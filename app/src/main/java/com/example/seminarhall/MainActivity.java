@@ -52,7 +52,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     protected void goToRegister() {
-        Intent intent=new Intent(MainActivity.this,RegisterActivity.class);
+//        Intent intent=new Intent(MainActivity.this,RegisterActivity.class);
+        Intent intent=new Intent(MainActivity.this,Singup.class);
+
         startActivity(intent);
     }
 
