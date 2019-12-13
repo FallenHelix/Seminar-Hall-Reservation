@@ -43,7 +43,7 @@ public class Singup extends AppCompatActivity {
     private static TextView login;
     private static Button signUpButton;
     private static CheckBox terms_conditions;
-    private static ProgressBar progressBar;
+    //private static ProgressBar progressBar;
 
 
     @Override
@@ -71,7 +71,9 @@ public class Singup extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 checkValidation();
-                confirmInput();
+                if (confirmInput()) {
+                    register();
+                }
 
             }
         });
@@ -154,12 +156,13 @@ public class Singup extends AppCompatActivity {
         }
     }
 
-    public void confirmInput() {
+    public boolean confirmInput() {
         if (!validateEmail() | !validateUsername() | !validatePassword()) {
-            return;
+            return false;
         }
         else
-            register();
+            return true;
+
 
 //        String input = "Email: " + emailId.getText().toString();
 //        input += "\n";
@@ -182,11 +185,9 @@ public class Singup extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(),
                                     "Registration successful!",
-                                    Toast.LENGTH_LONG)
-                                    .show();
+                                    Toast.LENGTH_SHORT).show();
 
                             // hide the progress bar
-                            progressBar.setVisibility(View.GONE);
 
                             // if the user created intent to login activity
                             Intent intent= new Intent(Singup.this,
@@ -204,7 +205,6 @@ public class Singup extends AppCompatActivity {
                                     .show();
 
                             // hide the progress bar
-                            progressBar.setVisibility(View.GONE);
                         }
                     }
                 });
