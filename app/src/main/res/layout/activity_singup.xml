@@ -138,5 +138,10 @@
         android:textColor="@color/white_greyish"
         android:textSize="15sp" />
 
+    <androidx.core.widget.ContentLoadingProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+
 
 </LinearLayout>

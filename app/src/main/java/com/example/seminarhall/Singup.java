@@ -3,6 +3,7 @@ package com.example.seminarhall;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -10,15 +11,30 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.AuthResult;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 
 import com.google.android.material.textfield.TextInputLayout;
 
 public class Singup extends AppCompatActivity {
 
-    private static View view;
+    //private static View view;
+    private FirebaseAuth mAuth;
+    private static final Pattern PASSWORD_PATTERN =
+            Pattern.compile("^" +
+                    //"(?=.*[0-9])" +         //at least 1 digit
+                    //"(?=.*[a-z])" +         //at least 1 lower case letter
+                    //"(?=.*[A-Z])" +         //at least 1 upper case letter
+                    "(?=.*[a-zA-Z])" +      //any letter
+                    "(?=.*[@#$%^&+=])" +    //at least 1 special character
+                    "(?=\\S+$)" +           //no white spaces
+                    ".{4,}" +               //at least 4 characters
+                    "$");
     private static EditText fullName, emailId, mobileNumber,
             password, confirmPassword;
     private static TextView login;
@@ -49,6 +65,7 @@ public class Singup extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 checkValidation();
+                confirmInput();
             }
         });
      }
@@ -80,4 +97,68 @@ public class Singup extends AppCompatActivity {
         else
             fullName.setError(null);
     }
+
+
+    private boolean validateEmail() {
+        String emailInput = emailId.getText().toString().trim();
+
+        if (emailInput.isEmpty()) {
+            emailId.setError("Field can't be empty");
+            return false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
+            emailId.setError("Please enter a valid email address");
+            return false;
+        } else {
+            emailId.setError(null);
+            return true;
+        }
+    }
+    private boolean validateUsername() {
+        String usernameInput = fullName.getText().toString().trim();
+
+        if (usernameInput.isEmpty()) {
+            fullName.setError("Field can't be empty");
+            return false;
+        } else if (usernameInput.length() > 15) {
+            fullName.setError("Username too long");
+            return false;
+        } else {
+            fullName.setError(null);
+            return true;
+        }
+    }
+
+    private boolean validatePassword() {
+        String passwordInput = password.getText().toString().trim();
+        String cpassword=confirmPassword.getText().toString().trim();
+
+        if (passwordInput.isEmpty()) {
+            password.setError("Field can't be empty");
+            return false;
+        } else if (!PASSWORD_PATTERN.matcher(passwordInput).matches()) {
+            password.setError("Password too weak");
+            return false;
+        } else if (!passwordInput.equals(cpassword)) {
+            confirmPassword.setError("Passwords didn't match");
+            return false;
+        } else {
+            password.setError(null);
+            return true;
+        }
+    }
+
+    public void confirmInput() {
+        if (!validateEmail() | !validateUsername() | !validatePassword()) {
+            return;
+        }
+
+        String input = "Email: " + emailId.getText().toString();
+        input += "\n";
+        input += "Username: " + fullName.getText().toString();
+        input += "\n";
+        input += "Password: " + password.getText().toString();
+
+        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
+    }
+
 }
