@@ -1,13 +1,16 @@
 package com.example.seminarhall;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +43,7 @@ public class Singup extends AppCompatActivity {
     private static TextView login;
     private static Button signUpButton;
     private static CheckBox terms_conditions;
+    private static ProgressBar progressBar;
 
 
     @Override
@@ -47,6 +51,8 @@ public class Singup extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singup);
         initViews();
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
     }
 
 
@@ -66,6 +72,7 @@ public class Singup extends AppCompatActivity {
             public void onClick(View view){
                 checkValidation();
                 confirmInput();
+
             }
         });
      }
@@ -151,14 +158,56 @@ public class Singup extends AppCompatActivity {
         if (!validateEmail() | !validateUsername() | !validatePassword()) {
             return;
         }
+        else
+            register();
 
-        String input = "Email: " + emailId.getText().toString();
-        input += "\n";
-        input += "Username: " + fullName.getText().toString();
-        input += "\n";
-        input += "Password: " + password.getText().toString();
+//        String input = "Email: " + emailId.getText().toString();
+//        input += "\n";
+//        input += "Username: " + fullName.getText().toString();
+//        input += "\n";
+//        input += "Password: " + password.getText().toString();
+//
+        //Toast.makeText(this, "Sucess", Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(this, input, Toast.LENGTH_SHORT).show();
+    }
+
+    private void register() {
+        String email=emailId.getText().toString().trim();
+        String passwordInput=password.getText().toString().trim();
+        mAuth.createUserWithEmailAndPassword(email, passwordInput).addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
+
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task)
+                    {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(),
+                                    "Registration successful!",
+                                    Toast.LENGTH_LONG)
+                                    .show();
+
+                            // hide the progress bar
+                            progressBar.setVisibility(View.GONE);
+
+                            // if the user created intent to login activity
+                            Intent intent= new Intent(Singup.this,
+                                    MainActivity.class);
+                            startActivity(intent);
+                        }
+                        else {
+
+                            // Registration failed
+                            Toast.makeText(
+                                    getApplicationContext(),
+                                    "Registration failed!!"
+                                            + " Please try again later",
+                                    Toast.LENGTH_LONG)
+                                    .show();
+
+                            // hide the progress bar
+                            progressBar.setVisibility(View.GONE);
+                        }
+                    }
+                });
     }
 
 }
