@@ -62,10 +62,12 @@ public class Singup extends AppCompatActivity {
 
         String getConfirmPassword = confirmPassword.getText().toString();
 
+
+        if(getFullName.length()==0)
         fullName.setError("Error Here");
 
 
-        if (getFullName.equals("") || getFullName.length() == 0
+         else if (getFullName.equals("") || getFullName.length() == 0
                 || getEmailId.equals("") || getEmailId.length() == 0
                 || getMobileNumber.equals("") || getMobileNumber.length() == 0
                 || getPassword.equals("") || getPassword.length() == 0
@@ -73,7 +75,9 @@ public class Singup extends AppCompatActivity {
                 || getConfirmPassword.length() == 0)
 
         {
-            fullName.setError("Error Here");
+            fullName.setError("Error 2");
         }
+        else
+            fullName.setError(null);
     }
 }
