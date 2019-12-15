@@ -67,6 +67,8 @@ public class Singup extends AppCompatActivity {
         terms_conditions = (CheckBox) findViewById(R.id.terms_conditions);
 
 
+
+
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
@@ -75,6 +77,14 @@ public class Singup extends AppCompatActivity {
                     register();
                 }
 
+            }
+        });
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(Singup.this, Login.class);
+                startActivity(intent);
+                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             }
         });
      }
@@ -191,7 +201,7 @@ public class Singup extends AppCompatActivity {
 
                             // if the user created intent to login activity
                             Intent intent= new Intent(Singup.this,
-                                    MainActivity.class);
+                                    Login.class);
                             startActivity(intent);
                         }
                         else {
