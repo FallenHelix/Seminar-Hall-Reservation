@@ -127,6 +127,9 @@ public class Singup extends AppCompatActivity {
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
             emailId.setError("Please enter a valid email address");
             return false;
+        } else if (!emailInput.substring(emailInput.indexOf("@") + 1).equals("somaiya.edu")) {
+            emailId.setError("Only Somaiya email address Allowed");
+            return false;
         } else {
             emailId.setError(null);
             return true;
@@ -194,7 +197,7 @@ public class Singup extends AppCompatActivity {
                     {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(),
-                                    "Registration successful!",
+                                    "Registration successful!, Please verify account",
                                     Toast.LENGTH_SHORT).show();
 
                             // hide the progress bar
@@ -219,5 +222,7 @@ public class Singup extends AppCompatActivity {
                     }
                 });
     }
+
+
 
 }

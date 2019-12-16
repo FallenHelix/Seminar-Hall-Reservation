@@ -3,7 +3,7 @@
 
     <string name="app_name">Login and SignUp ScreenDesign Demo</string>
 
-
+    <string name="forgotPass" >Forgot password?, Reset Here</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="email">Email Id</string>
@@ -16,7 +16,6 @@
     <string name="newUser">Not a Member yet? Sign Up here.</string>
     <string name="fullName">Full Name</string>
     <string name="mobileNumber">Mobile Number</string>
-    <string name="location">Location</string>
     <string name="confirmPassword">Confirm Password</string>
     <string name="terms_conditions">By clicking SignUp you agree all the Terms and Conditions.</string>
     <string name="signUp">SIGN UP</string>

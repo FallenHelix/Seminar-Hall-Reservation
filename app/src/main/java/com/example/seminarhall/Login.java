@@ -16,12 +16,15 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class Login extends AppCompatActivity {
     private  Button Login;
     private TextView Registration;
     private EditText EmailId;
+    private TextView ResetPasword;
+
     private EditText Password;
     private FirebaseAuth mAuth;
 
@@ -33,11 +36,19 @@ public class Login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
 
+        ResetPasword = findViewById(R.id.frgp);
         EmailId = findViewById(R.id.userEmailId);
         Password = findViewById(R.id.password);
         Login = findViewById(R.id.LogIn);
         Registration = findViewById(R.id.Rgst);
 
+        ResetPasword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(Login.this, forgot.class);
+                startActivity(intent);
+            }
+        });
         Registration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
@@ -72,18 +83,24 @@ public class Login extends AppCompatActivity {
                                     @NonNull Task<AuthResult> task)
                             {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getApplicationContext(),
-                                            "Login successful!!",
-                                            Toast.LENGTH_LONG)
-                                            .show();
+                                    if (EmailVerification()) {
+
+                                        Toast.makeText(getApplicationContext(),
+                                                "Login successful!!",
+                                                Toast.LENGTH_LONG)
+                                                .show();
 
 
-                                    // if sign-in is successful
-                                    // intent to home activity
-                                    Intent intent= new Intent(Login.this,
-                                            UserDetails.class);
-                                    startActivity(intent);
-                                }
+                                        // if sign-in is successful
+                                        // intent to home activity
+                                        Intent intent = new Intent(Login.this,
+                                                UserDetails.class);
+                                        startActivity(intent);
+                                    }
+                                    else
+                                    {
+                                        mAuth.signOut();
+                                    }                                }
 
                                 else {
 
@@ -101,6 +118,17 @@ public class Login extends AppCompatActivity {
     }
 
 
+    private boolean  EmailVerification()
+    {
+        final FirebaseUser user=mAuth.getCurrentUser();
+        if (!user.isEmailVerified()) {
+            user.sendEmailVerification();
+            Toast.makeText(this, "Email Verification sent to Email Address", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else
+            return true;
+    }
     private boolean validateEmail() {
         String emailInput = EmailId.getText().toString().trim();
 
@@ -133,7 +161,6 @@ public class Login extends AppCompatActivity {
     public boolean confirmInput() {
         if (!validateEmail() | !validatePassword()) {
             Toast.makeText(this, "Check Function Failed", Toast.LENGTH_LONG);
-
             return false;
         } else
         {
