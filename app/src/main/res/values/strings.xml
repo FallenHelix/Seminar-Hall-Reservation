@@ -3,7 +3,7 @@
 
     <string name="app_name">Login and SignUp ScreenDesign Demo</string>
 
-    <string name="forgotPass">Forgot password?, Reset Here</string>
+    <string name="forgotPass">Forgot password? Reset Here</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="email">Email Id</string>
