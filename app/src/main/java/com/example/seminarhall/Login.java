@@ -18,7 +18,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
 public class Login extends AppCompatActivity {
     private  Button Login;
     private TextView Registration;
@@ -45,7 +44,7 @@ public class Login extends AppCompatActivity {
         ResetPasword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                Intent intent = new Intent(Login.this, forgot.class);
+                Intent intent = new Intent(Login.this, reset.class);
                 startActivity(intent);
             }
         });
@@ -68,7 +67,6 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-
 
     private void SignInUser()
     {
@@ -151,7 +149,7 @@ public class Login extends AppCompatActivity {
         if (passwordInput.isEmpty()) {
             Password.setError("Field can't be empty");
             return false;
-        } else {
+        } else{
             Password.setError(null);
             return true;
         }
