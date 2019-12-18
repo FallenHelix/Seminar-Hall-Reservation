@@ -28,7 +28,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-
 public class Login extends AppCompatActivity {
     private  Button Login;
     private TextView Registration;
@@ -91,6 +90,7 @@ public class Login extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mAuth = FirebaseAuth.getInstance();
     }
+
 
     @Override
     public void onStart() {
@@ -182,6 +182,7 @@ public class Login extends AppCompatActivity {
 
 
 
+
     private void SignInUser()
     {
         String email=EmailId.getText().toString().trim();
@@ -263,7 +264,7 @@ public class Login extends AppCompatActivity {
         if (passwordInput.isEmpty()) {
             Password.setError("Field can't be empty");
             return false;
-        } else {
+        } else{
             Password.setError(null);
             return true;
         }
