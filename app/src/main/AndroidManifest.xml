@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".reset"></activity>
+
         <activity android:name=".UserDetails" />
         <activity android:name=".Login" />
         <activity android:name=".Singup" />
