@@ -10,6 +10,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,27 +40,42 @@ public class Login extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private EditText Password;
     private FirebaseAuth mAuth;
+    private ProgressBar progressbar;
     GoogleSignInOptions gso;
 
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
         singInButton = findViewById(R.id.sign_in_button);
-
         ResetPasword = findViewById(R.id.frgp);
         EmailId = findViewById(R.id.userEmailId);
         Password = findViewById(R.id.password);
         Login = findViewById(R.id.LogIn);
         Registration = findViewById(R.id.Rgst);
+        progressbar = findViewById(R.id.progressBar);
 
+        progressbar.setVisibility(View.INVISIBLE);
+
+
+        ResetPasword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, reset.class);
+                startActivity(intent);
+
+            }
+        });
 
 
         singInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
+                progressbar.setVisibility(View.VISIBLE);
+
                 signIn();
 
             }
@@ -136,6 +152,9 @@ public class Login extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+
+                           progressbar.setVisibility(View.INVISIBLE);
+
                             Toast.makeText(Login.this,"Authentication Successful",Toast.LENGTH_LONG).show();
                             //updateUI(user);
                             Intent intent = new Intent(Login.this, UserDetails.class);
@@ -146,6 +165,8 @@ public class Login extends AppCompatActivity {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             //Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                            progressbar.setVisibility(View.INVISIBLE);
+
                             Toast.makeText(Login.this,"Authentication Failed",Toast.LENGTH_LONG).show();
 
 
