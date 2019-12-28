@@ -23,6 +23,7 @@ public class UserDetails extends AppCompatActivity {
     private TextView Email;
     private TextView U_id;
     private Button sign_out;
+    private Button goDatabase;
     FirebaseAuth mAuth;
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -32,9 +33,18 @@ public class UserDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
         sign_out = findViewById(R.id.sign_out);
+        goDatabase = (Button) findViewById(R.id.See_data);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         setView();
+
+        goDatabase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserDetails.this, Home.class);
+                startActivity(intent);
+            }
+        });
 
         sign_out.setOnClickListener(new View.OnClickListener() {
             @Override

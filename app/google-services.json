@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "998458393536-edsniugeuia9ulsfrdbv2kt0kgdl4dl3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.seminarhall",
+            "certificate_hash": "b6a538ed1bedcc25d0f6d8796d35b283c09b14a3"
+          }
+        },
+        {
           "client_id": "998458393536-33574qt9c53id8o0qqoc4l2ol55lo0ie.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
