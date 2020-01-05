@@ -22,8 +22,10 @@ import java.util.List;
 
 public class Home extends AppCompatActivity {
 
-    List<Artist> artists;
+    //tempvariables
+    TextView tempview;
 
+    List<Artist> artists;
     DatabaseReference databaseArtists;
     private TextView Hall;
     private TextView status;
@@ -38,12 +40,15 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 //        Hall = findViewById(R.id.Hall_Name);
 //        status = findViewById(R.id.cap);
-        databaseArtists = FirebaseDatabase.getInstance().getReference("Artists");
-        if (databaseArtists == null) {
+        databaseArtists = FirebaseDatabase.getInstance().getReference("artists");
+        listViewArtists = (ListView) findViewById(R.id.listView);
+        tempview = (TextView) findViewById(R.id.temp1);
+
+        if (databaseArtists != null) {
             Toast.makeText(this,"NULl Reference",Toast.LENGTH_LONG).show();
         }
         artists = new ArrayList<>();
-        listViewArtists = (ListView) findViewById(R.id.listViewArtist);
+
     }
 
     @Override
@@ -63,12 +68,17 @@ public class Home extends AppCompatActivity {
                     Artist artist = postSnapshot.getValue(Artist.class);
                     //adding artist to the list
                     artists.add(artist);
+//                    tempview.setText(artist.getArtistName());
+                }
+                for (Artist a : artists) {
+                    Toast.makeText(Home.this, "Name is: "+a.getArtistId(), Toast.LENGTH_SHORT).show();
                 }
 
                 //creating adapter
                 artistList artistAdapter = new artistList(Home.this, artists);
                 //attaching adapter to the listview
                 listViewArtists.setAdapter(artistAdapter);
+
             }
 
             @Override

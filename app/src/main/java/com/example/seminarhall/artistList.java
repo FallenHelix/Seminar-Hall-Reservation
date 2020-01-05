@@ -1,6 +1,7 @@
 package com.example.seminarhall;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ public class artistList extends ArrayAdapter<Artist> {
 
         TextView Name = (TextView) listViewItem.findViewById(R.id.view1);
         TextView Genre= (TextView) listViewItem.findViewById(R.id.view2);
+        Genre.setHighlightColor(Color.YELLOW);
         Artist artist = artistList.get(position);
         Name.setText(artist.getArtistName());
         Genre.setText(artist.getArtistGenre());
