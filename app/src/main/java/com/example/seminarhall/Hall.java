@@ -3,42 +3,49 @@ package com.example.seminarhall;
 import java.util.Date;
 
 public class Hall {
-    private String name;
-    private int capacity;
-    private Date dt;
+    private String Name;
+    private int Size;
+    private String key;
 
     public Hall() {
     }
 
-    public Hall(String name, int capacity, Date dt) {
-        this.name = name;
-        this.capacity = capacity;
-        this.dt = dt;
+    public Hall(String name, int capacity) {
+        this.Name = name;
+        this.Size = capacity;
+    }
+
+    public Hall(String name, int capacity, String key) {
+        this.Name = name;
+        this.key=key;
+        this.Size = capacity;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.Name = name;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
+    public void setSize(int size) {
+        this.Size = size;
     }
 
-    public void setDt(Date dt) {
-        this.dt = dt;
+    public void setKey(String key) {
+        this.key=key;
+    }
+
+    public String getKey()
+    {
+        return this.key;
     }
 
     public String getName() {
-        return name;
+        return Name;
     }
 
-    public int getCapacity() {
-        return capacity;
+    public int getSize() {
+        return Size;
     }
 
-    public Date getDt() {
-        return dt;
-    }
 }
 
 

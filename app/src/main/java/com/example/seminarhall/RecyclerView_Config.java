@@ -2,7 +2,6 @@ package com.example.seminarhall;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -12,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class RecyclerView_Config {
+public class  RecyclerView_Config {
     private Context mContext;
     private HallAdapater mHallAdapter;
 
@@ -42,7 +41,7 @@ public class RecyclerView_Config {
 
         public void bind(Hall hall, String key) {
             mName.setText(hall.getName());
-            Capacity.setText(hall.getCapacity());
+            Capacity.setText(hall.getSize());
             this.key=key    ;
         }
 
@@ -58,9 +57,9 @@ public class RecyclerView_Config {
             this.mkeys = keys;
         }
 
-        public HallAdapater() {
-            super();
-        }
+//        public HallAdapater() {
+//            super();
+//        }
 
         @NonNull
         @Override

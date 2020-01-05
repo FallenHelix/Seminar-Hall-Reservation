@@ -18,7 +18,7 @@ public class databaseHelper {
 
     public databaseHelper() {
         mDatabase=FirebaseDatabase.getInstance();
-        mReferenceHall = mDatabase.getReference("Halls");
+        mReferenceHall = mDatabase.getReference("Hall");
     }
 
     public interface DataStatus
