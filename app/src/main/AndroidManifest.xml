@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddArtist"></activity>
+        <activity android:name=".hallList"></activity>
+        <activity android:name=".addHall" />
+        <activity android:name=".AddArtist" />
         <activity android:name=".DatabaseList" />
         <activity android:name=".Home" />
         <activity android:name=".reset" />

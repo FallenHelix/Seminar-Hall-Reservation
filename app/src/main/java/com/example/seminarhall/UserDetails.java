@@ -43,7 +43,7 @@ public class UserDetails extends AppCompatActivity {
         goDatabase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserDetails.this, Home.class);
+                Intent intent = new Intent(UserDetails.this, hallList.class);
                 startActivity(intent);
             }
         });
@@ -51,7 +51,7 @@ public class UserDetails extends AppCompatActivity {
         addData.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserDetails.this, AddArtist.class);
+                Intent intent = new Intent(UserDetails.this, addHall.class);
                 startActivity(intent);
             }
         });

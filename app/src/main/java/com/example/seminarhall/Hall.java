@@ -1,7 +1,10 @@
 package com.example.seminarhall;
 
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.util.Date;
 
+@IgnoreExtraProperties
 public class Hall {
     private String Name;
     private int Size;
@@ -10,10 +13,7 @@ public class Hall {
     public Hall() {
     }
 
-    public Hall(String name, int capacity) {
-        this.Name = name;
-        this.Size = capacity;
-    }
+
 
     public Hall(String name, int capacity, String key) {
         this.Name = name;
