@@ -24,6 +24,8 @@ public class UserDetails extends AppCompatActivity {
     private TextView U_id;
     private Button sign_out;
     private Button goDatabase;
+    private Button addData;
+
     FirebaseAuth mAuth;
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -41,11 +43,18 @@ public class UserDetails extends AppCompatActivity {
         goDatabase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserDetails.this, Home.class);
+                Intent intent = new Intent(UserDetails.this, hallList.class);
                 startActivity(intent);
             }
         });
 
+        addData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserDetails.this, addHall.class);
+                startActivity(intent);
+            }
+        });
         sign_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,6 +96,7 @@ public class UserDetails extends AppCompatActivity {
     private void setView() {
         Email = findViewById(R.id.Eml);
         U_id = findViewById(R.id.U_id);
+        addData = findViewById(R.id.Save_data);
         return;
     }
 
