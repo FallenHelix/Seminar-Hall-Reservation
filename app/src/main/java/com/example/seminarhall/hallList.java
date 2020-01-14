@@ -6,6 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -29,18 +33,18 @@ public class hallList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hall_list);
-        String[] languages={"Java", "JavaScrip", "C++", "Python", "XML", "adfasd", "adfadfas"};
+
+        setUpRecyclerView();
+    }
+
+    private void setUpRecyclerView()
+    {
         recyclerHallList = (RecyclerView)findViewById(R.id.RecView);
         recyclerHallList.setLayoutManager(new LinearLayoutManager(this));
 
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Halls");
-        if (databaseReference == null) {
-            Toast.makeText(this,"Null Database",Toast.LENGTH_LONG).show();
-        }
         halls=new ArrayList<>();
 
-
+        databaseReference = FirebaseDatabase.getInstance().getReference("Halls");
     }
 
     @Override
@@ -55,17 +59,44 @@ public class hallList extends AppCompatActivity {
                     Hall hall = postSnapshot.getValue(Hall.class);
                     halls.add(hall);
                 }
-
                 adapter = new HallListAdapter(hallList.this,halls);
+
                 recyclerHallList.setAdapter(adapter);
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater=getMenuInflater();
+        inflater.inflate(R.menu.hall_menu, menu);
+
+
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        androidx.appcompat.widget.SearchView searchView= (androidx.appcompat.widget.SearchView )searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new androidx.appcompat.widget.SearchView .OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+
+
+                adapter.getFilter().filter(newText);
+
+
+                return false;
+            }
+        });
+        return true;
     }
 }
 

@@ -16,6 +16,8 @@ public class databaseHelper {
     private DatabaseReference mReferenceHall;
     private List<Hall> halls = new ArrayList<>();
 
+
+
     public databaseHelper() {
         mDatabase=FirebaseDatabase.getInstance();
         mReferenceHall = mDatabase.getReference("Hall");

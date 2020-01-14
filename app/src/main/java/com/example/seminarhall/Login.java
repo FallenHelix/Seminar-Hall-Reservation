@@ -49,7 +49,6 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        mAuth = FirebaseAuth.getInstance();
         singInButton = findViewById(R.id.sign_in_button);
         ResetPasword = findViewById(R.id.frgp);
         EmailId = findViewById(R.id.userEmailId);
@@ -58,6 +57,7 @@ public class Login extends AppCompatActivity {
         Registration = findViewById(R.id.Rgst);
         progressbar = findViewById(R.id.progressBar);
 
+        mAuth = FirebaseAuth.getInstance();
         progressbar.setVisibility(View.INVISIBLE);
 
 

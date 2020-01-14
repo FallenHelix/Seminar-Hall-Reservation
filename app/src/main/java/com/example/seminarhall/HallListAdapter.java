@@ -5,7 +5,10 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,16 +18,25 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallListViewHolder> {
+public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallListViewHolder> implements Filterable{
 
 
-    List<Hall> halls;
+    private List<Hall> halls;
+    private List<Hall> hallListFull;
     private LayoutInflater mInflater;
 
 
     HallListAdapter(Activity context, ArrayList<Hall> halls) {
-        this.halls=halls;
+        if (halls == null) {
+            this.halls = new ArrayList<>();
+        }
+        else {
+            this.halls = halls;
+        }
+
+        this.hallListFull = new ArrayList<>(this.halls);
         this.mInflater = LayoutInflater.from(context);
+
     }
 
     @NonNull
@@ -63,4 +75,44 @@ public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallLi
         }
 
     }
+
+    @Override
+    public Filter getFilter() {
+
+        return exampleFilter;
+    }
+    private  Filter exampleFilter=new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Hall> filteredList = new ArrayList<>();
+            FilterResults results=new FilterResults();
+            if (halls.isEmpty()) {
+                results.values=filteredList;
+                return results;
+            }
+            if (constraint == null || constraint.length() == 0) {
+                filteredList.addAll(hallListFull);
+            }
+            else
+            {
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for (Hall hall : hallListFull) {
+                    int hint = Integer.parseInt(filterPattern);
+                    int temp=hall.getSize();
+                    if (temp>=hint) {
+                        filteredList.add(hall);
+                    }
+                }
+            }
+            results.values=filteredList;
+            return  results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            halls.clear();
+            halls.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 }

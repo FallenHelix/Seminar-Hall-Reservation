@@ -11,9 +11,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".hallList"></activity>
         <activity android:name=".addHall" />
-        <activity android:name=".AddArtist" />
-        <activity android:name=".DatabaseList" />
-        <activity android:name=".Home" />
         <activity android:name=".reset" />
         <activity android:name=".UserDetails" />
         <activity android:name=".Login" />
