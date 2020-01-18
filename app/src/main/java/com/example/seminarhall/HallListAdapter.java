@@ -2,6 +2,7 @@ package com.example.seminarhall;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +81,8 @@ public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallLi
         public void onClick(View view) {
             if (mClickListener != null)
                 mClickListener.onItemClick(view, getAdapterPosition());
+            Log.d("Onclick", "Onclick view view");
+
         }
     }
 

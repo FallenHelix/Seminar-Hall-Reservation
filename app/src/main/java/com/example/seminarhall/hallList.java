@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.icu.text.Transliterator;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,6 +39,7 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
 
         setUpRecyclerView();
         Toast.makeText(this,"Started",Toast.LENGTH_LONG).show();
+
     }
 
     private void setUpRecyclerView()
@@ -46,15 +48,9 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
         recyclerHallList.setLayoutManager(new LinearLayoutManager(this));
 
         halls=new ArrayList<>();
-
         databaseReference = FirebaseDatabase.getInstance().getReference("Halls");
-        adapter = new HallListAdapter(hallList.this,halls);
-        recyclerHallList.setAdapter(adapter);
     }
 
-    private void dislay(List<Hall> h) {
-
-    }
 
     @Override
     protected void onStart() {
@@ -70,13 +66,17 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
                 }
                 adapter = new HallListAdapter(hallList.this,halls);
                 recyclerHallList.setAdapter(adapter);
+                start();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-
+    }
+    private void start()
+    {
+        adapter.setClickListener(this);
     }
 
     @Override
@@ -110,7 +110,8 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this,"You Click: "+ position,Toast.LENGTH_LONG).show();
+        Log.d("Helo", "Clock kiya?");
+        Toast.makeText(this,"You Click: "+ position,Toast.LENGTH_SHORT).show();
     }
 }
 
