@@ -9,7 +9,6 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,12 +17,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallListViewHolder> implements Filterable{
-
+public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallListViewHolder> implements Filterable {
 
     private List<Hall> halls;
     private List<Hall> hallListFull;
     private LayoutInflater mInflater;
+    private ItemClickListener mClickListener;
+
 
 
     HallListAdapter(Activity context, ArrayList<Hall> halls) {
@@ -64,18 +64,36 @@ public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallLi
         return halls.size();
     }
 
-    public class HallListViewHolder extends RecyclerView.ViewHolder {
+//LIST XML handling class
+    public class HallListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView hallName;
         TextView hallSize;
 
-         HallListViewHolder(@NonNull View itemView) {
+         HallListViewHolder( View itemView) {
             super(itemView);
             hallName = (TextView) itemView.findViewById(R.id.view1);
             hallSize = (TextView) itemView.findViewById(R.id.view2);
+            itemView.setOnClickListener(this);
         }
 
+        @Override
+        public void onClick(View view) {
+            if (mClickListener != null)
+                mClickListener.onItemClick(view, getAdapterPosition());
+        }
     }
 
+    void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+
+    //Functions to Search IN view
     @Override
     public Filter getFilter() {
 
