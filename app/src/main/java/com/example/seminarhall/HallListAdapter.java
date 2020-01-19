@@ -62,7 +62,7 @@ public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallLi
 
     @Override
     public int getItemCount() {
-        return halls.size();
+        return null!=halls?halls.size():0;
     }
 
 //LIST XML handling class

@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class hallList extends AppCompatActivity implements HallListAdapter.ItemClickListener{
 
@@ -30,6 +31,7 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
     DatabaseReference databaseReference;
     ArrayList<Hall> halls;
     RecyclerView recyclerHallList;
+    private boolean FirstTime=true;
 
 
     @Override
@@ -55,6 +57,7 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
     @Override
     protected void onStart() {
         super.onStart();
+        Toast.makeText(this,"OnStart",Toast.LENGTH_SHORT).show();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -76,11 +79,14 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
     }
     private void start()
     {
+
+
         adapter.setClickListener(this);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Toast.makeText(this,"OnCreate Options Menu",Toast.LENGTH_SHORT).show();
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.hall_menu, menu);
 
@@ -97,9 +103,10 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
             @Override
             public boolean onQueryTextChange(String newText) {
 
-
-
-                adapter.getFilter().filter(newText);
+                if((adapter!=null&& adapter.getItemCount()!=0)||FirstTime!=true) {
+                    adapter.getFilter().filter(newText);
+                    FirstTime=false;
+                }
 
 
                 return false;
