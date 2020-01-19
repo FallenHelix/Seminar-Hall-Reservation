@@ -72,8 +72,8 @@ public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallLi
 
          HallListViewHolder( View itemView) {
             super(itemView);
-            hallName = (TextView) itemView.findViewById(R.id.view1);
-            hallSize = (TextView) itemView.findViewById(R.id.view2);
+            hallName = (TextView) itemView.findViewById(R.id.textView);
+            hallSize = (TextView) itemView.findViewById(R.id.textView2);
             itemView.setOnClickListener(this);
         }
 

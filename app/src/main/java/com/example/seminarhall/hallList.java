@@ -112,6 +112,7 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
     public void onItemClick(View view, int position) {
         Log.d("Helo", "Clock kiya?");
         Toast.makeText(this,"You Click: "+ position,Toast.LENGTH_SHORT).show();
+
     }
 }
 
