@@ -107,11 +107,12 @@ public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallLi
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Hall> filteredList = new ArrayList<>();
             FilterResults results=new FilterResults();
-            if (halls.isEmpty()) {
-                results.values=filteredList;
+
+            if (constraint == null || constraint.length() == 0) {
+                results.values=hallListFull;
                 return results;
             }
-            if (constraint == null || constraint.length() == 0) {
+            if (halls.isEmpty()) {
                 filteredList.addAll(hallListFull);
             }
             else
