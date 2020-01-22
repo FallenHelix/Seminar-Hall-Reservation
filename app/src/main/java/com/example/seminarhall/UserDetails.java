@@ -25,6 +25,7 @@ public class UserDetails extends AppCompatActivity {
     private Button sign_out;
     private Button goDatabase;
     private Button addData;
+    private Button searchDate;
 
     FirebaseAuth mAuth;
 
@@ -34,11 +35,20 @@ public class UserDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
+        searchDate = findViewById(R.id.SearchBydate);
         sign_out = findViewById(R.id.sign_out);
         goDatabase = (Button) findViewById(R.id.See_data);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         setView();
+
+        searchDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SearchByDate.class);
+                startActivity(intent);
+            }
+        });
 
         goDatabase.setOnClickListener(new View.OnClickListener() {
             @Override

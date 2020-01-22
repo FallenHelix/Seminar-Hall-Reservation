@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.icu.text.Transliterator;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,7 +41,6 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
         setContentView(R.layout.activity_hall_list);
 
         setUpRecyclerView();
-        Toast.makeText(this,"Started",Toast.LENGTH_LONG).show();
 
     }
 
@@ -57,7 +57,6 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
     @Override
     protected void onStart() {
         super.onStart();
-        Toast.makeText(this,"OnStart",Toast.LENGTH_SHORT).show();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -102,23 +101,31 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
+                try {
+                    int x = Integer.parseInt(newText);
+                } catch (Exception e) {
+                    ExceptionFunction();
+                    return true;
+                }
                 if((adapter!=null&& adapter.getItemCount()!=0)||FirstTime!=true) {
                     adapter.getFilter().filter(newText);
                     FirstTime=false;
                 }
-
-
                 return false;
             }
         });
         return true;
     }
 
+    private void ExceptionFunction()
+    {
+        Toast.makeText(this, "Please Input Only Number",Toast.LENGTH_LONG).show();
+    }
     @Override
     public void onItemClick(View view, int position) {
-        Log.d("Helo", "Clock kiya?");
-        Toast.makeText(this,"You Click: "+ position,Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(getApplicationContext(), SearchByDate.class);
+        intent.putExtra("Hall Selected", halls.get(position));
+        startActivity(intent);
 
     }
 }
