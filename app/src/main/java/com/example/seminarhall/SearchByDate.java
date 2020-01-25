@@ -52,13 +52,10 @@ public class SearchByDate extends AppCompatActivity implements DatePickerDialog.
         databaseReference= FirebaseDatabase.getInstance().getReference("Reservation");
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
-
     }
-
     private void checkUser()
     {
         FirebaseUser user = mAuth.getCurrentUser();

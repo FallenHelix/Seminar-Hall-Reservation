@@ -29,7 +29,7 @@ public class UserDetails extends AppCompatActivity {
 
     FirebaseAuth mAuth;
 
-    private GoogleSignInClient mGoogleSignInClient;
+        private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +41,12 @@ public class UserDetails extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         setView();
-
+        searchDate.setText("SearchByTime");
+////////////////////////
         searchDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), SearchByDate.class);
+                Intent intent = new Intent(UserDetails.this, SearchByTime.class);
                 startActivity(intent);
             }
         });
