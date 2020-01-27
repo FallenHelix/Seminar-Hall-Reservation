@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SearchByDate"></activity>
+        <activity android:name=".Booking"></activity>
+        <activity android:name=".SearchByDate" />
         <activity android:name=".ReservationMain" />
         <activity android:name=".SearchByTime" />
         <activity android:name=".hallList" />
