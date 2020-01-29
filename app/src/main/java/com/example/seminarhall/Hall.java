@@ -7,28 +7,33 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.util.Date;
 
-@IgnoreExtraProperties
 
+
+
+@IgnoreExtraProperties
 public class Hall implements Parcelable {
     private String Name;
     private int Size;
     private String key;
+    private String dept;
 
     public Hall() {
     }
 
 
 
-    public Hall(String name, int capacity, String key) {
+    public Hall(String name, int capacity, String key, String dept) {
         this.Name = name;
         this.key=key;
         this.Size = capacity;
+        this.dept = dept;
     }
 
     protected Hall(Parcel in) {
         Name = in.readString();
         Size = in.readInt();
         key = in.readString();
+        dept = in.readString();
     }
 
     public static final Creator<Hall> CREATOR = new Creator<Hall>() {
@@ -78,7 +83,10 @@ public class Hall implements Parcelable {
         dest.writeString(Name);
         dest.writeInt(Size);
         dest.writeString(key);
+        dest.writeString(dept);
     }
+
+    public String getDept(){ return dept;}
 }
 
 

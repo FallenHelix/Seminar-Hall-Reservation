@@ -27,4 +27,12 @@
     <string name="SignUp">New User? Register Here</string>
     <string name="back">BACK</string>
 
+    <string-array name="Departments">
+        <item>IT</item>
+        <item>COMPS</item>
+        <item>EXTC</item>
+        <item>MECH</item>
+        <item>ETRX</item>
+        <item>ALL</item>
+    </string-array>
 </resources>
