@@ -1,79 +1,71 @@
 package com.example.seminarhall;
 
-
-import java.sql.Date;
-import java.sql.Time;
-
-class T_time
-{
-   private Time time;
-
-    public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
-    }
-
-    T_time(Time time) {
-        this.time=time;
-    }
-
-
-
-}
 public class ReservedHall {
-    int Rkey;
-    int H_id;
-    T_time startTime,EndTime;
-    Date bookDate;
+    String hallId,reservationId,date,startTime,EndTime,userId,Purpose;
 
-    public ReservedHall(int rkey, int h_id, T_time startTime, T_time endTime, Date bookDate) {
-        Rkey = rkey;
-        H_id = h_id;
-        this.startTime = startTime;
-        EndTime = endTime;
-        this.bookDate = bookDate;
+    public String getHallId() {
+        return hallId;
     }
 
-    public int getRkey() {
-        return Rkey;
+    public void setHallId(String hallId) {
+        this.hallId = hallId;
     }
 
-    public void setRkey(int rkey) {
-        Rkey = rkey;
+    public String getReservationId() {
+        return reservationId;
     }
 
-    public int getH_id() {
-        return H_id;
+    public void setReservationId(String reservationId) {
+        this.reservationId = reservationId;
     }
 
-    public void setH_id(int h_id) {
-        H_id = h_id;
+    public String getDate() {
+        return date;
     }
 
-    public T_time getStartTime() {
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(T_time startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public T_time getEndTime() {
+    public String getEndTime() {
         return EndTime;
     }
 
-    public void setEndTime(T_time endTime) {
+    public void setEndTime(String endTime) {
         EndTime = endTime;
     }
 
-    public Date getBookDate() {
-        return bookDate;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setBookDate(Date bookDate) {
-        this.bookDate = bookDate;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getPurpose() {
+        return Purpose;
+    }
+
+    public void setPurpose(String purpose) {
+        Purpose = purpose;
+    }
+
+    public ReservedHall(String hallId, String reservationId, String date, String startTime, String endTime, String userId, String purpose) {
+        this.hallId = hallId;
+        this.reservationId = reservationId;
+        this.date = date;
+        this.startTime = startTime;
+        EndTime = endTime;
+        this.userId = userId;
+        Purpose = purpose;
     }
 }

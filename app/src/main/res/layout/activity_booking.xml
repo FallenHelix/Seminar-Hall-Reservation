@@ -14,22 +14,22 @@
         android:text="Select Date"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.458"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.581" />
+        app:layout_constraintVertical_bias="0.475" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="See halls Reserved"
+        android:text="Book!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.74" />
+        app:layout_constraintVertical_bias="0.855" />
 
     <TextView
         android:id="@+id/StartTime"
@@ -38,23 +38,21 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="232dp"
-        android:layout_marginEnd="26dp"
-        android:layout_marginRight="26dp"
         android:layout_marginBottom="103dp"
         android:ems="10"
         android:hint="Start Time"
         android:inputType="time"
         app:layout_constraintBottom_toTopOf="@+id/bindCalendar"
-        app:layout_constraintEnd_toStartOf="@+id/EndTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.112"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.526" />
 
     <TextView
         android:id="@+id/EndTime"
         android:layout_width="163dp"
         android:layout_height="43dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginLeft="26dp"
         android:layout_marginTop="232dp"
         android:layout_marginEnd="43dp"
         android:layout_marginRight="43dp"
@@ -64,8 +62,10 @@
         android:inputType="time"
         app:layout_constraintBottom_toTopOf="@+id/bindCalendar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/StartTime"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.526" />
 
     <TextView
         android:id="@+id/HallName"
@@ -79,6 +79,20 @@
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.143" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="285dp"
+        android:layout_height="52dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:hint="Purpose"
+        app:layout_constraintVertical_bias="0.706" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

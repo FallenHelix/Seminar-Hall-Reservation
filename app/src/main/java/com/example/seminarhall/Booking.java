@@ -31,14 +31,13 @@ import java.util.Date;
 
 public class Booking extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, View.OnClickListener {
     DatabaseReference databaseReference;
-    FirebaseAuth mAuth;
     private Hall currHall;
-    private Button calendarButton;
+    private Button calendarButton,reserve;
     private TextView hallName;
     InputFilter timeFilter;
     TextView txt1,txt2;
     private String LOG_TAG = "Booking Activity";
-    private boolean doneOnce = false;//USE?
+    private int currentId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +53,22 @@ public class Booking extends AppCompatActivity implements DatePickerDialog.OnDat
     private void setViews()
     {
         setContentView(R.layout.activity_booking);
+
+        //setting up Views;
         calendarButton= findViewById(R.id.bindCalendar);
-        calendarButton.setOnClickListener(this);
+        reserve = findViewById(R.id.button2);
         txt1 = (TextView) findViewById(R.id.StartTime);
-        txt1.setOnClickListener(this);
         txt2 = (TextView) findViewById(R.id.EndTime);
-        txt2.setOnClickListener(this);
         hallName = findViewById(R.id.HallName);
 
-        mAuth = FirebaseAuth.getInstance();
+        //onCLickListener
+        calendarButton.setOnClickListener(this);
+        txt1.setOnClickListener(this);
+        txt2.setOnClickListener(this);
+        reserve.setOnClickListener(this);
 
+
+        //getting Selected hall Details
         Intent intent=getIntent();
         currHall = intent.getParcelableExtra("Hall Selected");
         hallName.setText(currHall.getName());
@@ -131,7 +136,7 @@ public class Booking extends AppCompatActivity implements DatePickerDialog.OnDat
     }
     private void checkUser()
     {
-        FirebaseUser user = mAuth.getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user == null) {
             Intent intent = new Intent(this, Login.class);
             startActivity(intent);
@@ -163,6 +168,7 @@ public class Booking extends AppCompatActivity implements DatePickerDialog.OnDat
                 Calendar.getInstance().get(Calendar.MINUTE),
                 false
         );
+
         timePickerDialog.show();
     }
 
@@ -172,7 +178,7 @@ public class Booking extends AppCompatActivity implements DatePickerDialog.OnDat
         Calendar c=Calendar.getInstance();
         c.set(year, month, dayOfMonth);
 
-        String date = DateFormat.getDateInstance(DateFormat.FULL).format(c.getTime());
+        String date = DateFormat.getDateInstance(DateFormat.MEDIUM).format(c.getTime());
         calendarButton.setText(date);
     }
 
@@ -180,16 +186,26 @@ public class Booking extends AppCompatActivity implements DatePickerDialog.OnDat
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
+
         Calendar c = Calendar.getInstance();
         c.set(Calendar.MINUTE, minute);
         c.set(Calendar.HOUR_OF_DAY, hourOfDay);
         String time = DateFormat.getTimeInstance().format(c.getTime());
-        txt1.setText(time);
+
+        switch (currentId) {
+            case R.id.StartTime:
+                txt1.setText(time);
+                break;
+            case R.id.EndTime:
+                txt2.setText(time);
+        }
+
     }
 
     @Override
     public void onClick(View v) {
         int i=v.getId();
+        currentId=i;
         if (i == R.id.StartTime) {
             showTimePickerDialog();
 
@@ -198,6 +214,37 @@ public class Booking extends AppCompatActivity implements DatePickerDialog.OnDat
 
         } else if (i == R.id.bindCalendar) {
             showDatePickerDialog();
+        } else if (i == R.id.button2) {
+            if(!mainCheck())
+            {
+                Toast.makeText(this, "Pleasea Enter Purpose!!", Toast.LENGTH_SHORT).show();
+            }
+            else
+            {
+                reserveHall();
+            }
         }
+    }
+
+    private boolean mainCheck()
+    {
+        EditText text = findViewById(R.id.editText);
+        if (text.getText().toString().trim().length() == 0) {
+            return false;
+        }
+        else return true;
+    }
+
+    private void reserveHall()
+    {
+        EditText text = findViewById(R.id.editText);
+        String purpose=text.getText().toString().trim();
+        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Reserved");
+        String id = databaseReference.push().getKey();
+        ReservedHall reservedHall = new ReservedHall(currHall.getKey(), id, calendarButton.getText().toString().trim(), txt1.getText().toString().trim(),
+                txt2.getText().toString().trim(), user.getUid(),purpose);
+        databaseReference.child(id).setValue(reservedHall);
+        Toast.makeText(this,"Done reservation wiht id: "+id,Toast.LENGTH_SHORT).show();
     }
 }
