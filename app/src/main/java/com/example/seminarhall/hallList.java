@@ -123,7 +123,7 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
     }
     @Override
     public void onItemClick(View view, int position) {
-        Intent intent = new Intent(getApplicationContext(), SearchByDate.class);
+        Intent intent = new Intent(getApplicationContext(), Booking.class);
         intent.putExtra("Hall Selected", halls.get(position));
         startActivity(intent);
 

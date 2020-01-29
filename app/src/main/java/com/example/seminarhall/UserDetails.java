@@ -46,7 +46,7 @@ public class UserDetails extends AppCompatActivity {
         searchDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(UserDetails.this, SearchByTime.class);
+                Intent intent = new Intent(UserDetails.this, UserDetails.class);
                 startActivity(intent);
             }
         });

@@ -10,9 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".Booking"></activity>
-        <activity android:name=".SearchByDate" />
-        <activity android:name=".ReservationMain" />
-        <activity android:name=".SearchByTime" />
         <activity android:name=".hallList" />
         <activity android:name=".addHall" />
         <activity android:name=".reset" />
