@@ -12,8 +12,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="10dp"
-        android:text="@string/signUp"
-        android:textColor="@color/white_greyish"
+        android:text="@string/register"
+        android:textColor="#1A1919"
         android:textSize="25sp"
         android:textStyle="bold" />
 
@@ -30,8 +30,8 @@
         android:inputType="textCapWords"
         android:padding="10dp"
         android:singleLine="true"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="#141414"
+        android:textColorHint="@color/black"
         android:textSize="16sp" />
 
     <EditText
@@ -47,8 +47,8 @@
         android:inputType="textEmailAddress"
         android:padding="10dp"
         android:singleLine="true"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:textSize="16sp" />
 
     <EditText
@@ -64,10 +64,9 @@
         android:inputType="phone"
         android:padding="10dp"
         android:singleLine="true"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:textSize="16sp" />
-
 
 
     <EditText
@@ -81,12 +80,12 @@
         android:gravity="center_vertical"
         android:hint="@string/passowrd"
         android:inputType="textPassword"
-        app:passwordToggleEnabled="true"
         android:padding="10dp"
         android:singleLine="true"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="16sp" />
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="16sp"
+        app:passwordToggleEnabled="true" />
 
     <EditText
         android:id="@+id/confirmPassword"
@@ -101,8 +100,8 @@
         android:inputType="textPassword"
         android:padding="10dp"
         android:singleLine="true"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
         android:textSize="16sp" />
 
     <CheckBox
@@ -111,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="7dp"
         android:text="@string/terms_conditions"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="14sp" />
 
     <Button
@@ -121,7 +120,7 @@
         android:layout_marginTop="15dp"
         android:background="@drawable/loginbutton_selector"
         android:padding="3dp"
-        android:text="@string/signUp"
+        android:text="@string/register"
         android:textColor="@color/background_color"
         android:textSize="17sp"
         android:textStyle="bold" />
@@ -135,7 +134,7 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/already_user"
-        android:textColor="@color/white_greyish"
+        android:textColor="@color/black"
         android:textSize="15sp" />
 
     <androidx.core.widget.ContentLoadingProgressBar

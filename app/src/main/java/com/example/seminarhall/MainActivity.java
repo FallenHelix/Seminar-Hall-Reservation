@@ -32,9 +32,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-//        Info = (EditText) findViewById(R.id.inf);
 
-  //      Info.setText("Attempts Remaining: 5");
         Continue = findViewById(R.id.button);
 
         Continue.setOnClickListener(new View.OnClickListener() {
@@ -45,10 +43,6 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
         });
-
-
-
-
     }
 
 
