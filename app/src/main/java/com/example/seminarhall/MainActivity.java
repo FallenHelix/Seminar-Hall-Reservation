@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, Login.class);
+                Intent intent = new Intent(MainActivity.this, SignIn.class);
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }

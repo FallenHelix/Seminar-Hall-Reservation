@@ -9,13 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Booking"></activity>
+        <activity android:name=".SignIn"></activity>
+        <activity android:name=".Booking" />
         <activity android:name=".hallList" />
         <activity android:name=".addHall" />
         <activity android:name=".reset" />
         <activity android:name=".UserDetails" />
         <activity android:name=".Login" />
-        <activity android:name=".Singup" />
+        <activity android:name=".Singup" android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

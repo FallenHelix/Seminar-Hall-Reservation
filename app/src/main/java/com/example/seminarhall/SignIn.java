@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.SigningInfo;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,94 +25,77 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-public class Login extends AppCompatActivity {
-    private  Button Login;
-    private TextView Registration;
-    private EditText EmailId;
-    private TextView ResetPasword;
-    private SignInButton singInButton;
+public class SignIn extends AppCompatActivity implements View.OnClickListener{
+
     private static int RC_SIGN_IN=1;
     private static final String TAG = "GoogleActivity";
-    private GoogleSignInClient mGoogleSignInClient;
-    private EditText Password;
     private FirebaseAuth mAuth;
     private ProgressBar progressbar;
     GoogleSignInOptions gso;
+    private GoogleSignInClient mGoogleSignInClient;
+    private EditText emailInput,passwordInput;
 
-//    public final String forgotPasswordString="<![CDATA[ <b><font color=#ff0000>write</b> your <b><font color=#0000ff>text</b> here .]]>"
+
+    private TextView register,resetPassword;
 
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        singInButton = findViewById(R.id.sign_in_button);
-        ResetPasword = findViewById(R.id.frgp);
-        EmailId = findViewById(R.id.emailInput);
-        Password = findViewById(R.id.emailInput);
-        Login = findViewById(R.id.LogIn);
-        Registration = findViewById(R.id.Rgst);
-        progressbar = findViewById(R.id.progressBar);
-        mAuth = FirebaseAuth.getInstance();
-        progressbar.setVisibility(View.INVISIBLE);
-
-        //setting the color of reset password and registration
-        Registration.setText(Html.fromHtml(Registration.getText().toString()));
-        ResetPasword.setText(Html.fromHtml(ResetPasword.getText().toString()));
-
-
-        ResetPasword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Login.this, reset.class);
-                startActivity(intent);
-
-            }
-        });
-
-
-        singInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                progressbar.setVisibility(View.VISIBLE);
-
-                signIn();
-
-            }
-        });
-
-
-        Registration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                goRegister();
-            }
-        });
-
-        Login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (confirmInput()) {
-                    SignInUser();
-                } else {
-                    //Toast.makeText(this, "End ", Toast.LENGTH_LONG);
-                }
-            }
-        });
+        setContentView(R.layout.activity_sign_in);
+        setupViews();
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mAuth = FirebaseAuth.getInstance();
+    }
+
+    protected void setupViews()
+    {
+        findViewById(R.id.btn_back).setOnClickListener(this);
+        findViewById(R.id.sign_in_button).setOnClickListener(this);
+        findViewById(R.id.LogIn).setOnClickListener(this);
+        register = findViewById(R.id.Rgst);
+        resetPassword = findViewById(R.id.frgp);
+        emailInput = findViewById(R.id.emailInput);
+        passwordInput = findViewById(R.id.passwordInput);
+        findViewById(R.id.frgp).setOnClickListener(this);
+        findViewById(R.id.Rgst).setOnClickListener(this);
+        progressbar = findViewById(R.id.progressBar);
+        register.setText(Html.fromHtml(register.getText().toString()));
+        resetPassword.setText(Html.fromHtml(resetPassword.getText().toString()));
+
+        //hide progress bar
+        progressbar.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    public void onClick(View v) {
+        int i=v.getId();
+        if (i == R.id.btn_back) {
+            Intent intent = new Intent(SignIn.this, MainActivity.class);
+            startActivity(intent);
+        } else if (i == R.id.frgp) {
+            Intent intent = new Intent(SignIn.this, reset.class);
+            startActivity(intent);
+        } else if (i == R.id.Rgst) {
+            Intent intent = new Intent(SignIn.this, Singup.class);
+            startActivity(intent);
+        } else if (i == R.id.LogIn) {
+            SignInUser();
+
+        } else if (i == R.id.sign_in_button) {
+            signIn();
+
+        }
     }
 
 
@@ -159,11 +144,11 @@ public class Login extends AppCompatActivity {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
 
-                           progressbar.setVisibility(View.INVISIBLE);
+                            progressbar.setVisibility(View.INVISIBLE);
 
-                            Toast.makeText(Login.this,"Authentication Successful",Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignIn.this,"Authentication Successful",Toast.LENGTH_LONG).show();
                             //updateUI(user);
-                            Intent intent = new Intent(Login.this, UserDetails.class);
+                            Intent intent = new Intent(SignIn.this, UserDetails.class);
                             startActivity(intent);
 
 
@@ -173,7 +158,7 @@ public class Login extends AppCompatActivity {
                             //Snackbar.make(findViewById(R.id.main_layout), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
                             progressbar.setVisibility(View.INVISIBLE);
 
-                            Toast.makeText(Login.this,"Authentication Failed",Toast.LENGTH_LONG).show();
+                            Toast.makeText(SignIn.this,"Authentication Failed",Toast.LENGTH_LONG).show();
 
 
                             //  updateUI(null);
@@ -212,8 +197,8 @@ public class Login extends AppCompatActivity {
 
     private void SignInUser()
     {
-        String email=EmailId.getText().toString().trim();
-        String password=Password.getText().toString().trim();
+        String email=emailInput.getText().toString().trim();
+        String password=passwordInput.getText().toString().trim();
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
@@ -233,7 +218,7 @@ public class Login extends AppCompatActivity {
 
                                         // if sign-in is successful
                                         // intent to home activity
-                                        Intent intent = new Intent(Login.this,
+                                        Intent intent = new Intent(SignIn.this,
                                                 UserDetails.class);
                                         startActivity(intent);
                                     }
@@ -270,29 +255,29 @@ public class Login extends AppCompatActivity {
             return true;
     }
     private boolean validateEmail() {
-        String emailInput = EmailId.getText().toString().trim();
+        String email =  emailInput.getText().toString().trim();
 
-        if (emailInput.isEmpty()) {
-            EmailId.setError("Field can't be empty");
+        if (email.isEmpty()) {
+            emailInput.setError("Field can't be empty");
             return false;
-        } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
-            EmailId.setError("Please enter a valid email address");
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailInput.setError("Please enter a valid email address");
             return false;
         } else {
-            EmailId.setError(null);
+            emailInput.setError(null);
             return true;
         }
     }
 
 
     private boolean validatePassword() {
-        String passwordInput = Password.getText().toString().trim();
+        String password = passwordInput.getText().toString().trim();
 
-        if (passwordInput.isEmpty()) {
-            Password.setError("Field can't be empty");
+        if (password.isEmpty()) {
+            passwordInput.setError("Field can't be empty");
             return false;
         } else{
-            Password.setError(null);
+            passwordInput.setError(null);
             return true;
         }
     }
@@ -307,13 +292,9 @@ public class Login extends AppCompatActivity {
 
             Toast.makeText(this, "Check Function is Successful", Toast.LENGTH_LONG);
 
-        return true;
+            return true;
         }
     }
 
-    private void goRegister() {
-        Intent intent = new Intent(Login.this, Singup.class);
-        Toast.makeText(this, "Please Input Details",Toast.LENGTH_SHORT);
-        startActivity(intent);
-    }
+
 }

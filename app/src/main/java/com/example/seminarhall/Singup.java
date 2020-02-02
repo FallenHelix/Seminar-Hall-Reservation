@@ -40,7 +40,6 @@ public class Singup extends AppCompatActivity {
                     "$");
     private static EditText fullName, emailId, mobileNumber,
             password, confirmPassword;
-    private static TextView login;
     private static Button signUpButton;
     private static CheckBox terms_conditions;
     //private static ProgressBar progressBar;
@@ -57,14 +56,12 @@ public class Singup extends AppCompatActivity {
 
 
     private void initViews() {
-        fullName = (EditText) findViewById(R.id.fullName);
-        emailId = (EditText)findViewById(R.id.userEmailId);
-        mobileNumber = (EditText) findViewById(R.id.mobileNumber);
-        password = (EditText)findViewById(R.id.password);
-        confirmPassword = (EditText) findViewById(R.id.confirmPassword);
-        signUpButton = (Button) findViewById(R.id.signUpBtn);
-        login = (TextView) findViewById(R.id.already_user);
-        terms_conditions = (CheckBox) findViewById(R.id.terms_conditions);
+        fullName = (EditText) findViewById(R.id.nameInput);
+        emailId = (EditText)findViewById(R.id.emailInput);
+        mobileNumber = (EditText) findViewById(R.id.mobileInput);
+        password = (EditText)findViewById(R.id.passwordInput);
+        confirmPassword = (EditText) findViewById(R.id.confirmPasswordInput);
+        signUpButton = (Button) findViewById(R.id.signUpButton);
 
 
 
@@ -77,14 +74,6 @@ public class Singup extends AppCompatActivity {
                     register();
                 }
 
-            }
-        });
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(Singup.this, Login.class);
-                startActivity(intent);
-                overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
             }
         });
      }

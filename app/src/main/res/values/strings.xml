@@ -34,4 +34,10 @@
         <item>ETRX</item>
         <item>ALL</item>
     </string-array>
+
+    <string name="Registration">
+ <![CDATA[ <font color=#353447>New User?</font><b><font color=#FF6B6B face=@string/rc_bold> Register Here!</b>  .
+
+]]>
+  </string>
 </resources>
