@@ -33,7 +33,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/emainInput"
+        android:id="@+id/EmailInput"
         android:layout_width="315dp"
         android:layout_height="56dp"
         android:background="@drawable/edit_text"

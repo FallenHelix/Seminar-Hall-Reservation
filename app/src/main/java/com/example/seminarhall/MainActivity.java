@@ -28,17 +28,29 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
-            Intent intent = new Intent(MainActivity.this, UserDetails.class);
+             Intent intent = new Intent(MainActivity.this, UserDetails.class);
             startActivity(intent);
         }
 
 
         Continue = findViewById(R.id.button);
 
+        Button temp=findViewById(R.id.button3);
+        temp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Temp.class);
+
+                startActivity(intent);
+            }
+        });
+
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SignIn.class);
+//                Intent intent = new Intent(MainActivity.this, Temp.class);
+
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }

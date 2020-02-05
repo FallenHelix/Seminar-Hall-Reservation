@@ -7,35 +7,6 @@
     android:background="@drawable/background"
     tools:context=".MainActivity">
 
-
-
-    <!--    <Button-->
-<!--        android:id="@+id/button"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="124dp"-->
-<!--        android:background="#FFFFFF"-->
-<!--        android:text="Continue"-->
-<!--        android:textColor="@color/black"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.498"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/imageView"-->
-<!--        app:layout_constraintVertical_bias="1.0" />-->
-
-<!--    <ImageView-->
-<!--        android:id="@+id/imageView"-->
-<!--        android:layout_width="242dp"-->
-<!--        android:layout_height="331dp"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.497"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.25"-->
-<!--        app:srcCompat="@drawable/ssv" />-->
-
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="110dp"
@@ -112,5 +83,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.212" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="106dp"
+        tools:layout_editor_absoluteY="357dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

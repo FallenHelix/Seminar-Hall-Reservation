@@ -56,6 +56,18 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         mAuth = FirebaseAuth.getInstance();
+
+        FirebaseUser user=mAuth.getCurrentUser();
+        updateUi(user);
+    }
+
+    private void updateUi(FirebaseUser user) {
+
+        if (user != null) {
+            Intent intent = new Intent(this, UserDetails.class);
+            Toast.makeText(this, "Please LogOut First!", Toast.LENGTH_LONG);
+            startActivity(intent);
+        }
     }
 
     protected void setupViews()
@@ -65,7 +77,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
         findViewById(R.id.LogIn).setOnClickListener(this);
         register = findViewById(R.id.Rgst);
         resetPassword = findViewById(R.id.frgp);
-        emailInput = findViewById(R.id.emailInput);
+        emailInput = findViewById(R.id.EmailInput);
         passwordInput = findViewById(R.id.passwordInput);
         findViewById(R.id.frgp).setOnClickListener(this);
         findViewById(R.id.Rgst).setOnClickListener(this);
@@ -173,33 +185,24 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
 
 
     private void signIn() {
+        progressbar.setVisibility(View.VISIBLE);
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
-    private void signOut() {
-        // Firebase sign out
-        mAuth.signOut();
-
-        // Google sign out
-        mGoogleSignInClient.signOut().addOnCompleteListener(this,
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        //updateUI(null);
-                    }
-                });
-
+    @Override
+    public void onBackPressed() {
+        progressbar.setVisibility(View.INVISIBLE);
+        super.onBackPressed();
     }
-
-
-
 
     private void SignInUser()
     {
         String email=emailInput.getText().toString().trim();
         String password=passwordInput.getText().toString().trim();
 
+        if(confirmInput())
+            progressbar.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
                         new OnCompleteListener<AuthResult>() {
@@ -225,6 +228,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
                                     else
                                     {
                                         mAuth.signOut();
+                                        progressbar.setVisibility(View.INVISIBLE);
                                     }                                }
 
                                 else {
@@ -234,7 +238,6 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
                                             "Login failed!!",
                                             Toast.LENGTH_LONG)
                                             .show();
-
                                 }
                             }
                         });
