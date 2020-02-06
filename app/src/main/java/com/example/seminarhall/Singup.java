@@ -193,7 +193,7 @@ public class Singup extends AppCompatActivity {
 
                             // if the user created intent to login activity
                             Intent intent= new Intent(Singup.this,
-                                    Login.class);
+                                    SignIn.class);
                             startActivity(intent);
                         }
                         else {

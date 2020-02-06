@@ -9,25 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Temp"
-            android:theme="@style/AppTheme.NoActionBar"
-            ></activity>
-        <activity android:name=".SignIn"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Booking"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".hallList"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".addHall"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".HCalendar"></activity>
+        <activity
+            android:name=".SignIn"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Booking"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".hallList"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".addHall"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".reset" />
-        <activity android:name=".UserDetails"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".Login"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".UserDetails"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Singup"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

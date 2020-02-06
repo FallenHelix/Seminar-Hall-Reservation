@@ -97,7 +97,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                         //updateUI(null);
                     }
                 });
-        Intent intent = new Intent(UserDetails.this, Login.class);
+        Intent intent = new Intent(UserDetails.this, SignIn.class);
         startActivity(intent);
     }
 
