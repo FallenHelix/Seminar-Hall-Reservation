@@ -42,5 +42,11 @@
   </string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string-array name="Services" >
+        <item>Projector</item>
+        <item>White Board</item>
+        <item>Speaker and mic</item>
+        <item>Presentation Materials</item>
+    </string-array>
 
 </resources>

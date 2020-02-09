@@ -1,11 +1,13 @@
 package com.example.seminarhall;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -36,12 +38,18 @@ public class Booking extends AppCompatActivity implements HorizontalAdapter.Item
     DatabaseReference databaseReference;
     private Hall currHall;
     private Button reserve;
-    TextView txt1,txt2,hallName;
+    TextView txt1,txt2,hallName,itemSelected;
     private String TAG = "Booking Activity";
     private int currentId;
     private ArrayList<String> dates;
     private ArrayList<String> days;
     HorizontalAdapter adapter;
+
+    //var for multiple choice
+    private Button mainList;
+    String[] listItems;
+    boolean[] checkItems;
+    ArrayList<Integer> mUserItems = new ArrayList<>();
 
     @Override
     public void onItemClick(View view, int position) {
@@ -58,11 +66,72 @@ public class Booking extends AppCompatActivity implements HorizontalAdapter.Item
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate Started");
         setViews();
+        listItems = getResources().getStringArray(R.array.Services);
+        checkItems = new boolean[listItems.length];
+
 
 
         Log.d(TAG,"On Clikc Listner working Initiated");
         databaseReference= FirebaseDatabase.getInstance().getReference("Reservation");
     }
+
+    private void multiChoiceDialog()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Booking.this);
+        builder.setTitle("Selected Items");
+        builder.setMultiChoiceItems(listItems, checkItems, new DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                if (isChecked) {
+                    //if already added then remove
+                    if (!mUserItems.contains(which)) {
+                        mUserItems.add(which);
+                    } else {
+                        mUserItems.remove(which);
+                    }
+                }
+            }
+        });
+
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String item="";
+                for (int i = 0; i < mUserItems.size(); i++) {
+                    item = item + listItems[mUserItems.get(i)];
+
+                    if (i != mUserItems.size() - 1) {
+                        item = item + ",";
+                    }
+                }
+
+                itemSelected.setText(item);
+            }
+        });
+
+        builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                for (int i = 0; i < checkItems.length; i++)
+                    checkItems[i]=false;
+                mUserItems.clear();
+                itemSelected.setText("");
+
+            }
+        });
+        AlertDialog mDialog = builder.create();
+        mDialog.show();
+
+    }
+
 
     private void setViews()
     {
@@ -73,12 +142,13 @@ public class Booking extends AppCompatActivity implements HorizontalAdapter.Item
         txt1 = (TextView) findViewById(R.id.StartTime);
         txt2 = (TextView) findViewById(R.id.EndTime);
         hallName = findViewById(R.id.HallName);
+        itemSelected = findViewById(R.id.items);
 
         //onCLickListener
         txt1.setOnClickListener(this);
         txt2.setOnClickListener(this);
         reserve.setOnClickListener(this);
-
+        findViewById(R.id.b1).setOnClickListener(this);
         setUpRecyclerView();
         //getting Selected hall Details
         Intent intent=getIntent();
@@ -190,6 +260,8 @@ public class Booking extends AppCompatActivity implements HorizontalAdapter.Item
             {
 //                reserveHall();
             }
+        } else if (i == R.id.b1) {
+            multiChoiceDialog();
         }
     }
 

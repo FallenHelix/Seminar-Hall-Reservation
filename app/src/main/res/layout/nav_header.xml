@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-       android:layout_width="match_parent"
-        android:layout_height="176dp"
-        android:background="@android:color/holo_blue_bright"
-        android:gravity="bottom"
-        android:orientation="vertical"
-        android:padding="16dp"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#353447"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:paddingTop="30dp"
+    android:paddingLeft="20dp"
+    android:paddingBottom="20dp"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher_round" />
+    <ImageView
+        android:id="@+id/Profile_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher_round" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:text="Coding in Flow"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+    <TextView
+        android:id="@+id/User_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:layout_below="@+id/Profile_photo"
+        android:text="Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="info@codinginflow.com" />
+    <TextView
+        android:id="@+id/User_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:layout_below="@id/User_Name"/>
 
 </LinearLayout>
 

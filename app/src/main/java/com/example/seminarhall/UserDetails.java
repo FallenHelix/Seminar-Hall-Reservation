@@ -1,21 +1,30 @@
 package com.example.seminarhall;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -25,7 +34,10 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class UserDetails extends AppCompatActivity implements View.OnClickListener,NavigationView.OnNavigationItemSelectedListener {
+import java.io.InputStream;
+import java.net.URL;
+
+public class UserDetails extends AppCompatActivity implements View.OnClickListener,NavigationView.OnNavigationItemSelectedListener{
     private TextView Email;
     private TextView U_id;
     FirebaseAuth mAuth;
@@ -34,6 +46,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
 
@@ -48,8 +61,8 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        mAuth = FirebaseAuth.getInstance();
     }
+
 
 
     private void setView() {
@@ -73,6 +86,23 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        //setting up side drawer email and profile pic
+        String name,email;
+        name=mAuth.getCurrentUser().getDisplayName();
+        email=mAuth.getCurrentUser().getEmail();
+        String url=mAuth.getCurrentUser().getPhotoUrl().toString();
+        url=url.replace("s96-c", "s384-c");
+        //get the text views
+        View headerView = navigationView.getHeaderView(0);
+        ImageView navPic= (ImageView) headerView.findViewById(R.id.Profile_photo);
+        TextView nav_email = (TextView) headerView.findViewById(R.id.User_email);
+        TextView nav_name = (TextView) headerView.findViewById(R.id.User_Name);
+
+        Glide.with(this).load(url).into(navPic);
+        nav_email.setText(email);
+        nav_name.setText(name);
+
         return;
     }
 
@@ -106,7 +136,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         int i=v.getId();
 
         if (i == R.id.SearchBydate) {
-            Intent intent = new Intent(UserDetails.this, UserDetails.class);
+            Intent intent = new Intent(UserDetails.this, Photo.class);
             startActivity(intent);
         } else if (i == R.id.See_data) {
             Intent intent = new Intent(UserDetails.this, hallList.class);
@@ -137,19 +167,23 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         }
         else
         {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(intent);
             Toast.makeText(this, "User Not Logged IN",Toast.LENGTH_LONG);
         }
 
     }
 
+
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int i=item.getItemId();
-
         if (i == R.id.nav_profile) {
             Intent intent = new Intent(UserDetails.this, MainActivity.class);
             startActivity(intent);
         }
         return true;
     }
+
 }
