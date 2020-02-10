@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.sql.Time;
 import java.text.DateFormat;
@@ -258,7 +259,7 @@ public class Booking extends AppCompatActivity implements HorizontalAdapter.Item
             }
             else
             {
-//                reserveHall();
+                reserveHall();
             }
         } else if (i == R.id.b1) {
             multiChoiceDialog();
@@ -274,16 +275,18 @@ public class Booking extends AppCompatActivity implements HorizontalAdapter.Item
         else return true;
     }
 
-//    private void reserveHall()
-//    {
-//        EditText text = findViewById(R.id.editText);
-//        String purpose=text.getText().toString().trim();
-//        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-//        databaseReference = FirebaseDatabase.getInstance().getReference("Reserved");
-//        String id = databaseReference.push().getKey();
-//        ReservedHall reservedHall = new ReservedHall(currHall.getKey(), id, calendarButton.getText().toString().trim(), txt1.getText().toString().trim(),
-//                txt2.getText().toString().trim(), user.getUid(),purpose);
-//        databaseReference.child(id).setValue(reservedHall);
-//        Toast.makeText(this,"Done reservation wiht id: "+id,Toast.LENGTH_SHORT).show();
-//    }
+    private void reserveHall()
+    {
+        EditText text = findViewById(R.id.editText);
+        String purpose=text.getText().toString().trim();
+        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        databaseReference = FirebaseDatabase.getInstance().getReference("Reserved");
+        String id = databaseReference.push().getKey();
+        ReservedHall reservedHall = new ReservedHall(currHall.getKey(), id,"Date Needed", txt1.getText().toString().trim(),
+                txt2.getText().toString().trim(), user.getUid(),purpose);
+        databaseReference.child(id).setValue(reservedHall);
+        FirebaseFirestore db;
+//        db=FirebaseFirestore.getInstance().collection('')
+        Toast.makeText(this,"Done reservation wiht id: "+id,Toast.LENGTH_SHORT).show();
+    }
 }
