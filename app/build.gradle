@@ -7,7 +7,9 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "com.example.seminarhall"
-        minSdkVersion 23
+
+        minSdkVersion 22
+
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -34,8 +36,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.2.0'
     implementation 'com.google.firebase:firebase-database:19.2.1'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
-    implementation 'com.google.firebase:firebase-core:17.2.2'
-    implementation 'com.google.firebase:firebase-firestore:21.4.0'
+
+    implementation 'com.google.firebase:firebase-firestore:17.1.2'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
