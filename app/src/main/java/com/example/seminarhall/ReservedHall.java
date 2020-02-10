@@ -1,7 +1,16 @@
 package com.example.seminarhall;
 
+import com.google.firebase.firestore.Exclude;
+
+
+
 public class ReservedHall {
     String hallId,reservationId,date,startTime,EndTime,userId,Purpose;
+
+    ReservedHall()
+    {
+        //no args constructor
+    }
 
     public String getHallId() {
         return hallId;
@@ -11,6 +20,7 @@ public class ReservedHall {
         this.hallId = hallId;
     }
 
+    @Exclude
     public String getReservationId() {
         return reservationId;
     }
@@ -59,13 +69,12 @@ public class ReservedHall {
         Purpose = purpose;
     }
 
-    public ReservedHall(String hallId, String reservationId, String date, String startTime, String endTime, String userId, String purpose) {
+    public ReservedHall(String hallId, String date, String startTime, String endTime, String userId, String purpose) {
         this.hallId = hallId;
-        this.reservationId = reservationId;
         this.date = date;
         this.startTime = startTime;
-        EndTime = endTime;
+        this.EndTime = endTime;
         this.userId = userId;
-        Purpose = purpose;
+        this.Purpose = purpose;
     }
 }

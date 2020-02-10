@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         temp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, HCalendar.class);
+                Intent intent = new Intent(MainActivity.this, SeeRev.class);
 
                 startActivity(intent);
             }

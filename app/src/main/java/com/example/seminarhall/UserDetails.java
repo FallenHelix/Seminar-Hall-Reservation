@@ -102,6 +102,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         Glide.with(this).load(url).into(navPic);
         nav_email.setText(email);
         nav_name.setText(name);
+        navPic.setAdjustViewBounds(true);
 
         return;
     }

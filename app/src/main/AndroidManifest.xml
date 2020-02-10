@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.seminarhall">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -12,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".Photo"></activity>
+        <activity android:name=".SeeRev"></activity>
+        <activity android:name=".Photo" />
         <activity android:name=".HCalendar" />
         <activity
             android:name=".SignIn"
