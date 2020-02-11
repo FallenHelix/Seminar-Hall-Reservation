@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:label">
-        <activity android:name=".SeeRev"></activity>
+        <activity android:name=".profile"></activity>
+        <activity android:name=".SeeRev" />
         <activity android:name=".Photo" />
         <activity android:name=".HCalendar" />
         <activity
