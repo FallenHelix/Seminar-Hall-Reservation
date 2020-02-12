@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         temp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, SeeRev.class);
+                Intent intent = new Intent(MainActivity.this, functions.class);
 
                 startActivity(intent);
             }
@@ -78,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }
+
         FirebaseMessaging.getInstance().subscribeToTopic("general")
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
@@ -91,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
                 });
 
     }
+
+
 
 
 }
