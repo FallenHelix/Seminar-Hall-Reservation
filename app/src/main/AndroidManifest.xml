@@ -14,6 +14,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
+        <activity android:name=".profile"></activity>
         <activity android:name=".functions"></activity>
         <activity android:name=".SeeRev" />
         <activity android:name=".HCalendar" />
