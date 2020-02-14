@@ -188,7 +188,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int i=item.getItemId();
         if (i == R.id.nav_profile) {
-            Intent intent = new Intent(UserDetails.this, MainActivity.class);
+            Intent intent = new Intent(UserDetails.this, profile.class);
             startActivity(intent);
         }
         return true;

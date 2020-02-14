@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color  name="red">#FF0000</color>
+    <color name="red">#FF0000</color>
     <color name="background_color">#009688</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
@@ -9,4 +9,18 @@
     <color name="button_selectorcolor">#9E9E9E</color>
     <color name="main_red">#FF6B6B</color>
     <color name="gray">@android:color/darker_gray</color>
+
+
+    //edit Here
+    <color name="calendar_active_month_bg">#9E9E9EAA</color>
+    <color name="calendar_bg">#ffffffff</color>
+    <color name="calendar_divider">#ffbababa</color>
+    <color name="calendar_inactive_month_bg">#ffd7d9db</color>
+    <color name="calendar_selected_day_bg">#FF6B6Bff</color>
+    <color name="calendar_highlighted_day_bg">#ccffcc</color>
+    <color name="calendar_selected_range_bg">#ff96caff</color>
+    <color name="calendar_text_inactive">#40778088</color>
+    <color name="calendar_text_active">#ff778088</color>
+    <color name="calendar_text_selected">#ffffffff</color>
+    <color name="calendar_text_unselectable">#11FFFF</color>
 </resources>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Login and SignUp ScreenDesign Demo</string>
+    <string name="app_name">Hall Reservation</string>
 
 
     <string name="forgotPass">Forgot password? Reset Here</string>
@@ -25,7 +25,6 @@
     <string name="submit">SUBMIT</string>
     <string name="SignUp">New User? Register Here</string>
     <string name="back">BACK</string>
-
     <string-array name="Departments">
         <item>IT</item>
         <item>COMPS</item>
@@ -34,11 +33,8 @@
         <item>ETRX</item>
         <item>ALL</item>
     </string-array>
-
     <string name="Registration">
- <![CDATA[ <font color=#353447>New User?</font><b><font color=#FF6B6B face=@string/rc_bold> Register Here!</b>  .
-
-]]>
+ <![CDATA[ <font color=#353447>New User?</font><b><font color=#FF6B6B face=@string/rc_bold> Register Here!</b>  .]]>
   </string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -48,5 +44,12 @@
         <item>Speaker and mic</item>
         <item>Presentation Materials</item>
     </string-array>
+
+    <string name="profile">Profile</string>
+    <string name="booking">My Bookings</string>
+    <string name="title_activity_reserve">Reserve</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="title_activity_xyz">xyz</string>
 
 </resources>

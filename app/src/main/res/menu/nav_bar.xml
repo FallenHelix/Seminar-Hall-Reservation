@@ -4,18 +4,18 @@
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_message"
+            android:id="@+id/nav_booking"
 
-            android:icon="@drawable/person"
-            android:title="Message" />
-        <item
-            android:id="@+id/nav_chat"
-            android:icon="@drawable/ic_email"
-            android:title="Chat" />
+            android:icon="@drawable/ic_password"
+            android:title="@string/booking" />
+<!--        <item-->
+<!--            android:id="@+id/nav_chat"-->
+<!--            android:icon="@drawable/ic_email"-->
+<!--            android:title="Chat" />-->
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_email"
-            android:title="Profile" />
+            android:icon="@drawable/person"
+            android:title="@string/profile" />
     </group>
 
 </menu>
