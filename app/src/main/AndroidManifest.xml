@@ -12,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
         <activity android:name=".profile"></activity>
+        <activity android:name=".functions"></activity>
         <activity android:name=".SeeRev" />
-        <activity android:name=".Photo" />
         <activity android:name=".HCalendar" />
         <activity
             android:name=".SignIn"
@@ -43,6 +44,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".MessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

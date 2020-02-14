@@ -2,10 +2,13 @@ package com.example.seminarhall;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.app.Notification;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -304,5 +307,24 @@ public class Booking extends AppCompatActivity implements HorizontalAdapter.Item
                 .collection("Upcoming").add(reservedHall);
 
         Toast.makeText(this,"Done reservation",Toast.LENGTH_SHORT).show();
+
+        sendNotification();
+    }
+
+    public void sendNotification()
+    {
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+
+        Notification notification = new NotificationCompat.Builder(this, "MyNotification")
+                .setSmallIcon(R.drawable.ic_one)
+                .setContentTitle("New Reservation")
+                .setContentText("Reservation In Progress")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setVibrate(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400})
+                .build();
+
+        notificationManager.notify(1, notification);
     }
 }

@@ -14,6 +14,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,14 +29,20 @@ import com.bumptech.glide.Glide;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.functions.FirebaseFunctions;
+import com.google.firebase.functions.FirebaseFunctionsException;
+import com.google.firebase.functions.HttpsCallableResult;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserDetails extends AppCompatActivity implements View.OnClickListener,NavigationView.OnNavigationItemSelectedListener{
     private TextView Email;
@@ -137,7 +144,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         int i=v.getId();
 
         if (i == R.id.SearchBydate) {
-            Intent intent = new Intent(UserDetails.this, Photo.class);
+            Intent intent = new Intent(UserDetails.this, functions.class);
             startActivity(intent);
         } else if (i == R.id.See_data) {
             Intent intent = new Intent(UserDetails.this, hallList.class);
@@ -186,5 +193,12 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         }
         return true;
     }
+
+    public void checkAuthority()
+    {
+        FirebaseUser user=mAuth.getCurrentUser();
+        user.getDisplayName();
+    }
+
 
 }
