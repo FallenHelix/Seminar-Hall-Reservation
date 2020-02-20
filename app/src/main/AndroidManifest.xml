@@ -22,7 +22,7 @@
         <activity android:name=".SeeRev" />
         <activity android:name=".HCalendar" />
         <activity
-            android:name=".SignIn"
+            android:name=".LogIn.SignIn"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Booking"
@@ -33,12 +33,12 @@
         <activity
             android:name=".addHall"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".reset" />
+        <activity android:name=".LogIn.reset" />
         <activity
             android:name=".UserDetails"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Singup"
+            android:name=".LogIn.Singup"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".MainActivity">
             <intent-filter>

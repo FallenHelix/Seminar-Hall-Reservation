@@ -7,6 +7,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,10 +19,11 @@ import android.view.View;
 import android.widget.TableLayout;
 
 
-public class Reserve extends AppCompatActivity {
+public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFragmentInteractionListener{
     private static final String TAG = "Reserve Class";
     private SectionPageAdapter msectionPageAdapter;
     private ViewPager mViewPager;
+    public static String mString="Select Date First";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,17 +35,51 @@ public class Reserve extends AppCompatActivity {
         msectionPageAdapter = new SectionPageAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        setUpViewPager(mViewPager);
+        setUpViewPager();
         tabLayout.setupWithViewPager(mViewPager);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Fragment fragment = ((SectionPageAdapter) mViewPager.getAdapter()).getFragment(position);
+                try {
+                    FragmentTime t = (FragmentTime) fragment;
+                    t.onResume();
+                } catch (Exception e) {
+
+                }
+
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
 
-    private void setUpViewPager(ViewPager viewPager)
+    private void setUpViewPager()
     {
         Log.d(TAG, "setUpViewPager: ");
+        FragmentTime fragmentTime = FragmentTime.newInstance(mString);
         msectionPageAdapter.addFragment(new FragmentCalendar(), "Tab 1");
-        msectionPageAdapter.addFragment(new FragmentTime(), "Tab 2");
-        msectionPageAdapter.addFragment(new FragmentFinal(), "Tab 2");
-        viewPager.setAdapter(msectionPageAdapter);
+        msectionPageAdapter.addFragment(fragmentTime, "Tab 2");
+        msectionPageAdapter.addFragment(new FragmentFinal(), "Tab 3");
+        mViewPager.setAdapter(msectionPageAdapter);
+
     }
+
+    @Override
+    public void onFragmentInteraction(String sendBackText) {
+        mString=sendBackText;
+        msectionPageAdapter.notifyDataSetChanged();
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package com.example.seminarhall.booking;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -23,23 +24,16 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
 
     private static final String TAG = "FragmentCalendar";
     CalendarPickerView calendarPickerView;
+    String SelectedDate;
+    private OnFragmentInteractionListener mListener;
+
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         setUpCalendar(view);
-//        calendarPickerView.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
-//            @Override
-//            public void onDateSelected(Date date) {
-//
-//            }
-//
-//            @Override
-//            public void onDateUnselected(Date date) {
-//
-//            }
-//        });
         return view;
     }
 
@@ -59,12 +53,43 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
 
     @Override
     public void onDateSelected(Date date) {
-        String SelectedDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(date);
+        SelectedDate = DateFormat.getDateInstance(DateFormat.MEDIUM).format(date);
         Toast.makeText(getActivity(), SelectedDate, Toast.LENGTH_LONG).show();
+        sendBack(SelectedDate);
+//        updateable.update();
+
     }
 
     @Override
     public void onDateUnselected(Date date) {
+
+    }
+
+    public void sendBack(String sendBackText) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(sendBackText);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(String sendBackText);
 
     }
 

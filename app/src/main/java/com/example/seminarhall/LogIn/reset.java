@@ -1,23 +1,19 @@
-package com.example.seminarhall;
+package com.example.seminarhall.LogIn;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.seminarhall.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class reset extends AppCompatActivity {
 
@@ -33,7 +29,7 @@ public class reset extends AppCompatActivity {
 
         edtEmail = (EditText) findViewById(R.id.edt_reset_email);
         btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
-        btnBack = (Button) findViewById(R.id.btn_back);
+//        btnBack = (Button) findViewById(R.id.btn_back);
 
         mAuth = FirebaseAuth.getInstance();
 

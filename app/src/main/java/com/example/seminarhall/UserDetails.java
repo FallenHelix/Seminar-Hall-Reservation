@@ -1,7 +1,6 @@
 package com.example.seminarhall;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,49 +9,42 @@ import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.seminarhall.LogIn.SignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.functions.FirebaseFunctions;
-import com.google.firebase.functions.FirebaseFunctionsException;
-import com.google.firebase.functions.HttpsCallableResult;
+import com.google.firebase.auth.GetTokenResult;
 
-import java.io.InputStream;
-import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
 
 public class UserDetails extends AppCompatActivity implements View.OnClickListener,NavigationView.OnNavigationItemSelectedListener{
+    private static final String TAG = "UserDetails";
     private TextView Email;
     private TextView U_id;
     FirebaseAuth mAuth;
     private DrawerLayout drawer;
     private GoogleSignInClient mGoogleSignInClient;
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate: ");
         mAuth = FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
@@ -86,7 +78,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
@@ -172,6 +164,8 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getIdToken() instead.
             String uid = user.getUid();
+
+            setUpAdminUi(user);
         }
         else
         {
@@ -182,6 +176,31 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
     }
 
+    private void setUpAdminUi(FirebaseUser user) {
+       user.getIdToken(false).addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
+           @Override
+           public void onSuccess(GetTokenResult getTokenResult) {
+               Map<String, Object> map=getTokenResult.getClaims();
+
+               boolean isAdmin=map.get("admin")!=null?(boolean)map.get("admin"):false;
+               if (isAdmin) {
+                   showAdminUI();
+               } else {
+                   showRegularUI();
+               }
+           }
+       });
+    }
+
+    private void showAdminUI()
+    {
+      navigationView.getMenu().findItem(R.id.Admin_Panel).setVisible(true);
+    }
+
+    private void showRegularUI()
+    {
+        navigationView.getMenu().findItem(R.id.Admin_Panel).setVisible(false);
+    }
 
 
     @Override
@@ -194,11 +213,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         return true;
     }
 
-    public void checkAuthority()
-    {
-        FirebaseUser user=mAuth.getCurrentUser();
-        user.getDisplayName();
-    }
+
 
 
 }

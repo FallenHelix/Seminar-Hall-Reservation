@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
     <group android:checkableBehavior="single">
@@ -8,14 +9,41 @@
 
             android:icon="@drawable/ic_password"
             android:title="@string/booking" />
-<!--        <item-->
-<!--            android:id="@+id/nav_chat"-->
-<!--            android:icon="@drawable/ic_email"-->
-<!--            android:title="Chat" />-->
+
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/person"
             android:title="@string/profile" />
+
     </group>
+
+
+        <item android:title="Admin Panel"
+            android:id="@+id/Admin_Panel">
+            <menu>
+
+            <item
+                android:id="@+id/Add_admin"
+                android:icon="@drawable/person"
+                android:title="Add New Admin" />
+            <item
+
+                android:id="@+id/View_Request"
+                android:icon="@drawable/ic_password"
+                android:title="View Bookings" />
+            </menu>
+        </item>
+
+
+
+
+    <group android:id="@+id/signOut">
+
+        <item
+            android:icon="@drawable/ic_password"
+            android:title="Sign Out" />
+
+    </group>
+
 
 </menu>

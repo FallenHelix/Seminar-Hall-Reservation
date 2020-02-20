@@ -29,6 +29,17 @@ public class SectionPageAdapter extends FragmentPagerAdapter {
         return mFragmentTitleList.get(position);
     }
 
+    public Fragment getFragment(int position)
+    {
+        return mFragmentList.get(position);
+    }
+
+    @Override
+    public int getItemPosition(@NonNull Object object) {
+
+        return super.getItemPosition(object);
+    }
+
     @NonNull
     @Override
     public Fragment getItem(int position) {

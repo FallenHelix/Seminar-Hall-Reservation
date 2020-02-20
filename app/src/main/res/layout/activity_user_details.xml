@@ -107,7 +107,8 @@
         app:itemTextColor="@color/main_red"
         app:itemIconTint="@color/main_red"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_bar" />
+        app:menu="@menu/nav_bar"
+        />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>
