@@ -1,4 +1,4 @@
-package com.example.seminarhall.booking;
+package com.example.seminarhall.homePage;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,18 +9,20 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SectionPageAdapter extends FragmentPagerAdapter {
-
+public class BookingsPageAdapter extends FragmentPagerAdapter {
     private final List<Fragment> mFragmentList = new ArrayList<>();
     private final List<String> mFragmentTitleList = new ArrayList<>();
+
+    public BookingsPageAdapter(@NonNull FragmentManager fm)
+    {
+        super(fm);
+
+    }
+
 
     public void addFragment(Fragment fragment, String title) {
         mFragmentList.add(fragment);
         mFragmentTitleList.add(title);
-    }
-
-    public SectionPageAdapter(@NonNull FragmentManager fm) {
-        super(fm);
     }
 
     @Nullable
@@ -33,7 +35,6 @@ public class SectionPageAdapter extends FragmentPagerAdapter {
     {
         return mFragmentList.get(position);
     }
-
 
     @NonNull
     @Override

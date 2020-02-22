@@ -102,35 +102,36 @@
         class="androidx.appcompat.app.AlertController$RecycleListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="152dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="horizontal">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.724">
 
         <Button
             android:id="@+id/b1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
             android:background="@drawable/button"
             android:fontFamily="@font/r_medium"
+            android:padding="5dp"
             android:text="Items"
             android:textColor="@color/white"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="505dp"
-            android:padding="5dp"
 
-            android:layout_marginLeft="10dp"/>
+            tools:layout_editor_absoluteY="505dp" />
 
         <TextView
             android:id="@+id/items"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="All the required items :"
-            android:lineSpacingMultiplier="@integer/google_play_services_version"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:lineSpacingMultiplier="@integer/google_play_services_version"
+            android:text="All the required items :" />
     </RelativeLayout>
 
-   
 
 </androidx.constraintlayout.widget.ConstraintLayout>

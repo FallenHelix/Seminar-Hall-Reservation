@@ -42,7 +42,7 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
         Date today = new Date();
         Calendar c=Calendar.getInstance();
         c.add(Calendar.MONTH, 5);
-        calendarPickerView.init(today, c.getTime()).withSelectedDate(today).inMode(CalendarPickerView.SelectionMode.RANGE);
+        calendarPickerView.init(today, c.getTime()).withSelectedDate(today).inMode(CalendarPickerView.SelectionMode.SINGLE);
         calendarPickerView.setOnDateSelectedListener(this);
         Typeface typeface = ResourcesCompat.getFont(getActivity(), R.font.sf_display_medium);
 

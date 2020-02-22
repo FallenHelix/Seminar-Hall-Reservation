@@ -14,10 +14,14 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
+        <activity android:name=".homePage.MyBookings"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".booking.Reserve"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".profile" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".homePage.profile" />
         <activity android:name=".functions" />
         <activity android:name=".SeeRev" />
         <activity android:name=".HCalendar" />
@@ -28,14 +32,14 @@
             android:name=".Booking"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".hallList"
+            android:name=".dataBase.hallList"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".addHall"
+            android:name=".dataBase.addHall"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LogIn.reset" />
         <activity
-            android:name=".UserDetails"
+            android:name=".homePage.UserDetails"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LogIn.Singup"

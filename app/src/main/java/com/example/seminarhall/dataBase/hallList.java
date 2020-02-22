@@ -1,29 +1,27 @@
-package com.example.seminarhall;
+package com.example.seminarhall.dataBase;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.icu.text.Transliterator;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.example.seminarhall.Hall;
+import com.example.seminarhall.MainActivity;
+import com.example.seminarhall.R;
+import com.example.seminarhall.booking.Reserve;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,8 +30,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class hallList extends AppCompatActivity implements HallListAdapter.ItemClickListener,NavigationView.OnNavigationItemSelectedListener
 {
@@ -149,7 +145,7 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
     }
     @Override
     public void onItemClick(View view, int position) {
-        Intent intent = new Intent(getApplicationContext(), Booking.class);
+        Intent intent = new Intent(getApplicationContext(), Reserve.class);
         intent.putExtra("Hall Selected", halls.get(position));
         startActivity(intent);
 
