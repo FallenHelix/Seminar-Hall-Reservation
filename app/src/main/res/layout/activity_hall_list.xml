@@ -5,7 +5,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserDetails">
+    android:foregroundTint="@color/main_red"
+    tools:context=".homePage.UserDetails">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,20 +27,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/cardview_default_elevation"
+            android:layout_gravity="center"
+            android:fontFamily="@font/rc_bold"
+            android:layout_marginTop="20dp"
             android:gravity="bottom"
             android:padding="10dp"
             android:text="Hall Database"
-            android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
-            android:textColor="#000000" />
+            android:textColor="@color/main_red" />
 
         <androidx.recyclerview.widget.RecyclerView
-
             android:id="@+id/RecView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="53dp"
+            android:layout_marginTop="10dp"
             android:background="@android:color/darker_gray"
             android:fadeScrollbars="true"
             android:padding="4dp"
@@ -52,12 +53,5 @@
 
 
     </LinearLayout>
-    <com.google.android.material.navigation.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:id="@+id/nav_view"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_bar"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

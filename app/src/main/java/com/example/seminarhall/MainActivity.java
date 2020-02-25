@@ -10,13 +10,13 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.seminarhall.LogIn.SignIn;
+import com.example.seminarhall.booking.Reserve;
+import com.example.seminarhall.homePage.UserDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         temp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, functions.class);
+                Intent intent = new Intent(MainActivity.this, Reserve.class);
 
                 startActivity(intent);
             }

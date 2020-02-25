@@ -5,8 +5,9 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserDetails"
-    tools:openDrawer="end">
+    tools:context=".homePage.UserDetails" >
+<!--    tools:openDrawer="start"-->
+<!--    >-->
 
 
     <LinearLayout
@@ -62,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:text="SeeDataBase"
+            android:text="See DataBase"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -84,11 +85,11 @@
             app:layout_constraintVertical_bias="0.73" />
 
         <Button
-            android:id="@+id/SearchBydate"
+            android:id="@+id/My_bookings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:text="SearchByDate"
+            android:text="My Bookings"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -107,7 +108,8 @@
         app:itemTextColor="@color/main_red"
         app:itemIconTint="@color/main_red"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_bar" />
+        app:menu="@menu/nav_bar"
+        />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

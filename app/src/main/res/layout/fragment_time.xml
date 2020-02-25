@@ -2,31 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Booking">
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="27dp"
-        android:layout_marginBottom="35dp"
-        android:orientation="horizontal"
-        android:background="?attr/selectableItemBackground"
-        app:layout_constraintBottom_toTopOf="@+id/StartTime"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/HallName" />
-
+    android:isScrollContainer="true"
+    android:layout_height="match_parent">
 
 
     <Button
-        android:hapticFeedbackEnabled="true"
-        android:id="@+id/button2"
+        android:id="@+id/button4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:hapticFeedbackEnabled="true"
         android:text="Book!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,52 +22,38 @@
         app:layout_constraintVertical_bias="0.909" />
 
     <TextView
+        android:id="@+id/Date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/rc_bold"
+        android:text="Select Date Please"
+        android:textAlignment="center"
+        android:textColor="@color/main_red"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:layout_constraintVertical_bias="0.076" />
+
+    <TextView
         android:id="@+id/StartTime"
         android:layout_width="163dp"
         android:layout_height="43dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="324dp"
-        android:layout_marginBottom="103dp"
         android:background="?attr/selectableItemBackground"
         android:ems="10"
+        android:fontFamily="@font/sf_display_medium"
         android:hint="Start Time"
         android:inputType="time"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/EndTime"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.526" />
-
-    <TextView
-        android:id="@+id/EndTime"
-        android:layout_width="163dp"
-        android:layout_height="43dp"
-        android:layout_marginTop="324dp"
-        android:layout_marginEnd="43dp"
-        android:layout_marginRight="43dp"
-        android:layout_marginBottom="103dp"
-        android:ems="10"
-        android:hint="End Time"
-        android:inputType="time"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.99"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.526" />
-
-    <TextView
-        android:id="@+id/HallName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.457"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.074" />
+        app:layout_constraintVertical_bias="0.255" />
 
     <EditText
         android:id="@+id/editText"
@@ -90,24 +62,42 @@
         android:ems="10"
         android:gravity="start|top"
         android:hint="Purpose"
-        android:inputType="textMultiLine"
+        android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.38"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.592" />
+        app:layout_constraintVertical_bias="0.69" />
+
+    <TextView
+        android:id="@+id/EndTime"
+        android:layout_width="163dp"
+        android:layout_height="43dp"
+        android:ems="10"
+        android:fontFamily="@font/sf_display_medium"
+        android:hint="End Time"
+        android:inputType="time"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.935"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.255" />
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         class="androidx.appcompat.app.AlertController$RecycleListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.724">
+        app:layout_constraintVertical_bias="0.464">
 
         <Button
             android:id="@+id/b1"
@@ -129,8 +119,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:lineSpacingMultiplier="@integer/google_play_services_version"
-            android:text="All the required items :" />
+            android:inputType="textMultiLine"
+            android:text="Select required items\n new line :" />
     </RelativeLayout>
 
 

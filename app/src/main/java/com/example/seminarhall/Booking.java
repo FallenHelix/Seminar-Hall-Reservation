@@ -7,7 +7,6 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
@@ -15,32 +14,26 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.seminarhall.LogIn.SignIn;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.sql.Time;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
 
 public class Booking extends AppCompatActivity implements HorizontalAdapter.ItemClickListener, TimePickerDialog.OnTimeSetListener, View.OnClickListener {
     DatabaseReference databaseReference;
