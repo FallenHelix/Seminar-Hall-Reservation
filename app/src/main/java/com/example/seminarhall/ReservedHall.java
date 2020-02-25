@@ -5,8 +5,7 @@ import com.google.firebase.firestore.Exclude;
 
 
 public class ReservedHall {
-    String hallId,reservationId,date,startTime,EndTime,userId,Purpose;
-
+    private String hallId,reservationId,date,startTime,EndTime,userId,Purpose;
     ReservedHall()
     {
         //no args constructor

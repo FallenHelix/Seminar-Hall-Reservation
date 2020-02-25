@@ -1,11 +1,10 @@
-package com.example.seminarhall.homePage;
+package com.example.seminarhall.admin;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.seminarhall.homePage.BookingAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -28,8 +26,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentActive extends Fragment {
-    private static final String TAG = "FragmentActive";
+public class FragmentAdminNew extends Fragment {
+    private static final String TAG = "FragmentAdminNew";
     RecyclerView recyclerView;
     List<ReservedHall> halls;
     FirebaseFirestore db;
@@ -66,7 +64,7 @@ public class FragmentActive extends Fragment {
         String id=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         Log.d(TAG, "onStart: ");
-        notebookRef.whereEqualTo("userId",id).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        notebookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 halls.clear();
@@ -79,7 +77,7 @@ public class FragmentActive extends Fragment {
                     ReservedHall hall=query.toObject(ReservedHall.class);
                     hall.setReservationId(query.getId());
                     halls.add(hall);
-                    Log.d(TAG, "onEvent: ");
+                    Log.d(TAG, "onEvent: "+halls.size());
                 }
                 adapter = new BookingAdapter(halls);
                 recyclerView.setAdapter(adapter);

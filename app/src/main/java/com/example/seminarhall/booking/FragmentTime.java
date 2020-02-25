@@ -21,7 +21,9 @@ import androidx.fragment.app.Fragment;
 import com.example.seminarhall.Hall;
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -164,27 +166,30 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
     {
 
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-//        databaseReference = FirebaseDatabase.getInstance().getReference("Reserved");
-//        String id = databaseReference.push().getKey();
-//
         FirebaseFirestore db;
         Hall currHall=Reserve.getHall();
         ReservedHall reservedHall = new ReservedHall(currHall.getKey(), selectedDate.getText().toString().trim(), startTime.getText().toString().trim(),
                 endTime.getText().toString().trim(), user.getUid(),purpose.getText().toString().trim());
-//        databaseReference.child(id).setValue(reservedHall);
 
 
         db=FirebaseFirestore.getInstance();
-//        CollectionReference notebookRef = db.collection("Reservation");
-//        notebookRef.document("In_Progress").collection("progress").add(reservedHall);
-
-        CollectionReference notebookRef = db.collection("Reservation");
-        notebookRef.document("In_Progress")
-                .collection("Upcoming").add(reservedHall);
-
-
-        Toast.makeText(getActivity(),"Done reservation",Toast.LENGTH_SHORT).show();
+        CollectionReference ref = db.collection("Main/Reservation/Active");
+        ref.add(reservedHall).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(getContext(),"New request for Reservation has been created wih id: \n"+
+                        documentReference.getId(),Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(),"Exception Occurred",Toast.LENGTH_LONG).show();
+                Log.d(TAG, "onFailure: " + e);
+            }
+        });
     }
+
+
     private boolean mainCheck()
     {
 
@@ -262,7 +267,6 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
         });
         AlertDialog mDialog = builder.create();
         mDialog.show();
-
     }
 
 }

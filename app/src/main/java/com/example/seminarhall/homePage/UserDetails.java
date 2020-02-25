@@ -20,8 +20,9 @@ import com.bumptech.glide.Glide;
 import com.example.seminarhall.LogIn.SignIn;
 import com.example.seminarhall.MainActivity;
 import com.example.seminarhall.R;
+import com.example.seminarhall.admin.Admin_Control;
 import com.example.seminarhall.dataBase.addHall;
-import com.example.seminarhall.functions;
+import com.example.seminarhall.admin.functions;
 import com.example.seminarhall.dataBase.hallList;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -185,7 +186,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
            public void onSuccess(GetTokenResult getTokenResult) {
                Map<String, Object> map=getTokenResult.getClaims();
 
-               boolean isAdmin=map.get("admin")!=null?(boolean)map.get("admin"):false;
+               boolean isAdmin= map.get("admin") != null && (boolean) map.get("admin");
                if (isAdmin) {
                    showAdminUI();
                } else {
@@ -214,6 +215,9 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             startActivity(intent);
         } else if (i == R.id.Add_admin) {
             Intent intent = new Intent(UserDetails.this, functions.class);
+            startActivity(intent);
+        } else if (i == R.id.View_Request) {
+            Intent intent = new Intent(UserDetails.this, Admin_Control.class);
             startActivity(intent);
         }
         return true;

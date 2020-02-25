@@ -67,24 +67,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.533" />
 
-    <EditText
-        android:id="@+id/passwordInput2"
-        android:layout_width="315dp"
-        android:layout_height="56dp"
-        android:background="@drawable/edit_text"
-        android:drawableStart="@drawable/ic_password"
-        android:drawableLeft="@drawable/ic_password"
-        android:drawablePadding="20dp"
-        android:fontFamily="@font/regular"
-        android:hint="Password"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.541"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.831" />
-
     <Button
         android:id="@+id/LogIn"
         android:layout_width="146dp"

@@ -20,7 +20,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
 
     List<ReservedHall> rList;
 
-    BookingAdapter(List<ReservedHall> list) {
+    public BookingAdapter(List<ReservedHall> list) {
         rList=list;
     }
 
