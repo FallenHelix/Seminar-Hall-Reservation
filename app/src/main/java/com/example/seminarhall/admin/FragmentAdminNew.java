@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,7 +27,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentAdminNew extends Fragment {
+public class FragmentAdminNew extends Fragment implements BookingAdapter.itemClick {
     private static final String TAG = "FragmentAdminNew";
     RecyclerView recyclerView;
     List<ReservedHall> halls;
@@ -77,11 +78,17 @@ public class FragmentAdminNew extends Fragment {
                     ReservedHall hall=query.toObject(ReservedHall.class);
                     hall.setReservationId(query.getId());
                     halls.add(hall);
-                    Log.d(TAG, "onEvent: "+halls.size());
                 }
                 adapter = new BookingAdapter(halls);
                 recyclerView.setAdapter(adapter);
+                adapter.setClickListener(FragmentAdminNew.this);
             }
         });
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(getContext(), "You have clicked"+position, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onItemClick: ");
     }
 }

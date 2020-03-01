@@ -65,12 +65,7 @@ public class functions extends AppCompatActivity implements View.OnClickListener
         mCalculateButton = findViewById(R.id.buttonCalculate);
         mCalculateButton.setOnClickListener(this);
 
-        mMessageInputField = findViewById(R.id.fieldMessageInput);
-        mMessageOutputField = findViewById(R.id.fieldMessageOutput);
-        mAddMessageButton = findViewById(R.id.buttonAddMessage);
-        mSignInButton = findViewById(R.id.buttonSignIn);
-        mAddMessageButton.setOnClickListener(this);
-        mSignInButton.setOnClickListener(this);
+       findViewById(R.id.sendEmail).setOnClickListener(this);
 
         // [START initialize_functions_instance]
         mFunctions = FirebaseFunctions.getInstance();
@@ -87,11 +82,26 @@ public class functions extends AppCompatActivity implements View.OnClickListener
                     @Override
                     public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
                         Map<String, Object> result = (Map<String, Object>) task.getResult().getData();
+                        Log.d(TAG, "then: "+result.get("message"));
                         return (String)result.get("message");
                     }
                 });
     }
 
+    private Task<String> sendMail()
+    {
+        String email="shubham.bhakuni@somaiya.edu";
+        Map<String, Object> data = new HashMap<>();
+        data.put("email", email);
+        return mFunctions.getHttpsCallable("sendMail")
+                .call(data).continueWith(new Continuation<HttpsCallableResult, String>() {
+                    @Override
+                    public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+                        Map<String, Object> result = (Map<String, Object>) task.getResult().getData();
+                        return (String) result.get("operationResult");
+                    }
+                });
+    }
     // [START function_add_numbers]
     private Task<Integer> addNumbers(int a, int b) {
         // Create the arguments to the callable function, which are two integers
@@ -109,7 +119,9 @@ public class functions extends AppCompatActivity implements View.OnClickListener
                         // This continuation runs on either success or failure, but if the task
                         // has failed then getResult() will throw an Exception which will be
                         // propagated down.
+                        Log.d(TAG, "then: ");
                         Map<String, Object> result = (Map<String, Object>) task.getResult().getData();
+                        Log.d(TAG, "then: ");
                         return (Integer) result.get("operationResult");
                     }
                 });
@@ -247,8 +259,8 @@ public class functions extends AppCompatActivity implements View.OnClickListener
             case R.id.buttonCalculate:
                 onCalculateClicked();
                 break;
-            case R.id.buttonAddMessage:
-                onAddMessageClicked();
+            case R.id.sendEmail:
+                sendEmail();
                 break;
             case R.id.checkAdmin:
                 checkAdmin();
@@ -286,6 +298,7 @@ public class functions extends AppCompatActivity implements View.OnClickListener
             }
         });
 
+
     }
 
     private void MakeUserAdmin() {
@@ -316,8 +329,41 @@ public class functions extends AppCompatActivity implements View.OnClickListener
                 {
                     String end = task.getResult();
                     Toast.makeText(functions.this,end,Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
 
+    private void sendEmail()
+    {
+        Log.d(TAG, "sendEmail: started");
+        sendMail().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    Exception e = task.getException();
+                    if (e instanceof FirebaseFunctionsException) {
+                        FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
 
+                        // Function error code, will be INTERNAL if the failure
+                        // was not handled properly in the function call.
+                        FirebaseFunctionsException.Code code = ffe.getCode();
+
+                        // Arbitrary error details passed back from the function,
+                        // usually a Map<String, Object>.
+                        Object details = ffe.getDetails();
+                    }
+
+                    // [START_EXCLUDE]
+                    Log.d(TAG, "onComplete: failed"+e);
+                    return;
+                    // [END_EXCLUDE]
+                }
+                else
+                {
+                    String end = task.getResult();
+                    Log.d(TAG, "onComplete: passed?");
+                    Toast.makeText(functions.this,end,Toast.LENGTH_LONG).show();
                 }
             }
         });

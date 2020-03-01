@@ -259,7 +259,7 @@ public class Booking extends AppCompatActivity implements HorizontalAdapter.Item
             }
             else
             {
-                reserveHall();
+//                reserveHall();
             }
         } else if (i == R.id.b1) {
             multiChoiceDialog();
@@ -275,34 +275,34 @@ public class Booking extends AppCompatActivity implements HorizontalAdapter.Item
         else return true;
     }
 
-    private void reserveHall()
-    {
-
-
-        EditText text = findViewById(R.id.editText);
-        String purpose=text.getText().toString().trim();
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-//        databaseReference = FirebaseDatabase.getInstance().getReference("Reserved");
-//        String id = databaseReference.push().getKey();
+//    private void reserveHall()
+//    {
 //
-        FirebaseFirestore db;
-        ReservedHall reservedHall = new ReservedHall(currHall.getKey(), "Date Needed", txt1.getText().toString().trim(),
-                txt2.getText().toString().trim(), user.getUid(),purpose);
-//        databaseReference.child(id).setValue(reservedHall);
-
-
-          db=FirebaseFirestore.getInstance();
-//        CollectionReference notebookRef = db.collection("Reservation");
-//        notebookRef.document("In_Progress").collection("progress").add(reservedHall);
-
-         CollectionReference notebookRef = db.collection("Reservation");
-        notebookRef.document("In_Progress")
-                .collection("Upcoming").add(reservedHall);
-
-        Toast.makeText(this,"Done reservation",Toast.LENGTH_SHORT).show();
-
-        sendNotification();
-    }
+//
+//        EditText text = findViewById(R.id.editText);
+//        String purpose=text.getText().toString().trim();
+//        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+////        databaseReference = FirebaseDatabase.getInstance().getReference("Reserved");
+////        String id = databaseReference.push().getKey();
+////
+//        FirebaseFirestore db;
+//        ReservedHall reservedHall = new ReservedHall(currHall.getKey(), "Date Needed", txt1.getText().toString().trim(),
+//                txt2.getText().toString().trim(), user.getUid(),purpose);
+////        databaseReference.child(id).setValue(reservedHall);
+//
+//
+//          db=FirebaseFirestore.getInstance();
+////        CollectionReference notebookRef = db.collection("Reservation");
+////        notebookRef.document("In_Progress").collection("progress").add(reservedHall);
+//
+//         CollectionReference notebookRef = db.collection("Reservation");
+//        notebookRef.document("In_Progress")
+//                .collection("Upcoming").add(reservedHall);
+//
+//        Toast.makeText(this,"Done reservation",Toast.LENGTH_SHORT).show();
+//
+//        sendNotification();
+//    }
 
     public void sendNotification()
     {

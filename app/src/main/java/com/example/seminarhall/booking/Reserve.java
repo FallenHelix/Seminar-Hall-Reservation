@@ -8,11 +8,15 @@ import android.os.Bundle;
 
 import com.example.seminarhall.LogIn.SignIn;
 import com.example.seminarhall.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
@@ -26,14 +30,22 @@ import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFragmentInteractionListener{
     private static final String TAG = "Reserve Class";
     private SectionPageAdapter msectionPageAdapter;
     private ViewPager mViewPager;
-    public static String mString="Select Date First";
+    private static List<String> mString;
     private TextView head;
     private static Hall selectedHall;
+
+    public static List<String> getSelectedDates()
+    {
+        return mString;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +53,7 @@ public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFra
         setContentView(R.layout.activity_reserve);
 
         Log.d(TAG, "onCreate: ");
+        mString = new ArrayList<>();
         head = (TextView) findViewById(R.id.title);
         setHallName();
 
@@ -104,7 +117,7 @@ public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFra
     private void setUpViewPager()
     {
         Log.d(TAG, "setUpViewPager: ");
-        FragmentTime fragmentTime = FragmentTime.newInstance(mString);
+        FragmentTime fragmentTime = FragmentTime.newInstance("Select Date First");
         msectionPageAdapter.addFragment(new FragmentCalendar(), "Tab 1");
         msectionPageAdapter.addFragment(fragmentTime, "Tab 2");
         mViewPager.setAdapter(msectionPageAdapter);
@@ -112,9 +125,11 @@ public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFra
     }
 
     @Override
-    public void onFragmentInteraction(String sendBackText) {
-        mString=sendBackText;
-        msectionPageAdapter.notifyDataSetChanged();
+    public void onFragmentInteraction(List<String> sendBackText) {
+        if (sendBackText != null) {
+            mString=sendBackText;
+//        msectionPageAdapter.notifyDataSetChanged();
+        }
     }
 
 

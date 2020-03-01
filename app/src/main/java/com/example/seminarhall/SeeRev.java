@@ -63,7 +63,7 @@ public class SeeRev extends AppCompatActivity {
                     ReservedHall hall = documentSnapshot.toObject(ReservedHall.class);
                     hall.setReservationId(documentSnapshot.getId());
 
-                    String documentId = hall.reservationId;
+                    String documentId = hall.getReservationId();
                     String title = hall.getHallId();
                     String description = hall.getPurpose();
 

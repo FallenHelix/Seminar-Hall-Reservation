@@ -1,5 +1,6 @@
 package com.example.seminarhall.homePage;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,17 +9,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.seminarhall.Hall;
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
-import com.example.seminarhall.dataBase.HallListAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingViewHolder> {
 
     List<ReservedHall> rList;
+    public static itemClick mClickListener;
 
     public BookingAdapter(List<ReservedHall> list) {
         rList=list;
@@ -36,7 +35,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
 //        holder.hallName.setText(rList.get(position).getPurpose());
 //        holder.hallSize.setText(rList.get(position).getUserId());
         holder.hallName.setText(rList.get(position).getPurpose());
-        holder.hallSize.setText(rList.get(position).getDate());
+        holder.hallSize.setText(rList.get(position).getStartDate());
     }
 
     @Override
@@ -45,7 +44,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
 
     }
 
-    public static class BookingViewHolder extends RecyclerView.ViewHolder {
+    public static class BookingViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
         TextView hallName;
         TextView hallSize;
 
@@ -53,6 +52,26 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             super(itemView);
             hallName = (TextView) itemView.findViewById(R.id.textView);
             hallSize = (TextView) itemView.findViewById(R.id.textView2);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View v) {
+            if (mClickListener != null)
+                mClickListener.onItemClick(v, getAdapterPosition());
+            Log.d("Onclick", "Onclick view view");
+
+        }
+
+    }
+    public void setClickListener(itemClick itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+
+    public interface itemClick
+    {
+        void onItemClick(View view, int position);
+
     }
 }
