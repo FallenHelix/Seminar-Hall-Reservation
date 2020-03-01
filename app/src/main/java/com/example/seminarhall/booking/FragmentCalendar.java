@@ -46,11 +46,11 @@ CalendarPickerView.DateSelectableFilter{
     String SelectedDate;
     private OnFragmentInteractionListener mListener;
     List<Date> BookedDates;//dates that are needed to be highlighted, indicating a booked event;
+    List<String> BookedDatesText;
 
     private void getBookedDates() {
+        Log.d(TAG, "getBookedDates: ");
         Hall hall = Reserve.getHall();
-        Log.d(TAG, "getBookedDates: "+hall.getKey());
-        final List<String> array = new ArrayList<>();
 
         CollectionReference db = FirebaseFirestore.getInstance().collection("Main/Reservation/Active");
         db.whereEqualTo("hallId", hall.getKey())
@@ -61,12 +61,11 @@ CalendarPickerView.DateSelectableFilter{
 
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        Log.d(TAG, "onSuccess: "+queryDocumentSnapshots.size());
                         for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
                             Temp=x.getData();
-                            array.addAll((List<String>) Temp.get("days"));
+                            BookedDatesText.addAll((List<String>) Temp.get("days"));
                         }
-                        toDatesArray(array);
+                        toDatesArray(BookedDatesText);
                     }
                 });
     }
@@ -76,6 +75,7 @@ CalendarPickerView.DateSelectableFilter{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
+
         setViews(view);
         setUpCalendar();
 
@@ -84,9 +84,11 @@ CalendarPickerView.DateSelectableFilter{
 
     private void setViews(View view) {
         Log.d(TAG, "setViews: ");
+
         calendarPickerView = view.findViewById(R.id.calendar);
         calendarPickerView.setOnDateSelectedListener(this);
         BookedDates = new ArrayList<>();
+        BookedDatesText = new ArrayList<>();
         calendarPickerView.setDateSelectableFilter(this);
         getBookedDates();
     }
@@ -102,11 +104,11 @@ CalendarPickerView.DateSelectableFilter{
         typeface = ResourcesCompat.getFont(getActivity(), R.font.sf_display_medium);
         calendarPickerView.setDateTypeface(typeface);
         calendarPickerView.highlightDates(BookedDates);
-        Log.d(TAG, "setUpCalendar: "+BookedDates.size());
 
     }
 
     private void getDates() {
+        Log.d(TAG, "getDates: ");
         List<Date> dates = calendarPickerView.getSelectedDates();
         if (dates == null || dates.size() > 10) {
             Toast.makeText(getContext(), "Max Number of days: 10", Toast.LENGTH_SHORT).show();
@@ -115,11 +117,15 @@ CalendarPickerView.DateSelectableFilter{
         }
         List<String> selectedDates = new ArrayList<>();
         for (Date x : dates) {
-            if (BookedDates.contains(x)) {
-                setUpCalendar();
-            }
+//            
             String temp = DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(x);
+            if (BookedDatesText.contains(temp)) {
+                setUpCalendar();
+                Log.d(TAG, "getDates: clash");
+                return;
+            }
             selectedDates.add(temp);
+            Log.d(TAG, "getDates: "+dates.size());
         }
         mListener.onFragmentInteraction(selectedDates);
     }
@@ -139,13 +145,11 @@ CalendarPickerView.DateSelectableFilter{
             try {
                 t = sdf.parse(dates.get(i));
                 BookedDates.add(t);
-                Log.d(TAG, "Converted Date"+t);
             } catch (ParseException e) {
                 Log.d(TAG, "Exception In Dates");
                 return;
             }
         }
-        Log.d(TAG, "toDatesArray: ");
         calendarPickerView.highlightDates(BookedDates);
     }
 
@@ -180,9 +184,8 @@ CalendarPickerView.DateSelectableFilter{
 
     @Override
     public boolean isDateSelectable(Date date) {
-        if (BookedDates.contains(date)) {
-            return false;
-        }
+
+
         return true;
     }
 
