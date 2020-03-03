@@ -26,6 +26,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class FragmentActive extends Fragment {
@@ -78,6 +79,8 @@ public class FragmentActive extends Fragment {
                 for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
                     ReservedHall hall=query.toObject(ReservedHall.class);
                     hall.setReservationId(query.getId());
+//                    hall.setBookingDate(Calendar.getInstance().getTime());
+                    hall.setBookingDate(query.getTimestamp("bookingDate").toDate());
                     halls.add(hall);
                     Log.d(TAG, "onEvent: ");
                 }

@@ -14,18 +14,21 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name=".admin.Admin_Control"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Receipts.receipt"></activity>
+        <activity
+            android:name=".admin.Admin_Control"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".homePage.MyBookings"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".booking.Reserve"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".homePage.profile" />
-        <activity android:name=".admin.functions"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".admin.functions"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".SeeRev" />
         <activity android:name=".HCalendar" />
         <activity

@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.seminarhall.LogIn.SignIn;
 import com.example.seminarhall.MainActivity;
 import com.example.seminarhall.R;
+import com.example.seminarhall.Receipts.receipt;
 import com.example.seminarhall.admin.Admin_Control;
 import com.example.seminarhall.dataBase.addHall;
 import com.example.seminarhall.admin.functions;
@@ -140,7 +141,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         int i=v.getId();
 
         if (i == R.id.My_bookings) {
-            Intent intent = new Intent(UserDetails.this, MyBookings.class);
+            Intent intent = new Intent(UserDetails.this, receipt.class);
             startActivity(intent);
         } else if (i == R.id.See_data) {
             Intent intent = new Intent(UserDetails.this, hallList.class);

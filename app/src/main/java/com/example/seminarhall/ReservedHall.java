@@ -1,17 +1,23 @@
 package com.example.seminarhall;
 
+import android.util.Log;
+
 import com.google.firebase.firestore.Exclude;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 
 public class ReservedHall {
-    private String hallId,reservationId, StartDate,startTime,EndTime,userId,Purpose,EndDate;
-    private String BookingDate;
+    private String hallId,reservationId, startTime,EndTime,userId,Purpose;
+    private String StartDate,EndDate;
+    private Date BookingDate;
     int NoOfDays;
+    List<String> days;
 
     public int getNoOfDays() {
         return NoOfDays;
@@ -29,7 +35,6 @@ public class ReservedHall {
         this.days = days;
     }
 
-    List<String> days;
     ReservedHall()
     {
         //no args constructor
@@ -92,11 +97,13 @@ public class ReservedHall {
         Purpose = purpose;
     }
 
-    public String getBookingDate() {
+//    @Exclude
+    public Date getBookingDate() {
         return BookingDate;
     }
 
-    public void setBookingDate(String bookingDate) {
+//    @Exclude
+    public void setBookingDate(Date bookingDate) {
         BookingDate = bookingDate;
     }
 
@@ -108,6 +115,7 @@ public class ReservedHall {
         EndDate = endDate;
     }
 
+
     public ReservedHall(String hallId, List<String> Dates
             , String startTime, String endTime, String userId, String purpose) {
         this.hallId = hallId;
@@ -117,7 +125,7 @@ public class ReservedHall {
         this.startTime = startTime;
         this.userId = userId;
         this.Purpose = purpose;
-        this.BookingDate= DateFormat.getDateInstance(DateFormat.SHORT).format(Calendar.getInstance().getTime());
+        this.BookingDate= Calendar.getInstance().getTime();
         this.days=Dates;
         this.NoOfDays=Dates.size();
 

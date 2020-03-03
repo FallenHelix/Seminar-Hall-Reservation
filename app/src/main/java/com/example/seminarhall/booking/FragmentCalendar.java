@@ -45,6 +45,7 @@ CalendarPickerView.DateSelectableFilter{
     CalendarPickerView calendarPickerView;
     String SelectedDate;
     private OnFragmentInteractionListener mListener;
+
     List<Date> BookedDates;//dates that are needed to be highlighted, indicating a booked event;
     List<String> BookedDatesText;
 
@@ -154,6 +155,8 @@ CalendarPickerView.DateSelectableFilter{
     }
 
 
+
+
     @Override
     public void onDateUnselected(Date date) {
 
@@ -185,12 +188,15 @@ CalendarPickerView.DateSelectableFilter{
     @Override
     public boolean isDateSelectable(Date date) {
 
-
+       
         return true;
     }
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(List<String> sendBackText);
+
+
     }
+
 
 }
