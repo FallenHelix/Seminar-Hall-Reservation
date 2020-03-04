@@ -1,6 +1,7 @@
 package com.example.seminarhall.booking;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,17 +15,15 @@ import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
-import com.example.seminarhall.Booking;
 import com.example.seminarhall.Hall;
-import com.example.seminarhall.HorizontalAdapter;
 import com.example.seminarhall.R;
-import com.example.seminarhall.ReservedHall;
-import com.example.seminarhall.admin.Admin_Control;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.timessquare.CalendarCellDecorator;
+import com.squareup.timessquare.CalendarCellView;
 import com.squareup.timessquare.CalendarPickerView;
 
 import java.text.DateFormat;
@@ -32,9 +31,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -47,11 +44,14 @@ CalendarPickerView.DateSelectableFilter{
     private OnFragmentInteractionListener mListener;
 
     List<Date> BookedDates;//dates that are needed to be highlighted, indicating a booked event;
+    List<Date> BookedDates2;//dates that are needed to be highlighted, indicating a booked event;
+
     List<String> BookedDatesText;
 
     private void getBookedDates() {
         Log.d(TAG, "getBookedDates: ");
         Hall hall = Reserve.getHall();
+        BookedDates2 = new ArrayList<>();
 
         CollectionReference db = FirebaseFirestore.getInstance().collection("Main/Reservation/Active");
         db.whereEqualTo("hallId", hall.getKey())
@@ -59,16 +59,31 @@ CalendarPickerView.DateSelectableFilter{
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     private Map<String, Object> Temp;
+                    int days;
+                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
 
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
                             Temp=x.getData();
+//                            x.get
+                            days = (int)((long) x.get("noOfDays"));
+                            Log.d(TAG, "Days: "+days);
+                            if(days>1)
                             BookedDatesText.addAll((List<String>) Temp.get("days"));
+                            else if (days == 1) {
+                                try {
+                                    BookedDates2.add(sdf.parse((String)Temp.get("startDate")));
+                                } catch (ParseException e) {
+                                    Log.d(TAG, "Failure");
+                                }
+                            }
                         }
                         toDatesArray(BookedDatesText);
                     }
                 });
+        setCellDecorator();
+
     }
 
 
@@ -105,7 +120,28 @@ CalendarPickerView.DateSelectableFilter{
         typeface = ResourcesCompat.getFont(getActivity(), R.font.sf_display_medium);
         calendarPickerView.setDateTypeface(typeface);
         calendarPickerView.highlightDates(BookedDates);
+    }
 
+
+    private void setCellDecorator() {
+        CalendarCellDecorator decorator=new CalendarCellDecorator() {
+            @Override
+            public void decorate(CalendarCellView cellView, Date date) {
+                if(cellView.isSelectable())
+                if (BookedDates2.contains(date)) {
+                    cellView.setBackgroundColor(getResources().getColor(R.color.black));
+                    Log.d(TAG, "decorate: ");
+
+                }
+                if (cellView.isToday()) {
+                    cellView.setBackgroundColor(Color.BLUE);
+                }
+            }
+        };
+        List<CalendarCellDecorator> decoratorList = new ArrayList<>();
+        decoratorList.add(decorator);
+
+        calendarPickerView.setDecorators(decoratorList);
     }
 
     private void getDates() {
@@ -194,9 +230,6 @@ CalendarPickerView.DateSelectableFilter{
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(List<String> sendBackText);
-
-
     }
-
 
 }

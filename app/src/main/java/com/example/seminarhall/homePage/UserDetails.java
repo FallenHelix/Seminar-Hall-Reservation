@@ -20,7 +20,6 @@ import com.bumptech.glide.Glide;
 import com.example.seminarhall.LogIn.SignIn;
 import com.example.seminarhall.MainActivity;
 import com.example.seminarhall.R;
-import com.example.seminarhall.Receipts.receipt;
 import com.example.seminarhall.admin.Admin_Control;
 import com.example.seminarhall.dataBase.addHall;
 import com.example.seminarhall.admin.functions;
@@ -96,17 +95,21 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         name=mAuth.getCurrentUser().getDisplayName();
         email=mAuth.getCurrentUser().getEmail();
         String url=mAuth.getCurrentUser().getPhotoUrl().toString();
-        url=url.replace("s96-c", "s384-c");
+
         //get the text views
         View headerView = navigationView.getHeaderView(0);
         ImageView navPic= (ImageView) headerView.findViewById(R.id.Profile_photo);
         TextView nav_email = (TextView) headerView.findViewById(R.id.User_email);
         TextView nav_name = (TextView) headerView.findViewById(R.id.User_Name);
-
-        Glide.with(this).load(url).into(navPic);
-        nav_email.setText(email);
         nav_name.setText(name);
         navPic.setAdjustViewBounds(true);
+        if(url!=null)
+        {
+            url=url.replace("s96-c", "s384-c");
+            Glide.with(this).load(url).into(navPic);
+            nav_email.setText(email);
+
+        }
 
         return;
     }
@@ -141,7 +144,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         int i=v.getId();
 
         if (i == R.id.My_bookings) {
-            Intent intent = new Intent(UserDetails.this, receipt.class);
+            Intent intent = new Intent(UserDetails.this, MyBookings.class);
             startActivity(intent);
         } else if (i == R.id.See_data) {
             Intent intent = new Intent(UserDetails.this, hallList.class);

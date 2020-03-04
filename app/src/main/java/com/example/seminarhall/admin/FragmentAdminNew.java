@@ -16,6 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
 import com.example.seminarhall.homePage.BookingAdapter;
+import com.example.seminarhall.homePage.FragmentActive;
+import com.example.seminarhall.homePage.ReceiptAdapter;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -23,17 +27,21 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class FragmentAdminNew extends Fragment implements BookingAdapter.itemClick {
+public class FragmentAdminNew extends Fragment implements ReceiptAdapter.ItemClickListener {
     private static final String TAG = "FragmentAdminNew";
     RecyclerView recyclerView;
     List<ReservedHall> halls;
     FirebaseFirestore db;
     CollectionReference notebookRef;
-    BookingAdapter adapter;
+    ReceiptAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,9 +87,9 @@ public class FragmentAdminNew extends Fragment implements BookingAdapter.itemCli
                     hall.setReservationId(query.getId());
                     halls.add(hall);
                 }
-                adapter = new BookingAdapter(halls);
+                adapter = new ReceiptAdapter(halls);
                 recyclerView.setAdapter(adapter);
-                adapter.setClickListener(FragmentAdminNew.this);
+                adapter.setListener(FragmentAdminNew.this);
             }
         });
     }
@@ -90,5 +98,40 @@ public class FragmentAdminNew extends Fragment implements BookingAdapter.itemCli
     public void onItemClick(View view, int position) {
         Toast.makeText(getContext(), "You have clicked"+position, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onItemClick: ");
+        ReservedHall hall = halls.get(position);
+        String id = hall.getReservationId();
+        FirebaseFirestore db=FirebaseFirestore.getInstance();
+        db.collection("Main/Reservation/Active").document(id).delete().addOnSuccessListener(
+                new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "onSuccess: Deletion Successful");
+                    }
+                }
+        );
+        db.collection("Main/Reservation/Closed").document(id).set(hall).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: In Adding to Closed");
+            }
+        });
+        Map<String ,Object> map = new HashMap<>();
+        map.put("Status:", true);
+        map.put("Accepted Date", Calendar.getInstance().getTime());
+
+
+        db.collection("Main/Reservation/Closed").document(id).set(map, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: Merge");
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: Merge Failed");
+            }
+        });
+
     }
 }

@@ -29,13 +29,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class FragmentActive extends Fragment {
+public class FragmentActive extends Fragment implements ReceiptAdapter.ItemClickListener{
     private static final String TAG = "FragmentActive";
     RecyclerView recyclerView;
     List<ReservedHall> halls;
     FirebaseFirestore db;
     CollectionReference notebookRef;
-    BookingAdapter adapter;
+    ReceiptAdapter adapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -84,9 +84,15 @@ public class FragmentActive extends Fragment {
                     halls.add(hall);
                     Log.d(TAG, "onEvent: ");
                 }
-                adapter = new BookingAdapter(halls);
+                adapter = new ReceiptAdapter(halls);
                 recyclerView.setAdapter(adapter);
+                adapter.setListener(FragmentActive.this);
             }
         });
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(getContext(), "You have clicked" + position, Toast.LENGTH_SHORT).show();
     }
 }

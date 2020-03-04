@@ -1,4 +1,4 @@
-package com.example.seminarhall.Receipts;
+package com.example.seminarhall.homePage;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +22,10 @@ import java.util.List;
 public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptViewHolder> {
     private static final String TAG = "ReceiptAdapter";
 
-    List<ReservedHall> reserveList;
+    private List<ReservedHall> reserveList;
+    public   ItemClickListener itemClickListener;
 
-    ReceiptAdapter(List<ReservedHall> halls) {
+    public ReceiptAdapter(List<ReservedHall> halls) {
         reserveList=halls;
     }
 
@@ -66,8 +67,12 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
         return reserveList.size();
     }
 
+    public void setListener(ItemClickListener itemClickListener) {
+        this.itemClickListener=itemClickListener;
+    }
 
-    public static class ReceiptViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    public  class ReceiptViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
          TextView Hallid,sDate,eDate,purpose;
 
 
@@ -83,7 +88,12 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
 
         @Override
         public void onClick(View v) {
-
+            if (itemClickListener != null) {
+                itemClickListener.onItemClick(v,getAdapterPosition());
+            }
         }
+    }
+    public interface ItemClickListener {
+        void onItemClick(View view, int position);
     }
 }

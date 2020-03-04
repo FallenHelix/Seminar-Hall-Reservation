@@ -14,7 +14,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name=".Receipts.receipt"></activity>
+        <activity android:name=".LogIn.NewUser"></activity>
+        <activity android:name=".homePage.receipt" />
         <activity
             android:name=".admin.Admin_Control"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -29,7 +30,6 @@
         <activity
             android:name=".admin.functions"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SeeRev" />
         <activity android:name=".HCalendar" />
         <activity
             android:name=".LogIn.SignIn"
