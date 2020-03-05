@@ -83,7 +83,6 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
         progressbar = findViewById(R.id.progressBar);
         register.setText(Html.fromHtml(register.getText().toString()));
         resetPassword.setText(Html.fromHtml(resetPassword.getText().toString()));
-
         //hide progress bar
         progressbar.setVisibility(View.INVISIBLE);
     }

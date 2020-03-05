@@ -13,8 +13,9 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class profile extends AppCompatActivity {
 
-    TextView name,email,branch,roll,mob;
+    TextView name, email, branch, roll, mob;
     ImageView profile;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,17 +25,22 @@ public class profile extends AppCompatActivity {
     }
 
     private void putInfo() {
-        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         name.setText(user.getDisplayName());
         email.setText(user.getEmail());
         mob.setText(user.getPhoneNumber());
 //        mob.setText(user.getMetadata());
-        String url=user.getPhotoUrl().toString();
-        String u=url.replace("s96-c", "s340-c");
+        String url = null;
+        if (user.getPhotoUrl() != null) {
+            url = user.getPhotoUrl().toString();
+        }
+        if (url != null) {
+            url = url.replace("s96-c", "s340-c");
+            Glide.with(this).load(url)
+                    .into(profile);
+        }
 
-        Glide.with(this).load(u)
-                .into(profile);
 
 //        profile.setAdjustViewBounds(true);
     }
