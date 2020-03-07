@@ -14,10 +14,12 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name=".receipt"></activity>
+        <activity android:name=".booking_history"></activity>
+        <activity android:name=".home" />
+        <activity android:name=".receipt" />
         <activity
             android:name=".homePage.MyBookings"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".booking.Reserve"
             android:theme="@style/AppTheme.NoActionBar"
