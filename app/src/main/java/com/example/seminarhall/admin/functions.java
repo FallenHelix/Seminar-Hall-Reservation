@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.seminarhall.R;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -31,8 +32,7 @@ import java.util.Map;
 
 public class functions extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = "MainActivity";
-
+    private static final String TAG = "functions";
     private static final int RC_SIGN_IN = 9001;
 
     // Add number views
@@ -263,7 +263,9 @@ public class functions extends AppCompatActivity implements View.OnClickListener
                 sendEmail();
                 break;
             case R.id.checkAdmin:
-                checkAdmin();
+                Log.d(TAG, "onClick: ");
+                ck();
+                Log.d(TAG, "onClick: after ");
                 break;
             case R.id.MakeAdmin:
                 MakeUserAdmin();
@@ -273,7 +275,7 @@ public class functions extends AppCompatActivity implements View.OnClickListener
         }
     }
 
-    private void checkAdmin() {
+    private void ck() {
         Log.d("checkAdmin", "checkAdmin clicked");
 //        Toast.makeText(this, "Make CheckAdmin", Toast.LENGTH_SHORT).show();
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
@@ -293,10 +295,16 @@ public class functions extends AppCompatActivity implements View.OnClickListener
 //                String f = (String) result.getClaims().get("admin");
 
                 for (Map.Entry<String,Object> entry : map.entrySet())
-                    Log.d("Tags","Key = " + entry.getKey() +
+                    Log.d(TAG,"Key = " + entry.getKey() +
                             ", Value = " + entry.getValue());
             }
-        });
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: "+e);
+            }
+        })
+        ;
 
 
     }

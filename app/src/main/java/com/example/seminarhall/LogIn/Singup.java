@@ -20,6 +20,8 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 import com.example.seminarhall.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.AuthResult;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -62,18 +64,16 @@ public class Singup extends AppCompatActivity {
 
     private void initViews() {
         fullName = (EditText) findViewById(R.id.nameInput);
-        emailId = (EditText)findViewById(R.id.emailInput);
+        emailId = (EditText) findViewById(R.id.emailInput);
         mobileNumber = (EditText) findViewById(R.id.mobileInput);
-        password = (EditText)findViewById(R.id.passwordInput);
+        password = (EditText) findViewById(R.id.passwordInput);
         confirmPassword = (EditText) findViewById(R.id.confirmPasswordInput);
         signUpButton = (Button) findViewById(R.id.signUpButton);
 
 
-
-
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 checkValidation();
                 if (confirmInput()) {
                     register();
@@ -81,7 +81,7 @@ public class Singup extends AppCompatActivity {
 
             }
         });
-     }
+    }
 
     private void checkValidation() {
 
@@ -93,21 +93,18 @@ public class Singup extends AppCompatActivity {
         String getConfirmPassword = confirmPassword.getText().toString();
 
 
-        if(getFullName.length()==0)
-        fullName.setError("Error Here");
+        if (getFullName.length() == 0)
+            fullName.setError("Error Here");
 
 
-         else if (getFullName.equals("") || getFullName.length() == 0
+        else if (getFullName.equals("") || getFullName.length() == 0
                 || getEmailId.equals("") || getEmailId.length() == 0
                 || getMobileNumber.equals("") || getMobileNumber.length() == 0
                 || getPassword.equals("") || getPassword.length() == 0
                 || getConfirmPassword.equals("")
-                || getConfirmPassword.length() == 0)
-
-        {
+                || getConfirmPassword.length() == 0) {
             fullName.setError("Error 2");
-        }
-        else
+        } else
             fullName.setError(null);
     }
 
@@ -121,14 +118,17 @@ public class Singup extends AppCompatActivity {
         } else if (!Patterns.EMAIL_ADDRESS.matcher(emailInput).matches()) {
             emailId.setError("Please enter a valid email address");
             return false;
-        } else if (!emailInput.substring(emailInput.indexOf("@") + 1).equals("somaiya.edu")) {
-            emailId.setError("Only Somaiya email address Allowed");
-            return false;
-        } else {
+        }
+//        else if (!emailInput.substring(emailInput.indexOf("@") + 1).equals("somaiya.edu")) {
+//            emailId.setError("Only Somaiya email address Allowed");
+//            return false;
+//        }
+        else {
             emailId.setError(null);
             return true;
         }
     }
+
     private boolean validateUsername() {
         String usernameInput = fullName.getText().toString().trim();
 
@@ -146,7 +146,7 @@ public class Singup extends AppCompatActivity {
 
     private boolean validatePassword() {
         String passwordInput = password.getText().toString().trim();
-        String cpassword=confirmPassword.getText().toString().trim();
+        String cpassword = confirmPassword.getText().toString().trim();
 
         if (passwordInput.isEmpty()) {
             password.setError("Field can't be empty");
@@ -166,8 +166,7 @@ public class Singup extends AppCompatActivity {
     public boolean confirmInput() {
         if (!validateEmail() | !validateUsername() | !validatePassword()) {
             return false;
-        }
-        else
+        } else
             return true;
 
 
@@ -182,54 +181,71 @@ public class Singup extends AppCompatActivity {
     }
 
     private void register() {
-        String email=emailId.getText().toString().trim();
-        String passwordInput=password.getText().toString().trim();
+        String email = emailId.getText().toString().trim();
+        String passwordInput = password.getText().toString().trim();
 
-        final Map<String, String> map = new HashMap<String,String>();
-        map.put("email", email);
-        map.put("Name", fullName.getText().toString().trim());
-        map.put("mobile", mobileNumber.getText().toString().trim());
-
-        mAuth.createUserWithEmailAndPassword(email, passwordInput).addOnCompleteListener(this,new OnCompleteListener<AuthResult>() {
-
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task)
-                    {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(),
-                                    "Registration successful!, Please verify account",
-                                    Toast.LENGTH_SHORT).show();
+        final Map<String, Object> map = new HashMap<>();
 
 
-                            // hide the progress bar
+        mAuth.createUserWithEmailAndPassword(email, passwordInput).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
 
-                            // if the user created intent to login activity
-                            Intent intent= new Intent(Singup.this,
-                                    NewUser.class);
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(),
+                            "Registration successful!, Please verify account",
+                            Toast.LENGTH_SHORT).show();
 
-                            intent.putExtra("HashMapK", (Serializable) map);
-                            intent.putExtra("user", task.getResult().getUser());
-                            startActivity(intent);
+
+                    // hide the progress bar
+
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(fullName.getText().toString().trim())
+                            .build();
+
+                    FirebaseUser user=task.getResult().getUser();
+                    user.updateProfile(profileUpdates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                    }
+                                    else {
+                                        Toast.makeText(Singup.this, "An Error Occured!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                    CollectionReference ref = FirebaseFirestore.getInstance().collection("Main/Users/Students");
+                    map.put("newUser",true);
+                    map.put("Name", fullName.getText().toString().trim());
+                    map.put("userId", user.getUid());
+
+                    ref.document(user.getUid()).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
                         }
-                        else {
+                    });
+                    // if the user created intent to login activity
+                    Intent intent = new Intent(Singup.this,
+                            SignIn.class);
+                    startActivity(intent);
+                } else {
 
-                            // Registration failed
-                            Toast.makeText(
-                                    getApplicationContext(),
-                                    "Registration failed!!"
-                                            + " Please try again later",
-                                    Toast.LENGTH_LONG)
-                                    .show();
+                    // Registration failed
+                    Toast.makeText(
+                            getApplicationContext(),
+                            "Registration failed!!"
+                                    + " Please try again later",
+                            Toast.LENGTH_LONG)
+                            .show();
 
-                            // hide the progress bar
-                        }
-                    }
+                    // hide the progress bar
+                }
+            }
 
 
         });
     }
-
-
 
 
 }
