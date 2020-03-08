@@ -52,56 +52,6 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener {
 
     }
 
-    private Task<String> newUser(FirebaseUser user) {
-        Map<String, Object> data = new HashMap<>();
-        data.put("email", user.getEmail());
-        return mFunctions.getHttpsCallable("makeAdmin")
-                .call(data)
-                .continueWith(new Continuation<HttpsCallableResult, String>() {
-                    @Override
-                    public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
-                        Map<String, Object> result = (Map<String, Object>) task.getResult().getData();
-                        Log.d(TAG, "then: "+result.get("message"));
-                        return (String)result.get("message");
-                    }
-                });
-    }
-
-    public void afterInsert()
-    {
-        Log.d(TAG, "afterInsert: ");
-        newUser(FirebaseAuth.getInstance().getCurrentUser()).addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-                if (!task.isSuccessful()) {
-                    Exception e = task.getException();
-                    if (e instanceof FirebaseFunctionsException) {
-                        FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
-
-                        // Function error code, will be INTERNAL if the failure
-                        // was not handled properly in the function call.
-                        FirebaseFunctionsException.Code code = ffe.getCode();
-
-                        // Arbitrary error details passed back from the function,
-                        // usually a Map<String, Object>.
-                        Object details = ffe.getDetails();
-                    }
-
-                    // [START_EXCLUDE]
-                    Log.w(TAG, "Make Admin Failed", e);
-                    return;
-                    // [END_EXCLUDE]
-                }
-                else
-                {
-                    String end = task.getResult();
-                    Toast.makeText(NewUser.this,end,Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(NewUser.this, MainActivity.class);
-                    startActivity(intent);
-                }
-            }
-        });
-    }
 
     private void setUpViews() {
         roll = (EditText) findViewById(R.id.Roll);
@@ -158,7 +108,9 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener {
         ref.document(user.getUid()).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                afterInsert();
+                Log.d(TAG, "onSuccess: ");
+                Intent intent = new Intent(NewUser.this, UserDetails.class);
+                startActivity(intent);
 
             }
         }).addOnFailureListener(new OnFailureListener() {

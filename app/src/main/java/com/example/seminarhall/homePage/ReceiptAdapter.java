@@ -39,8 +39,8 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
     @Override
     public void onBindViewHolder(@NonNull ReceiptViewHolder holder, int position) {
         holder.Hallid.setText(getHallName(reserveList.get(position).getHallId()));
-        holder.sDate.append(reserveList.get(position).getStartDate());
-        holder.eDate.append(reserveList.get(position).getEndDate());
+        holder.sDate.append(reserveList.get(position).getStartDate().toString());
+        holder.eDate.append(reserveList.get(position).getEndDate().toString());
         holder.purpose.append(reserveList.get(position).getPurpose());
 
     }

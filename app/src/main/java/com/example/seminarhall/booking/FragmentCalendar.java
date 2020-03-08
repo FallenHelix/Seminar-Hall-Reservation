@@ -60,7 +60,7 @@ CalendarPickerView.DateSelectableFilter{
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     private Map<String, Object> Temp;
                     int days;
-                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
 
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -176,7 +176,7 @@ CalendarPickerView.DateSelectableFilter{
 
     private void toDatesArray(List<String> dates) {
         Log.d(TAG, "toDatesArray: ");
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
         for (int i = 0; i < dates.size(); i++) {
             Date t = null;
             try {
@@ -186,6 +186,9 @@ CalendarPickerView.DateSelectableFilter{
                 Log.d(TAG, "Exception In Dates");
                 return;
             }
+        }
+        for (Date x : BookedDates) {
+            Log.d(TAG, x.toString());
         }
         calendarPickerView.highlightDates(BookedDates);
     }

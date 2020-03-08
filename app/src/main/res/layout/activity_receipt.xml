@@ -28,19 +28,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.274"
-        app:srcCompat="@drawable/indexbox" />
+        app:srcCompat="@drawable/indexbox" >
+    </ImageView>
 
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <TextView
+        android:text="Purpose"
+        android:textAlignment="center"
+        android:paddingTop="20dp"
+        android:id="@+id/TextViewPurpose"
+        android:layout_width="287dp"
+        android:layout_height="117dp"
+        android:background="@drawable/purposebox"
         android:layout_marginBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/purposebox" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
     <TextView
+        android:textColor="@color/white"
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -53,7 +58,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/TextBookingId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="196dp"
@@ -65,7 +70,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/TextRoom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="196dp"
@@ -77,7 +82,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView10"
+        android:textColor="@color/black"
+        android:fontFamily="@font/sf_display_medium"
+        android:id="@+id/TextStartDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start Date:"
@@ -89,7 +96,9 @@
         app:layout_constraintVertical_bias="0.401" />
 
     <TextView
-        android:id="@+id/textView11"
+        android:textColor="@color/black"
+        android:fontFamily="@font/sf_display_medium"
+        android:id="@+id/TextStartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="284dp"
@@ -102,7 +111,9 @@
         app:layout_constraintVertical_bias="0.004" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:textColor="@color/black"
+        android:fontFamily="@font/sf_display_medium"
+        android:id="@+id/TextEndDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="End Date:"
@@ -114,7 +125,9 @@
         app:layout_constraintVertical_bias="0.47" />
 
     <TextView
-        android:id="@+id/textView14"
+        android:textColor="@color/black"
+        android:fontFamily="@font/sf_display_medium"
+        android:id="@+id/TextEndTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="End time:"
@@ -126,7 +139,9 @@
         app:layout_constraintVertical_bias="0.47" />
 
     <TextView
-        android:id="@+id/textView15"
+        android:textColor="@color/black"
+        android:fontFamily="@font/sf_display_medium"
+        android:id="@+id/TextDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Duration:"
@@ -138,6 +153,8 @@
         app:layout_constraintVertical_bias="0.547" />
 
     <TextView
+        android:textColor="@color/black"
+        android:fontFamily="@font/sf_display_medium"
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

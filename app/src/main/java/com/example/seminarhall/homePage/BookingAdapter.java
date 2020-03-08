@@ -35,7 +35,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
 //        holder.hallName.setText(rList.get(position).getPurpose());
 //        holder.hallSize.setText(rList.get(position).getUserId());
         holder.hallName.setText(rList.get(position).getPurpose());
-        holder.hallSize.setText(rList.get(position).getStartDate());
+        holder.hallSize.setText(rList.get(position).getStartDate().toString());
     }
 
     @Override

@@ -43,8 +43,8 @@ public class Admin_Control extends AppCompatActivity {
     }
     private void setUpViewPager() {
         Log.d(TAG, "setUpViewPager: ");
-        adapter.addFragment(new FragmentAdminNew(), "Tab 1");
-        adapter.addFragment(new FragmentClosed(), "Tab 2");
+        adapter.addFragment(new FragmentAdminNew(), "Admin Active");
+        adapter.addFragment(new FragmentAdminClosed(), "Admin Closed");
         mViewPager.setAdapter(adapter);
     }
 

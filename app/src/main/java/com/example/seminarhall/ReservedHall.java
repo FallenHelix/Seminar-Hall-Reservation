@@ -14,7 +14,7 @@ import java.util.List;
 
 public class ReservedHall {
     private String hallId,reservationId, startTime,EndTime,userId,Purpose;
-    private String StartDate,EndDate;
+    private Date StartDate,EndDate;
     private Date BookingDate;
     int NoOfDays;
     List<String> days;
@@ -57,11 +57,11 @@ public class ReservedHall {
         this.reservationId = reservationId;
     }
 
-    public String getStartDate() {
+    public Date getStartDate() {
         return StartDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Date startDate) {
         this.StartDate = startDate;
     }
 
@@ -107,11 +107,11 @@ public class ReservedHall {
         BookingDate = bookingDate;
     }
 
-    public String getEndDate() {
+    public Date getEndDate() {
         return EndDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Date endDate) {
         EndDate = endDate;
     }
 
@@ -119,8 +119,8 @@ public class ReservedHall {
     public ReservedHall(String hallId, List<String> Dates
             , String startTime, String endTime, String userId, String purpose) {
         this.hallId = hallId;
-        this.StartDate = Dates.get(0);
-        this.EndDate=Dates.get(Dates.size()-1);
+        this.StartDate = toDate(Dates.get(0));
+        this.EndDate=toDate(Dates.get(Dates.size()-1));
         this.EndTime = endTime;
         this.startTime = startTime;
         this.userId = userId;
@@ -129,5 +129,17 @@ public class ReservedHall {
         this.days=Dates;
         this.NoOfDays=Dates.size();
 
+    }
+    @Exclude
+    private Date toDate(String date)
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+        try {
+            Date t=sdf.parse(date);
+            return t;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

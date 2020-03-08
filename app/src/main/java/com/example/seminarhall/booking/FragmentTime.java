@@ -161,7 +161,6 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
             multiChoiceDialog();
         }
         else if (i == R.id.button4) {
-            getClashingDates();
 
             if(!mainCheck())
             {
@@ -184,6 +183,10 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
         ReservedHall hall = new ReservedHall(currHall.getKey(), SelectedDates, startTime.getText().toString().trim(),
                 endTime.getText().toString().trim(), user.getUid(), purpose.getText().toString().trim());
 
+        if (hall.getStartDate() == null||hall.getEndDate()==null) {
+            Toast.makeText(getContext(), "Error Occurred Try again later", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         db=FirebaseFirestore.getInstance();
         CollectionReference ref = db.collection("Main/Reservation/Active");
@@ -283,26 +286,5 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
         mDialog.show();
     }
 
-    private boolean getClashingDates()
-    {
-        String hallId=Reserve.getHall().getKey();
-        CollectionReference db = FirebaseFirestore.getInstance().collection("Main/Reservation/Active");
-        db.whereArrayContainsAny("days", SelectedDates).get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
-                            ReservedHall hall = x.toObject(ReservedHall.class);
-                            List<String> t= (List<String>) x.getData().get("days");
-//                            Log.d(TAG, "onSuccess: " + hall.getStartDate());
-//                            Log.d(TAG, "EndDate: "+hall.getEndDate());
-                            Log.d(TAG, "Size of t: "+t.size());
-                            for (String temp : t) {
-                                Log.d(TAG, "onSuccess: "+temp);
-                            }
-                        }
-                    }
-                });
-        return true;
-    }
+
 }
