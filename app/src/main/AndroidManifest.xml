@@ -14,9 +14,18 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
+<!-- <<<<<<< 7march -->
         <activity android:name=".booking_history"></activity>
         <activity android:name=".home" />
         <activity android:name=".receipt" />
+<!--   7march -->
+
+        <activity android:name=".LogIn.NewUser"></activity>
+        <activity android:name=".homePage.receipt" />
+        <activity
+            android:name=".admin.Admin_Control"
+            android:theme="@style/AppTheme.NoActionBar" />
+<!-- >>>>>>> master -->
         <activity
             android:name=".homePage.MyBookings"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -25,8 +34,9 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".homePage.profile" />
-        <activity android:name=".functions" />
-        <activity android:name=".SeeRev" />
+        <activity
+            android:name=".admin.functions"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".HCalendar" />
         <activity
             android:name=".LogIn.SignIn"

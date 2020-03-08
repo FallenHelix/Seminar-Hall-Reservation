@@ -21,18 +21,27 @@ import androidx.fragment.app.Fragment;
 import com.example.seminarhall.Hall;
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.squareup.timessquare.CalendarPickerView;
 
 import org.w3c.dom.Text;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 
 public class FragmentTime extends Fragment implements View.OnClickListener,TimePickerDialog.OnTimeSetListener {
@@ -48,6 +57,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
     String[] listItems;
     boolean[] checkItems;
     ArrayList<Integer> mUserItems = new ArrayList<>();
+    private List<String> SelectedDates;
 
 
     //Fragment listener
@@ -71,7 +81,9 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate: ");
-        
+        Calendar c=Calendar.getInstance();
+        String d = DateFormat.getDateInstance(DateFormat.SHORT).format(c.getTime());
+        Log.d(TAG, "onCreate: "+d);
     }
 
     private void setUpViews(View view) {
@@ -110,8 +122,9 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
     public void onResume() {
         super.onResume();
         Log.d(TAG, "onResume:");
-        String mText=Reserve.mString;
-        updateDate(mText);
+        SelectedDates = Reserve.getSelectedDates();
+        if(SelectedDates.size()!=0) //for empty case
+        updateDate(SelectedDates.get(0));
     }
 
     private void updateDate(String mText) {
@@ -148,6 +161,8 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
             multiChoiceDialog();
         }
         else if (i == R.id.button4) {
+            getClashingDates();
+
             if(!mainCheck())
             {
                 Toast.makeText(getContext(), "Pleasea Enter Purpose!!", Toast.LENGTH_SHORT).show();
@@ -160,39 +175,43 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
 
     }
 
-    private void reserveHall()
+    private void reserveHall() //adding to database
     {
 
         FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
-//        databaseReference = FirebaseDatabase.getInstance().getReference("Reserved");
-//        String id = databaseReference.push().getKey();
-//
         FirebaseFirestore db;
         Hall currHall=Reserve.getHall();
-        ReservedHall reservedHall = new ReservedHall(currHall.getKey(), selectedDate.getText().toString().trim(), startTime.getText().toString().trim(),
-                endTime.getText().toString().trim(), user.getUid(),purpose.getText().toString().trim());
-//        databaseReference.child(id).setValue(reservedHall);
+        ReservedHall hall = new ReservedHall(currHall.getKey(), SelectedDates, startTime.getText().toString().trim(),
+                endTime.getText().toString().trim(), user.getUid(), purpose.getText().toString().trim());
 
 
         db=FirebaseFirestore.getInstance();
-//        CollectionReference notebookRef = db.collection("Reservation");
-//        notebookRef.document("In_Progress").collection("progress").add(reservedHall);
-
-        CollectionReference notebookRef = db.collection("Reservation");
-        notebookRef.document("In_Progress")
-                .collection("Upcoming").add(reservedHall);
-
-
-        Toast.makeText(getActivity(),"Done reservation",Toast.LENGTH_SHORT).show();
+        CollectionReference ref = db.collection("Main/Reservation/Active");
+        ref.add(hall).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Toast.makeText(getContext(),"New request for Reservation has been created wih id: \n"+
+                        documentReference.getId(),Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(),"Exception Occurred",Toast.LENGTH_LONG).show();
+                Log.d(TAG, "onFailure: " + e);
+            }
+        });
     }
+
+
     private boolean mainCheck()
     {
 
-        if (itemText.getText().toString().trim().length() == 0) {
+        if (purpose.getText().toString().trim().length() == 0) {
             return false;
         }
         else return true;
     }
+
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         Calendar c = Calendar.getInstance();
@@ -262,7 +281,28 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
         });
         AlertDialog mDialog = builder.create();
         mDialog.show();
-
     }
 
+    private boolean getClashingDates()
+    {
+        String hallId=Reserve.getHall().getKey();
+        CollectionReference db = FirebaseFirestore.getInstance().collection("Main/Reservation/Active");
+        db.whereArrayContainsAny("days", SelectedDates).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
+                            ReservedHall hall = x.toObject(ReservedHall.class);
+                            List<String> t= (List<String>) x.getData().get("days");
+//                            Log.d(TAG, "onSuccess: " + hall.getStartDate());
+//                            Log.d(TAG, "EndDate: "+hall.getEndDate());
+                            Log.d(TAG, "Size of t: "+t.size());
+                            for (String temp : t) {
+                                Log.d(TAG, "onSuccess: "+temp);
+                            }
+                        }
+                    }
+                });
+        return true;
+    }
 }

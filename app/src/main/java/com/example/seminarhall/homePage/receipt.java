@@ -2,20 +2,15 @@ package com.example.seminarhall.homePage;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
-import com.example.seminarhall.booking.FragmentFinal;
+import com.example.seminarhall.homePage.ReceiptAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -27,30 +22,34 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentClosed extends Fragment implements ReceiptAdapter.ItemClickListener {
-    private static final String TAG = "FragmentClosed";
+public class receipt extends AppCompatActivity {
+    private static final String TAG = "receipt";
     RecyclerView recyclerView;
-    List<ReservedHall> halls;
-    CollectionReference notebookRef;
     ReceiptAdapter adapter;
-
-    @Nullable
+    List<ReservedHall> halls;
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_receipt);
+        setViews();
+    }
+
+    private void setViews() {
+        recyclerView = (RecyclerView) findViewById(R.id.receipt_rec_view);
         halls = new ArrayList<>();
-        Log.d(TAG, "onCreateView: ");
-        View view = inflater.inflate(R.layout.fragment_active, container, false);
-        setUpViews(view);
-        return view;
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
     }
 
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart: ");
-        String id= FirebaseAuth.getInstance().getCurrentUser().getUid();
-        notebookRef = FirebaseFirestore.getInstance().collection("Main/Reservation/Closed");
-        notebookRef.whereEqualTo("userId",id).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        CollectionReference col = FirebaseFirestore.getInstance().collection("/Main/Reservation/Active");
+        String id=FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        col.whereEqualTo("userId",id)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 halls.clear();
@@ -62,27 +61,13 @@ public class FragmentClosed extends Fragment implements ReceiptAdapter.ItemClick
                     for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
                         ReservedHall hall=query.toObject(ReservedHall.class);
                         hall.setReservationId(query.getId());
-//                    hall.setBookingDate(Calendar.getInstance().getTime());
-                        hall.setBookingDate(query.getTimestamp("bookingDate").toDate());
                         halls.add(hall);
                         Log.d(TAG, "onEvent: ");
                     }
                 adapter = new ReceiptAdapter(halls);
                 recyclerView.setAdapter(adapter);
-                adapter.setListener(FragmentClosed.this);
             }
         });
-
-    }
-
-    private void setUpViews(View v) {
-        recyclerView=(RecyclerView)v.findViewById(R.id.Active_recView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        Toast.makeText(getContext(), "You have clicked"+position, Toast.LENGTH_SHORT).show();
 
     }
 }

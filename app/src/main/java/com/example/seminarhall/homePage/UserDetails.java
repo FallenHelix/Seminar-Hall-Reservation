@@ -17,16 +17,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.seminarhall.LogIn.NewUser;
 import com.example.seminarhall.LogIn.SignIn;
 import com.example.seminarhall.MainActivity;
 import com.example.seminarhall.R;
+import com.example.seminarhall.admin.Admin_Control;
 import com.example.seminarhall.dataBase.addHall;
-import com.example.seminarhall.functions;
+import com.example.seminarhall.admin.functions;
 import com.example.seminarhall.dataBase.hallList;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
@@ -63,8 +66,29 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        CheckForNewUser();
     }
 
+    private void CheckForNewUser() {
+        Log.d(TAG, "CheckForNewUser: ");
+        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        user.getIdToken(false).addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
+            @Override
+            public void onSuccess(GetTokenResult result) {
+                Map<String, Object> map=result.getClaims();
+                Log.d(TAG, "onSuccess: ");
+
+                for (Map.Entry<String,Object> entry : map.entrySet())
+                    Log.d("Tags","Key = " + entry.getKey() +
+                            ", Value = " + entry.getValue());
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: ");
+            }
+        });
+    }
 
 
     private void setView() {
@@ -93,18 +117,26 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         String name,email;
         name=mAuth.getCurrentUser().getDisplayName();
         email=mAuth.getCurrentUser().getEmail();
-        String url=mAuth.getCurrentUser().getPhotoUrl().toString();
-        url=url.replace("s96-c", "s384-c");
+        String url=null;
+        if(mAuth.getCurrentUser().getPhotoUrl()!=null)
+        {
+            url=mAuth.getCurrentUser().getPhotoUrl().toString();
+        }
+
         //get the text views
         View headerView = navigationView.getHeaderView(0);
         ImageView navPic= (ImageView) headerView.findViewById(R.id.Profile_photo);
         TextView nav_email = (TextView) headerView.findViewById(R.id.User_email);
         TextView nav_name = (TextView) headerView.findViewById(R.id.User_Name);
-
-        Glide.with(this).load(url).into(navPic);
-        nav_email.setText(email);
         nav_name.setText(name);
         navPic.setAdjustViewBounds(true);
+        if(url!=null)
+        {
+            url=url.replace("s96-c", "s384-c");
+            Glide.with(this).load(url).into(navPic);
+            nav_email.setText(email);
+
+        }
 
         return;
     }
@@ -152,6 +184,12 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUi(FirebaseAuth.getInstance().getCurrentUser());
+    }
+
     private void updateUi(FirebaseUser user) {
         if (user != null) {
             //String name=user.getDisplayName();
@@ -184,11 +222,21 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
            @Override
            public void onSuccess(GetTokenResult getTokenResult) {
                Map<String, Object> map=getTokenResult.getClaims();
+               for (Map.Entry<String,Object> entry : map.entrySet())
+                   Log.d(TAG,"Key = " + entry.getKey() +
+                           ", Value = " + entry.getValue());
 
-               boolean isAdmin=map.get("admin")!=null?(boolean)map.get("admin"):false;
+               boolean isAdmin= map.get("admin") != null && (boolean) map.get("admin");
+               boolean newUser= map.get("newUser") != null && (boolean) map.get("newUser");
+
                if (isAdmin) {
                    showAdminUI();
-               } else {
+               }
+               else if (newUser) {
+                   Intent intent = new Intent(UserDetails.this, NewUser.class);
+                   startActivity(intent);
+               }
+               else {
                    showRegularUI();
                }
            }
@@ -214,6 +262,9 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             startActivity(intent);
         } else if (i == R.id.Add_admin) {
             Intent intent = new Intent(UserDetails.this, functions.class);
+            startActivity(intent);
+        } else if (i == R.id.View_Request) {
+            Intent intent = new Intent(UserDetails.this, Admin_Control.class);
             startActivity(intent);
         }
         return true;

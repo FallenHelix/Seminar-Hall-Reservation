@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".functions">
+    tools:context=".admin.functions">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -113,69 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardBackgroundColor="@android:color/white"
-            app:cardUseCompatPadding="true">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="16dp">
-
-                <TextView
-                    android:id="@+id/header_add_message"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="heading_add_message"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
-
-
-                <LinearLayout
-                    android:id="@+id/form_add_message"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/header_add_message"
-                    android:orientation="vertical">
-
-                    <EditText
-                        android:id="@+id/fieldMessageInput"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="input"
-                        tools:text="some bad message" />
-
-                    <EditText
-                        android:id="@+id/fieldMessageOutput"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:hint="output"
-                        tools:text="some clean message" />
-
-                </LinearLayout>
-
-                <Button
-                    android:id="@+id/buttonSignIn"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/buttonAddMessage"
-                    android:layout_toLeftOf="@+id/buttonAddMessage"
-                    android:layout_toStartOf="@+id/buttonAddMessage"
-                    android:text="sign_in" />
-
-                <Button
-                    android:id="@+id/buttonAddMessage"
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@+id/form_add_message"
-                    android:text="add_message" />
-
-            </RelativeLayout>
-
-        </androidx.cardview.widget.CardView>
+            app:cardUseCompatPadding="true"/>
 
         <Button
             android:id="@+id/MakeAdmin"
@@ -188,6 +126,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Check user for admin" />
+
+        <Button
+            android:id="@+id/sendEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send Eamil" />
+
 
 
     </LinearLayout>

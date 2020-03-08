@@ -13,13 +13,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hapticFeedbackEnabled="true"
+        android:background="@drawable/edit_text"
         android:text="Book!"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.436"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.909" />
+        app:layout_constraintVertical_bias="0.881" />
 
     <TextView
         android:id="@+id/Date"
@@ -44,6 +45,7 @@
         android:background="?attr/selectableItemBackground"
         android:ems="10"
         android:fontFamily="@font/sf_display_medium"
+        android:textColor="@color/black"
         android:hint="Start Time"
         android:inputType="time"
         android:textAlignment="center"
@@ -62,6 +64,7 @@
         android:ems="10"
         android:gravity="start|top"
         android:hint="Purpose"
+        android:textColor="@color/black"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -72,6 +75,7 @@
     <TextView
         android:id="@+id/EndTime"
         android:layout_width="163dp"
+        android:textColor="@color/black"
         android:layout_height="43dp"
         android:ems="10"
         android:fontFamily="@font/sf_display_medium"
