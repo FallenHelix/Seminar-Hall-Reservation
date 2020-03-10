@@ -1,9 +1,16 @@
 package com.example.seminarhall.homePage;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,32 +23,57 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
 import java.util.List;
 
 
 public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptViewHolder> {
     private static final String TAG = "ReceiptAdapter";
+    Context context;
+    Drawable accepted ;
+    Drawable error ;
+    Drawable waiting ;
+
 
     private List<ReservedHall> reserveList;
-    public   ItemClickListener itemClickListener;
+    public ItemClickListener itemClickListener;
+    private List<Integer> status;
 
-    public ReceiptAdapter(List<ReservedHall> halls) {
-        reserveList=halls;
+    public ReceiptAdapter(Context context,List<ReservedHall> halls, List<Integer> stats) {
+        reserveList = halls;
+        status = stats;
+        this.context=context;
+        setUpDrawable();
+    }
+
+    private void setUpDrawable() {
+        accepted = context.getDrawable(R.drawable.ic_checkbox);
+        error = context.getDrawable(R.drawable.error);
+        waiting = context.getDrawable(R.drawable.ic_bug);
     }
 
     @NonNull
     @Override
     public ReceiptViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.receipt_list, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.receipt_layout, parent, false);
         return new ReceiptAdapter.ReceiptViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ReceiptViewHolder holder, int position) {
-        holder.Hallid.setText(getHallName(reserveList.get(position).getHallId()));
-        holder.sDate.append(reserveList.get(position).getStartDate().toString());
-        holder.eDate.append(reserveList.get(position).getEndDate().toString());
-        holder.purpose.append(reserveList.get(position).getPurpose());
+        holder.Hallid.append(getHallName(reserveList.get(position).getHallId()));
+        Log.d(TAG, "onBindViewHolder: ");
+        if(holder.image!=null)
+        if (status.get(position) == 0) {
+            holder.image.setImageDrawable(waiting);
+        } else if (status.get(position) == 1) {
+            holder.image.setImageDrawable(accepted);
+        } else if (status.get(position) == 2) {
+            holder.image.setImageDrawable(error);
+        }
+        holder.sDate.append(reserveList.get(position).getStartDateText());
+        holder.eDate.append(reserveList.get(position).getEndDateText());
+        holder.sTime.append(reserveList.get(position).getPurpose());
 
     }
 
@@ -54,6 +86,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
 //                        Log.d(TAG, "onDataChange: "+dataSnapshot.getValue().toString());
 
                     }
+
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -68,31 +101,31 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
     }
 
     public void setListener(ItemClickListener itemClickListener) {
-        this.itemClickListener=itemClickListener;
+        this.itemClickListener = itemClickListener;
     }
 
 
-    public  class ReceiptViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-         TextView Hallid,sDate,eDate,purpose;
-
-
-
+    public class ReceiptViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        TextView Hallid, sDate, eDate, sTime;
+        ImageView image;
         public ReceiptViewHolder(@NonNull View itemView) {
             super(itemView);
-            Hallid = (TextView) itemView.findViewById(R.id.BDate);
-            sDate = (TextView) itemView.findViewById(R.id.startDate);
-            eDate    = (TextView) itemView.findViewById(R.id.endDate);
-            purpose = (TextView) itemView.findViewById(R.id.TextViewPurpose);
+            Hallid = (TextView) itemView.findViewById(R.id.TextRoom);
+            sDate = (TextView) itemView.findViewById(R.id.TextStartDate);
+            eDate = (TextView) itemView.findViewById(R.id.TextEndDate);
+            sTime = (TextView) itemView.findViewById(R.id.TextStartTime);
+            image = (ImageView)itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             if (itemClickListener != null) {
-                itemClickListener.onItemClick(v,getAdapterPosition());
+                itemClickListener.onItemClick(v, getAdapterPosition());
             }
         }
     }
+
     public interface ItemClickListener {
         void onItemClick(View view, int position);
     }

@@ -1,5 +1,6 @@
 package com.example.seminarhall.homePage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
 import com.example.seminarhall.booking.FragmentFinal;
+import com.example.seminarhall.receipt;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -33,6 +35,8 @@ public class FragmentClosed extends Fragment implements ReceiptAdapter.ItemClick
     List<ReservedHall> halls;
     CollectionReference notebookRef;
     ReceiptAdapter adapter;
+    List<Integer> status = new ArrayList<>();
+
 
     @Nullable
     @Override
@@ -65,9 +69,11 @@ public class FragmentClosed extends Fragment implements ReceiptAdapter.ItemClick
 //                    hall.setBookingDate(Calendar.getInstance().getTime());
                         hall.setBookingDate(query.getTimestamp("bookingDate").toDate());
                         halls.add(hall);
+                        Integer temp = query.get("stats") == null ? 0 : (Integer)query.get("status");
+                        status.add(temp);
                         Log.d(TAG, "onEvent: ");
                     }
-                adapter = new ReceiptAdapter(halls);
+                adapter = new ReceiptAdapter(getContext(),halls,status);
                 recyclerView.setAdapter(adapter);
                 adapter.setListener(FragmentClosed.this);
             }
@@ -83,6 +89,11 @@ public class FragmentClosed extends Fragment implements ReceiptAdapter.ItemClick
     @Override
     public void onItemClick(View view, int position) {
         Toast.makeText(getContext(), "You have clicked"+position, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onItemClick: ");
+        Intent intent = new Intent(getContext(), receipt.class);
+        intent.putExtra("key",halls.get(position).getReservationId());
+        intent.putExtra("stat", "Closed");
+        startActivity(intent);
 
     }
 }

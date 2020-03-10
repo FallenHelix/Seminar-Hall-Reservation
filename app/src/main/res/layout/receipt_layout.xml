@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    app:cardCornerRadius="4dp">
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="3dp"
+        android:layout_margin="4dp">
+
+        <ImageView
+            android:layout_centerHorizontal="true"
+            android:id="@+id/imageView"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/ic_checkbox"
+            android:padding="10dp" />
+
+
+        <TextView
+            android:id="@id/TextRoom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/imageView"
+            android:layout_marginHorizontal="200dp"
+            android:layout_marginStart="66dp"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@id/TextStartDate"
+            android:padding="10dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="10dp"
+            android:text="Room_Id"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_below="@+id/imageView"
+            android:id="@+id/TextStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Date:"
+            android:paddingTop="10dp"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            />
+        <TextView
+            android:id="@+id/TextEndDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/TextStartDate"
+            android:text="End Date:"
+            android:paddingTop="10dp"
+            android:padding="10dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/TextStartTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/TextRoom"
+            android:layout_marginHorizontal="200dp"
+            android:layout_marginStart="66dp"
+            android:layout_marginTop="14dp"
+            android:layout_toEndOf="@+id/TextStartDate"
+            android:padding="10dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp"
+            android:text="Start Time:"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/TextUser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/TextEndDate"
+            android:text="User Name:"
+            android:paddingTop="10dp"
+            android:padding="10dp"
+            android:textColor="@color/black"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

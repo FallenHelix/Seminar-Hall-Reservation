@@ -33,14 +33,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class FragmentCalendar extends Fragment implements CalendarPickerView.OnDateSelectedListener,
-CalendarPickerView.DateSelectableFilter{
+        CalendarPickerView.DateSelectableFilter {
 
     private static final String TAG = "FragmentCalendar";
     CalendarPickerView calendarPickerView;
-    String SelectedDate;
+
     private OnFragmentInteractionListener mListener;
 
     List<Date> BookedDates;//dates that are needed to be highlighted, indicating a booked event;
@@ -51,7 +52,7 @@ CalendarPickerView.DateSelectableFilter{
     private void getBookedDates() {
         Log.d(TAG, "getBookedDates: ");
         Hall hall = Reserve.getHall();
-        BookedDates2 = new ArrayList<>();
+
 
         CollectionReference db = FirebaseFirestore.getInstance().collection("Main/Reservation/Active");
         db.whereEqualTo("hallId", hall.getKey())
@@ -65,24 +66,41 @@ CalendarPickerView.DateSelectableFilter{
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                         for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
-                            Temp=x.getData();
+                            Temp = x.getData();
 //                            x.get
-                            days = (int)((long) x.get("noOfDays"));
-                            Log.d(TAG, "Days: "+days);
-                            if(days>1)
+                            days = (int) ((long) x.get("noOfDays"));
+                            Log.d(TAG, "Days: " + days);
                             BookedDatesText.addAll((List<String>) Temp.get("days"));
-                            else if (days == 1) {
-                                try {
-                                    BookedDates2.add(sdf.parse((String)Temp.get("startDate")));
-                                } catch (ParseException e) {
-                                    Log.d(TAG, "Failure");
-                                }
-                            }
+
                         }
+//                        setCellDecorator();
                         toDatesArray(BookedDatesText);
                     }
                 });
-        setCellDecorator();
+
+         db = FirebaseFirestore.getInstance().collection("Main/Reservation/Closed");
+        db.whereEqualTo("hallId", hall.getKey())
+//                .whereGreaterThanOrEqualTo("noOfDays",1)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    private Map<String, Object> Temp;
+                    int days;
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
+                            Temp = x.getData();
+//                            x.get
+                            days = (int) ((long) x.get("noOfDays"));
+                            Log.d(TAG, "Days: " + days);
+                                BookedDatesText.addAll((List<String>) Temp.get("days"));
+                        }
+//                        setCellDecorator();
+                        toDatesArray(BookedDatesText);
+                    }
+                });
+
 
     }
 
@@ -107,6 +125,9 @@ CalendarPickerView.DateSelectableFilter{
         BookedDatesText = new ArrayList<>();
         calendarPickerView.setDateSelectableFilter(this);
         getBookedDates();
+        //setting up lists
+        BookedDates2 = new ArrayList<>();
+        BookedDatesText = new ArrayList<>();
     }
 
     private void setUpCalendar() {
@@ -119,30 +140,12 @@ CalendarPickerView.DateSelectableFilter{
         calendarPickerView.init(today, c.getTime()).inMode(CalendarPickerView.SelectionMode.RANGE);
         typeface = ResourcesCompat.getFont(getActivity(), R.font.sf_display_medium);
         calendarPickerView.setDateTypeface(typeface);
+        calendarPickerView.setHapticFeedbackEnabled(true);
         calendarPickerView.highlightDates(BookedDates);
     }
 
 
-    private void setCellDecorator() {
-        CalendarCellDecorator decorator=new CalendarCellDecorator() {
-            @Override
-            public void decorate(CalendarCellView cellView, Date date) {
-                if(cellView.isSelectable())
-                if (BookedDates2.contains(date)) {
-                    cellView.setBackgroundColor(getResources().getColor(R.color.black));
-                    Log.d(TAG, "decorate: ");
 
-                }
-                if (cellView.isToday()) {
-                    cellView.setBackgroundColor(Color.BLUE);
-                }
-            }
-        };
-        List<CalendarCellDecorator> decoratorList = new ArrayList<>();
-        decoratorList.add(decorator);
-
-        calendarPickerView.setDecorators(decoratorList);
-    }
 
     private void getDates() {
         Log.d(TAG, "getDates: ");
@@ -154,15 +157,15 @@ CalendarPickerView.DateSelectableFilter{
         }
         List<String> selectedDates = new ArrayList<>();
         for (Date x : dates) {
-//            
-            String temp = DateFormat.getDateInstance(DateFormat.DATE_FIELD).format(x);
+//
+            String temp = DateFormat.getDateInstance(DateFormat.DATE_FIELD,Locale.ITALY).format(x);
             if (BookedDatesText.contains(temp)) {
                 setUpCalendar();
                 Log.d(TAG, "getDates: clash");
                 return;
             }
             selectedDates.add(temp);
-            Log.d(TAG, "getDates: "+dates.size());
+            Log.d(TAG, "getDates: " + dates.size());
         }
         mListener.onFragmentInteraction(selectedDates);
     }
@@ -192,8 +195,6 @@ CalendarPickerView.DateSelectableFilter{
         }
         calendarPickerView.highlightDates(BookedDates);
     }
-
-
 
 
     @Override
@@ -227,7 +228,7 @@ CalendarPickerView.DateSelectableFilter{
     @Override
     public boolean isDateSelectable(Date date) {
 
-       
+
         return true;
     }
 

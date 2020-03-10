@@ -1,5 +1,6 @@
 package com.example.seminarhall.homePage;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
+import com.example.seminarhall.receipt;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -36,12 +38,13 @@ public class FragmentActive extends Fragment implements ReceiptAdapter.ItemClick
     FirebaseFirestore db;
     CollectionReference notebookRef;
     ReceiptAdapter adapter;
-
+    public List<Integer> status; //1: New, 2:approved, 3: declined
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         halls = new ArrayList<>();
+        status = new ArrayList<>();
         db= FirebaseFirestore.getInstance();
         notebookRef = FirebaseFirestore.getInstance().collection("/Main/Reservation/Active");
     }
@@ -71,6 +74,7 @@ public class FragmentActive extends Fragment implements ReceiptAdapter.ItemClick
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 halls.clear();
+                status.clear();
                 if (e != null) {
                     System.err.println("Listen failed: " + e);
                     return;
@@ -79,12 +83,14 @@ public class FragmentActive extends Fragment implements ReceiptAdapter.ItemClick
                 for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
                     ReservedHall hall=query.toObject(ReservedHall.class);
                     hall.setReservationId(query.getId());
+                    Integer temp = query.get("stats") == null ? 0 : (Integer)query.get("status");
+                    status.add(temp);
 //                    hall.setBookingDate(Calendar.getInstance().getTime());
                     hall.setBookingDate(query.getTimestamp("bookingDate").toDate());
                     halls.add(hall);
                     Log.d(TAG, "onEvent: ");
                 }
-                adapter = new ReceiptAdapter(halls);
+                adapter = new ReceiptAdapter(getContext(),halls,status);
                 recyclerView.setAdapter(adapter);
                 adapter.setListener(FragmentActive.this);
             }
@@ -94,5 +100,10 @@ public class FragmentActive extends Fragment implements ReceiptAdapter.ItemClick
     @Override
     public void onItemClick(View view, int position) {
         Toast.makeText(getContext(), "You have clicked" + position, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onItemClick: ");
+        Intent intent = new Intent(getContext(), receipt.class);
+        intent.putExtra("key",halls.get(position).getReservationId());
+        intent.putExtra("stat", "Closed");
+        startActivity(intent);
     }
 }

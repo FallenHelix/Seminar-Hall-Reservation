@@ -40,16 +40,13 @@ public class functions extends AppCompatActivity implements View.OnClickListener
     private EditText mSecondNumberField;
     private EditText mAddResultField;
     private Button mCalculateButton;
+    private EditText email;
+
 
     // Add message views
-    private EditText mMessageInputField;
-    private EditText mMessageOutputField;
-    private Button mAddMessageButton;
-    private Button mSignInButton;
 
-    // [START define_functions_instance]
+
     private FirebaseFunctions mFunctions;
-    // [END define_functions_instance]
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +56,7 @@ public class functions extends AppCompatActivity implements View.OnClickListener
         findViewById(R.id.MakeAdmin).setOnClickListener(this);
         findViewById(R.id.checkAdmin).setOnClickListener(this);
 
-        mFirstNumberField = findViewById(R.id.fieldFirstNumber);
-        mSecondNumberField = findViewById(R.id.fieldSecondNumber);
-        mAddResultField = findViewById(R.id.fieldAddResult);
-        mCalculateButton = findViewById(R.id.buttonCalculate);
-        mCalculateButton.setOnClickListener(this);
+        email = findViewById(R.id.email);
 
        findViewById(R.id.sendEmail).setOnClickListener(this);
 
@@ -73,9 +66,9 @@ public class functions extends AppCompatActivity implements View.OnClickListener
     }
 
 
-    private Task<String> makeAdmin(FirebaseUser user) {
+    private Task<String> makeAdmin(String email) {
         Map<String, Object> data = new HashMap<>();
-        data.put("email", user.getEmail());
+        data.put("email", email);
         return mFunctions.getHttpsCallable("makeAdmin")
                 .call(data)
                 .continueWith(new Continuation<HttpsCallableResult, String>() {
@@ -200,42 +193,6 @@ public class functions extends AppCompatActivity implements View.OnClickListener
         // [END call_add_numbers]
     }
 
-    private void onAddMessageClicked() {
-        String inputMessage = mMessageInputField.getText().toString();
-
-        if (TextUtils.isEmpty(inputMessage)) {
-            showSnackbar("Please enter a message.");
-            return;
-        }
-
-        // [START call_add_message]
-        addMessage(inputMessage)
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Exception e = task.getException();
-                            if (e instanceof FirebaseFunctionsException) {
-                                FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
-                                FirebaseFunctionsException.Code code = ffe.getCode();
-                                Object details = ffe.getDetails();
-                            }
-
-                            // [START_EXCLUDE]
-                            Log.w(TAG, "addMessage:onFailure", e);
-                            showSnackbar("An error occurred.");
-                            return;
-                            // [END_EXCLUDE]
-                        }
-
-                        // [START_EXCLUDE]
-                        String result = task.getResult();
-                        mMessageOutputField.setText(result);
-                        // [END_EXCLUDE]
-                    }
-                });
-        // [END call_add_message]
-    }
 
 
     private void showSnackbar(String message) {
@@ -256,9 +213,6 @@ public class functions extends AppCompatActivity implements View.OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.buttonCalculate:
-                onCalculateClicked();
-                break;
             case R.id.sendEmail:
                 sendEmail();
                 break;
@@ -310,7 +264,7 @@ public class functions extends AppCompatActivity implements View.OnClickListener
     }
 
     private void MakeUserAdmin() {
-        makeAdmin(FirebaseAuth.getInstance().getCurrentUser()).addOnCompleteListener(new OnCompleteListener<String>() {
+        makeAdmin(email.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<String>() {
             @Override
             public void onComplete(@NonNull Task<String> task) {
                 if (!task.isSuccessful()) {

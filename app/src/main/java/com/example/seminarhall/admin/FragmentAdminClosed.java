@@ -37,7 +37,7 @@ public class FragmentAdminClosed extends Fragment implements ReceiptAdapter.Item
     FirebaseFirestore db;
     CollectionReference notebookRef;
     ReceiptAdapter adapter;
-
+    List<Integer> status = new ArrayList<>();
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: ");
@@ -70,6 +70,7 @@ public class FragmentAdminClosed extends Fragment implements ReceiptAdapter.Item
         notebookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                status.clear();
                 halls.clear();
                 if (e != null) {
                     System.err.println("Listen failed: " + e);
@@ -79,9 +80,13 @@ public class FragmentAdminClosed extends Fragment implements ReceiptAdapter.Item
                     for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
                         ReservedHall hall=query.toObject(ReservedHall.class);
                         hall.setReservationId(query.getId());
+                        Integer temp = query.get("Status") == null ? 0 : (Boolean) query.get("Status")==true?1:2;
+                        Log.d(TAG, "onEvent: "+temp);
+                        Log.d(TAG, "onEvent: "+query.get("Status"));
+                        status.add(temp);
                         halls.add(hall);
                     }
-                adapter = new ReceiptAdapter(halls);
+                adapter = new ReceiptAdapter(getContext(),halls,status);
                 recyclerView.setAdapter(adapter);
                 adapter.setListener(FragmentAdminClosed.this);
             }

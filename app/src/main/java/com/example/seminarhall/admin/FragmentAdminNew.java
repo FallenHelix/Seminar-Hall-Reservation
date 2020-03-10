@@ -42,6 +42,7 @@ public class FragmentAdminNew extends Fragment implements ReceiptAdapter.ItemCli
     FirebaseFirestore db;
     CollectionReference notebookRef;
     ReceiptAdapter adapter;
+    List<Integer> status = new ArrayList<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,8 +87,10 @@ public class FragmentAdminNew extends Fragment implements ReceiptAdapter.ItemCli
                     ReservedHall hall=query.toObject(ReservedHall.class);
                     hall.setReservationId(query.getId());
                     halls.add(hall);
+                    Integer temp = query.get("stats") == null ? 0 : (Integer)query.get("status");
+                    status.add(temp);
                 }
-                adapter = new ReceiptAdapter(halls);
+                adapter = new ReceiptAdapter(getContext(),halls,status);
                 recyclerView.setAdapter(adapter);
                 adapter.setListener(FragmentAdminNew.this);
             }
@@ -101,7 +104,8 @@ public class FragmentAdminNew extends Fragment implements ReceiptAdapter.ItemCli
         ReservedHall hall = halls.get(position);
         String id = hall.getReservationId();
         FirebaseFirestore db=FirebaseFirestore.getInstance();
-        db.collection("Main/Reservation/Active").document(id).delete().addOnSuccessListener(
+
+                db.collection("Main/Reservation/Active").document(id).delete().addOnSuccessListener(
                 new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -116,8 +120,9 @@ public class FragmentAdminNew extends Fragment implements ReceiptAdapter.ItemCli
             }
         });
         Map<String ,Object> map = new HashMap<>();
-        map.put("Status:", true);
+        map.put("Status", true);
         map.put("Accepted Date", Calendar.getInstance().getTime());
+        map.put("Approved", FirebaseAuth.getInstance().getCurrentUser().getUid());
 
 
         db.collection("Main/Reservation/Closed").document(id).set(map, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -132,6 +137,8 @@ public class FragmentAdminNew extends Fragment implements ReceiptAdapter.ItemCli
                 Log.d(TAG, "onFailure: Merge Failed");
             }
         });
+
+
 
     }
 }

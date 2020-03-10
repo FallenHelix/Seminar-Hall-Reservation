@@ -50,30 +50,30 @@ public class FragmentFinal extends Fragment implements ReceiptAdapter.ItemClickL
     public void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
-        String id= FirebaseAuth.getInstance().getCurrentUser().getUid();
-        notebookRef = FirebaseFirestore.getInstance().collection("Main/Reservation/Closed");
-        notebookRef.whereEqualTo("userId",id).addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                halls.clear();
-                if (e != null) {
-                    System.err.println("Listen failed: " + e);
-                    return;
-                }
-                if(queryDocumentSnapshots!=null)
-                    for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
-                        ReservedHall hall=query.toObject(ReservedHall.class);
-                        hall.setReservationId(query.getId());
-//                    hall.setBookingDate(Calendar.getInstance().getTime());
-                        hall.setBookingDate(query.getTimestamp("bookingDate").toDate());
-                        halls.add(hall);
-                        Log.d(TAG, "onEvent: ");
-                    }
-                adapter = new ReceiptAdapter(halls);
-                recyclerView.setAdapter(adapter);
-                adapter.setListener(FragmentFinal.this);
-            }
-        });
+//        String id= FirebaseAuth.getInstance().getCurrentUser().getUid();
+//        notebookRef = FirebaseFirestore.getInstance().collection("Main/Reservation/Closed");
+//        notebookRef.whereEqualTo("userId",id).addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//                halls.clear();
+//                if (e != null) {
+//                    System.err.println("Listen failed: " + e);
+//                    return;
+//                }
+//                if(queryDocumentSnapshots!=null)
+//                    for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
+//                        ReservedHall hall=query.toObject(ReservedHall.class);
+//                        hall.setReservationId(query.getId());
+////                    hall.setBookingDate(Calendar.getInstance().getTime());
+//                        hall.setBookingDate(query.getTimestamp("bookingDate").toDate());
+//                        halls.add(hall);
+//                        Log.d(TAG, "onEvent: ");
+//                    }
+//                adapter = new ReceiptAdapter(halls);
+//                recyclerView.setAdapter(adapter);
+//                adapter.setListener(FragmentFinal.this);
+//            }
+//        });
 
     }
 

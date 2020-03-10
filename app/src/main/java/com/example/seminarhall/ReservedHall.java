@@ -142,4 +142,14 @@ public class ReservedHall {
         }
         return null;
     }
+    @Exclude
+    public String getStartDateText()
+    {
+        return DateFormat.getDateInstance(DateFormat.SHORT).format(StartDate);
+    }
+    @Exclude
+    public String getEndDateText()
+    {
+        return DateFormat.getDateInstance(DateFormat.SHORT).format(EndDate);
+    }
 }
