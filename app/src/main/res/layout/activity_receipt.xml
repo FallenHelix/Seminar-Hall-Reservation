@@ -32,12 +32,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:textColor="@color/white"
         android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="301dp"
+        android:layout_height="53dp"
         android:layout_marginTop="40dp"
+        android:drawableLeft="@drawable/book"
+        android:drawablePadding="20dp"
         android:text="Booking Summary"
+        android:textColor="@color/white"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.437"
