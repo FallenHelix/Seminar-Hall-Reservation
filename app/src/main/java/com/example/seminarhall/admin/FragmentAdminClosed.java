@@ -44,7 +44,7 @@ public class FragmentAdminClosed extends Fragment implements ReceiptAdapter.Item
         super.onCreate(savedInstanceState);
         halls = new ArrayList<>();
         db= FirebaseFirestore.getInstance();
-        notebookRef = FirebaseFirestore.getInstance().collection("/Main/Reservation/Closed");
+        notebookRef = FirebaseFirestore.getInstance().collection("Main/Reservation/Closed");
     }
     @Nullable
     @Override
@@ -77,18 +77,22 @@ public class FragmentAdminClosed extends Fragment implements ReceiptAdapter.Item
                     return;
                 }
                 if(queryDocumentSnapshots!=null)
+                {
+                    Log.d(TAG, "Size: "+queryDocumentSnapshots.size());
+
                     for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
                         ReservedHall hall=query.toObject(ReservedHall.class);
                         hall.setReservationId(query.getId());
                         Integer temp = query.get("Status") == null ? 0 : (Boolean) query.get("Status")==true?1:2;
-                        Log.d(TAG, "onEvent: "+temp);
-                        Log.d(TAG, "onEvent: "+query.get("Status"));
+                        Log.d(TAG, "Temp: "+temp);
+                        Log.d(TAG, "Status: "+query.get("Status"));
                         status.add(temp);
                         halls.add(hall);
                     }
                 adapter = new ReceiptAdapter(getContext(),halls,status);
                 recyclerView.setAdapter(adapter);
                 adapter.setListener(FragmentAdminClosed.this);
+                }
             }
         });
     }

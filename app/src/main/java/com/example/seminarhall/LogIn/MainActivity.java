@@ -1,4 +1,4 @@
-package com.example.seminarhall;
+package com.example.seminarhall.LogIn;
 
 
 import androidx.annotation.NonNull;
@@ -6,15 +6,18 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.bluetooth.le.PeriodicAdvertisingParameters;
 import android.os.Build;
 import android.os.Bundle;
 
 import android.content.Intent;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.seminarhall.LogIn.SignIn;
+import com.example.seminarhall.R;
 import com.example.seminarhall.booking.Reserve;
 import com.example.seminarhall.homePage.UserDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,10 +26,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button Continue;
     private FirebaseAuth mAuth;
+    TextView newUserTextView;
 
 
     @Override
@@ -34,8 +38,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setUPNotification();
+        newUserTextView = findViewById(R.id.TextRegister);
         mAuth = FirebaseAuth.getInstance();
-
+        newUserTextView.setText(Html.fromHtml(newUserTextView.getText().toString()));
+        newUserTextView.setVisibility(View.VISIBLE);
+        newUserTextView.setOnClickListener(this);
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
              Intent intent = new Intent(MainActivity.this, UserDetails.class);
@@ -45,15 +52,7 @@ public class MainActivity extends AppCompatActivity {
 
         Continue = findViewById(R.id.button);
 
-        Button temp=findViewById(R.id.button3);
-        temp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Reserve.class);
 
-                startActivity(intent);
-            }
-        });
 
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +93,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        int i = newUserTextView.getId();
+        if (i == R.id.TextRegister) {
+            Intent intent = new Intent(MainActivity.this, Singup.class);
+            startActivity(intent);
+        }
 
-
+    }
 }
 

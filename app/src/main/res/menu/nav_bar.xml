@@ -31,6 +31,10 @@
                 android:id="@+id/View_Request"
                 android:icon="@drawable/ic_password"
                 android:title="View Bookings" />
+                <item
+                    android:id="@+id/Add_halls"
+                    android:icon="@drawable/ic_mic_black_24dp"
+                    android:title="Add New Halls" />
             </menu>
         </item>
 
@@ -40,7 +44,8 @@
     <group android:id="@+id/signOut">
 
         <item
-            android:icon="@drawable/ic_password"
+            android:id="@+id/Nav_signOut"
+            android:icon="@drawable/confirm_password"
             android:title="Sign Out" />
 
     </group>

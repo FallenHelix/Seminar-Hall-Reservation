@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.seminarhall.R;
@@ -19,7 +20,7 @@ public class reset extends AppCompatActivity {
 
     private EditText edtEmail;
     private Button btnResetPassword;
-    private Button btnBack;
+    private ImageView btnBack;
     private FirebaseAuth mAuth;
 
     @Override
@@ -29,10 +30,9 @@ public class reset extends AppCompatActivity {
 
         edtEmail = (EditText) findViewById(R.id.edt_reset_email);
         btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
-//        btnBack = (Button) findViewById(R.id.btn_back);
+        btnBack = (ImageView) findViewById(R.id.backButton);
 
         mAuth = FirebaseAuth.getInstance();
-
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

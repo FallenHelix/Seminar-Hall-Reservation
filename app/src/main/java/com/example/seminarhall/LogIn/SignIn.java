@@ -14,7 +14,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.seminarhall.MainActivity;
 import com.example.seminarhall.R;
 import com.example.seminarhall.homePage.UserDetails;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -82,6 +81,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
         findViewById(R.id.Rgst).setOnClickListener(this);
         progressbar = findViewById(R.id.progressBar);
         register.setText(Html.fromHtml(register.getText().toString()));
+        register.setVisibility(View.VISIBLE);
         resetPassword.setText(Html.fromHtml(resetPassword.getText().toString()));
         //hide progress bar
         progressbar.setVisibility(View.INVISIBLE);

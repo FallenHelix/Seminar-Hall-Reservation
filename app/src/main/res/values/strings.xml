@@ -4,7 +4,9 @@
     <string name="app_name">Hall Reservation</string>
 
 
-    <string name="forgotPass">Forgot password? Reset Here</string>
+    <string name="forgotPass">
+    <![CDATA[ <font color=#353447>Forgot Password?</font><b><font color=#FF6B6B face=@string/rc_bold> Reser Here!</b>  .]]>
+    </string>
 
     <string name="action_settings">Settings</string>
     <string name="email">Email Id</string>

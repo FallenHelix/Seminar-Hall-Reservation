@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.seminarhall.LogIn.NewUser;
 import com.example.seminarhall.LogIn.SignIn;
-import com.example.seminarhall.MainActivity;
+import com.example.seminarhall.LogIn.MainActivity;
 import com.example.seminarhall.R;
 import com.example.seminarhall.admin.Admin_Control;
 import com.example.seminarhall.dataBase.addHall;
@@ -70,24 +70,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     }
 
     private void CheckForNewUser() {
-        Log.d(TAG, "CheckForNewUser: ");
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        user.getIdToken(false).addOnSuccessListener(new OnSuccessListener<GetTokenResult>() {
-            @Override
-            public void onSuccess(GetTokenResult result) {
-                Map<String, Object> map=result.getClaims();
-                Log.d(TAG, "onSuccess: ");
 
-                for (Map.Entry<String,Object> entry : map.entrySet())
-                    Log.d("Tags","Key = " + entry.getKey() +
-                            ", Value = " + entry.getValue());
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure: ");
-            }
-        });
     }
 
 
@@ -187,6 +170,9 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
         updateUi(FirebaseAuth.getInstance().getCurrentUser());
     }
 
@@ -265,6 +251,11 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             startActivity(intent);
         } else if (i == R.id.View_Request) {
             Intent intent = new Intent(UserDetails.this, Admin_Control.class);
+            startActivity(intent);
+        } else if (i == R.id.Nav_signOut) {
+            signOut();
+        } else if (i == R.id.Add_halls) {
+            Intent intent = new Intent(UserDetails.this, addHall.class);
             startActivity(intent);
         }
         return true;
