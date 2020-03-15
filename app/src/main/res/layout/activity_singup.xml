@@ -32,6 +32,7 @@
         android:drawableStart="@drawable/ic_email"
         android:drawableLeft="@drawable/ic_email"
         android:drawablePadding="20dp"
+        android:textColor="@android:color/black"
         android:fontFamily="@font/regular"
         android:hint="Email"
         android:padding="10dp"
@@ -42,7 +43,10 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.462" />
 
+
+
     <EditText
+
         android:id="@+id/passwordInput"
         android:layout_width="315dp"
         android:layout_height="56dp"
@@ -52,6 +56,7 @@
         android:drawablePadding="20dp"
         android:fontFamily="@font/regular"
         android:hint="Password"
+        android:textColor="@android:color/black"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +66,10 @@
         app:layout_constraintVertical_bias="0.678" />
 
     <EditText
+
+
+    <EditText
+
         android:id="@+id/confirmPasswordInput"
         android:layout_width="315dp"
         android:layout_height="56dp"
@@ -70,6 +79,7 @@
         android:drawablePadding="20dp"
         android:fontFamily="@font/regular"
         android:hint="Confirm password"
+        android:textColor="@android:color/black"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
