@@ -65,7 +65,7 @@ public class Singup extends AppCompatActivity {
     private void initViews() {
         fullName = (EditText) findViewById(R.id.nameInput);
         emailId = (EditText) findViewById(R.id.emailInput);
-        mobileNumber = (EditText) findViewById(R.id.mobileInput);
+//        mobileNumber = (EditText) findViewById(R.id.mobileInput);
         password = (EditText) findViewById(R.id.passwordInput);
         confirmPassword = (EditText) findViewById(R.id.confirmPasswordInput);
         signUpButton = (Button) findViewById(R.id.signUpButton);
@@ -85,29 +85,13 @@ public class Singup extends AppCompatActivity {
 
     private void checkValidation() {
 
-        String getFullName = fullName.getText().toString();
         String getEmailId = emailId.getText().toString();
-        String getMobileNumber = mobileNumber.getText().toString();
         String getPassword = password.getText().toString();
 
         String getConfirmPassword = confirmPassword.getText().toString();
 
 
-        if (getFullName.length() == 0)
-            fullName.setError("Error Here");
-
-
-        else if (getFullName.equals("") || getFullName.length() == 0
-                || getEmailId.equals("") || getEmailId.length() == 0
-                || getMobileNumber.equals("") || getMobileNumber.length() == 0
-                || getPassword.equals("") || getPassword.length() == 0
-                || getConfirmPassword.equals("")
-                || getConfirmPassword.length() == 0) {
-            fullName.setError("Error 2");
-        } else
-            fullName.setError(null);
     }
-
 
     private boolean validateEmail() {
         String emailInput = emailId.getText().toString().trim();
@@ -129,20 +113,7 @@ public class Singup extends AppCompatActivity {
         }
     }
 
-    private boolean validateUsername() {
-        String usernameInput = fullName.getText().toString().trim();
 
-        if (usernameInput.isEmpty()) {
-            fullName.setError("Field can't be empty");
-            return false;
-        } else if (usernameInput.length() > 15) {
-            fullName.setError("Username too long");
-            return false;
-        } else {
-            fullName.setError(null);
-            return true;
-        }
-    }
 
     private boolean validatePassword() {
         String passwordInput = password.getText().toString().trim();
@@ -164,19 +135,12 @@ public class Singup extends AppCompatActivity {
     }
 
     public boolean confirmInput() {
-        if (!validateEmail() | !validateUsername() | !validatePassword()) {
+        if (!validateEmail() | !validatePassword()) {
             return false;
         } else
             return true;
 
 
-//        String input = "Email: " + emailId.getText().toString();
-//        input += "\n";
-//        input += "Username: " + fullName.getText().toString();
-//        input += "\n";
-//        input += "Password: " + password.getText().toString();
-//
-        //Toast.makeText(this, "Sucess", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -195,36 +159,16 @@ public class Singup extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),
                             "Registration successful!, Please verify account",
                             Toast.LENGTH_SHORT).show();
-
-
-                    // hide the progress bar
-
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(fullName.getText().toString().trim())
-                            .build();
-
-                    FirebaseUser user=task.getResult().getUser();
-                    user.updateProfile(profileUpdates)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                    }
-                                    else {
-                                        Toast.makeText(Singup.this, "An Error Occured!", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
-                    CollectionReference ref = FirebaseFirestore.getInstance().collection("Main/Users/Students");
-                    map.put("newUser",true);
-                    map.put("Name", fullName.getText().toString().trim());
-                    map.put("userId", user.getUid());
-
-                    ref.document(user.getUid()).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                        }
-                    });
+//                    CollectionReference ref = FirebaseFirestore.getInstance().collection("Users");
+//                    map.put("newUser",true);
+//                    map.put("Name", fullName.getText().toString().trim());
+//                    map.put("userId", user.getUid());
+//
+//                    ref.document(user.getUid()).set(map).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void aVoid) {
+//                        }
+//                    });
                     // if the user created intent to login activity
                     Intent intent = new Intent(Singup.this,
                             SignIn.class);

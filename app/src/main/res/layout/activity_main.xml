@@ -5,7 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".MainActivity">
+    tools:context=".LogIn.MainActivity">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        android:id="@+id/button11" />
 
     <ImageView
         android:id="@+id/imageView2"
@@ -20,6 +26,7 @@
         app:srcCompat="@drawable/ssv" />
 
     <Button
+        android:hapticFeedbackEnabled="true"
         android:id="@+id/button"
         android:layout_width="134dp"
         android:layout_height="65dp"
@@ -36,7 +43,9 @@
         app:layout_constraintVertical_bias="0.347" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:visibility="invisible"
+        android:hapticFeedbackEnabled="true"
+        android:id="@+id/TextRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
@@ -46,28 +55,14 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="72dp"
         android:fontFamily="@font/light"
-        android:text="New User? "
+        android:text="@string/Registration"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/textView4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button"
         app:layout_constraintVertical_bias="0.512" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/bold"
-        android:text="@string/register"
-        android:textColor="#FF6B6B"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/imageView2"
-        app:layout_constraintHorizontal_bias="0.525"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button"
-        app:layout_constraintVertical_bias="0.872" />
 
     <TextView
         android:layout_width="308dp"
@@ -83,13 +78,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.212" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        tools:layout_editor_absoluteX="106dp"
-        tools:layout_editor_absoluteY="357dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

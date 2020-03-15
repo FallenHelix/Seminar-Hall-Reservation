@@ -22,7 +22,7 @@
         android:id="@+id/TextViewPurpose"
         android:layout_width="287dp"
         android:layout_height="117dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="124dp"
         android:background="@drawable/purposebox"
         android:paddingTop="20dp"
         android:text="Purpose"
@@ -90,19 +90,19 @@
         app:layout_constraintVertical_bias="0.401" />
 
     <TextView
-        android:textColor="@color/black"
-        android:fontFamily="@font/sf_display_medium"
         android:id="@+id/TextStartTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="284dp"
+        android:fontFamily="@font/sf_display_medium"
         android:text="Start time:"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.802"
+        app:layout_constraintHorizontal_bias="0.728"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.004" />
+        app:layout_constraintVertical_bias="0.002" />
 
     <TextView
         android:textColor="@color/black"
@@ -119,18 +119,18 @@
         app:layout_constraintVertical_bias="0.47" />
 
     <TextView
-        android:textColor="@color/black"
-        android:fontFamily="@font/sf_display_medium"
         android:id="@+id/TextEndTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/sf_display_medium"
         android:text="End time:"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.786"
+        app:layout_constraintHorizontal_bias="0.713"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.47" />
+        app:layout_constraintVertical_bias="0.469" />
 
     <TextView
         android:textColor="@color/black"
@@ -147,17 +147,42 @@
         app:layout_constraintVertical_bias="0.547" />
 
     <TextView
-        android:textColor="@color/black"
-        android:fontFamily="@font/sf_display_medium"
         android:id="@+id/textView16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/sf_display_medium"
         android:text="Purpose"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.46"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.641" />
+        app:layout_constraintVertical_bias="0.615" />
+
+    <Button
+        android:id="@+id/ButtonAccept"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/ic_checkbox"
+        android:text="Accept"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.226"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewPurpose"
+        app:layout_constraintVertical_bias="0.513" />
+
+    <Button
+        android:id="@+id/ButtonReject"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/ic_stop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.601"
+        app:layout_constraintStart_toEndOf="@+id/ButtonAccept"
+        app:layout_constraintTop_toBottomOf="@+id/TextViewPurpose"
+        app:layout_constraintVertical_bias="0.515" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

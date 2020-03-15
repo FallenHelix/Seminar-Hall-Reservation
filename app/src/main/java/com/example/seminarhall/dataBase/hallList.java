@@ -19,7 +19,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.seminarhall.Hall;
-import com.example.seminarhall.MainActivity;
+import com.example.seminarhall.LogIn.MainActivity;
 import com.example.seminarhall.R;
 import com.example.seminarhall.booking.Reserve;
 import com.google.android.material.navigation.NavigationView;

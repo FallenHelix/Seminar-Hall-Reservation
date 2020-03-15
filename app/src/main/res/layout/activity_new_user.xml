@@ -8,6 +8,24 @@
     tools:context=".LogIn.NewUser">
 
     <EditText
+        android:id="@+id/nameInput"
+        android:layout_width="315dp"
+        android:layout_height="56dp"
+        android:background="@drawable/edit_text"
+        android:drawableStart="@drawable/person"
+        android:drawableLeft="@drawable/person"
+        android:drawablePadding="20dp"
+        android:fontFamily="@font/regular"
+        android:hint="Name"
+        android:padding="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.427"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.204" />
+
+    <EditText
         android:id="@+id/Roll"
         android:layout_width="315dp"
         android:layout_height="56dp"
@@ -23,44 +41,7 @@
         app:layout_constraintHorizontal_bias="0.427"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.271" />
-
-    <EditText
-        android:id="@+id/department"
-        android:layout_width="315dp"
-        android:layout_height="56dp"
-        android:background="@drawable/edit_text"
-        android:drawableStart="@drawable/ic_email"
-        android:drawableLeft="@drawable/ic_email"
-        android:drawablePadding="20dp"
-        android:fontFamily="@font/regular"
-        android:hint="Branch"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.427"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.42" />
-
-    <EditText
-        android:id="@+id/Type"
-        android:layout_width="315dp"
-        android:layout_height="56dp"
-        android:background="@drawable/edit_text"
-        android:drawableStart="@drawable/phone"
-        android:drawableLeft="@drawable/phone"
-        android:drawablePadding="20dp"
-        android:fontFamily="@font/regular"
-        android:hint="Type"
-        android:inputType="phone"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.427"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.565" />
+        app:layout_constraintVertical_bias="0.442" />
 
     <Button
         android:id="@+id/signUpButton"
@@ -88,7 +69,33 @@
         app:layout_constraintHorizontal_bias="0.043"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.078">
+        app:layout_constraintVertical_bias="0.078"/>
 
-    </ImageView>
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/department"
+        android:layout_width="315dp"
+
+        android:layout_height="56dp"
+        android:background="@drawable/edit_text"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.281"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.674" />
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/Usertype"
+        android:gravity="left|center"
+        android:textAlignment="center"
+        android:background="@drawable/edit_text"
+        android:layout_width="315dp"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.427"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.314" />
 </androidx.constraintlayout.widget.ConstraintLayout>

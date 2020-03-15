@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.auth.User;
 
 public class addHall extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -26,7 +27,7 @@ public class addHall extends AppCompatActivity implements AdapterView.OnItemSele
     Button addToDb;
     DatabaseReference databaseReference;
     Spinner branch;
-    private String branchString;
+    private String branchString,UserTypeString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class addHall extends AppCompatActivity implements AdapterView.OnItemSele
         editTextHallSize = findViewById(R.id.Hall_Size);
         addToDb = findViewById(R.id.Add_a);
         branch = findViewById(R.id.department);
+
         setspinner();
         databaseReference = FirebaseDatabase.getInstance().getReference("Halls");
 
@@ -53,10 +55,12 @@ public class addHall extends AppCompatActivity implements AdapterView.OnItemSele
     {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.Departments, android.R.layout.simple_spinner_item);
+
 // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 // Apply the adapter to the spinner
         branch.setAdapter(adapter);
+
 
         branch.setOnItemSelectedListener(this);
     }

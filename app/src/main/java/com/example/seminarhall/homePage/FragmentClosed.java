@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
+import com.example.seminarhall.admin.FragmentAdminClosed;
 import com.example.seminarhall.booking.FragmentFinal;
 import com.example.seminarhall.receipt;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,9 +34,9 @@ public class FragmentClosed extends Fragment implements ReceiptAdapter.ItemClick
     private static final String TAG = "FragmentClosed";
     RecyclerView recyclerView;
     List<ReservedHall> halls;
-    CollectionReference notebookRef;
     ReceiptAdapter adapter;
     List<Integer> status = new ArrayList<>();
+    CollectionReference notebookRef = FirebaseFirestore.getInstance().collection("Main/Reservation/Closed");
 
 
     @Nullable
@@ -53,31 +54,61 @@ public class FragmentClosed extends Fragment implements ReceiptAdapter.ItemClick
         super.onStart();
         Log.d(TAG, "onStart: ");
         String id= FirebaseAuth.getInstance().getCurrentUser().getUid();
-        notebookRef = FirebaseFirestore.getInstance().collection("Main/Reservation/Closed");
-        notebookRef.whereEqualTo("userId",id).addSnapshotListener(new EventListener<QuerySnapshot>() {
+//        notebookRef.whereEqualTo("userId",id).addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//                halls.clear();
+//                if (e != null) {
+//                    System.err.println("Listen failed: " + e);
+//                    return;
+//                }
+//                if(queryDocumentSnapshots!=null)
+//                    for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
+//                        ReservedHall hall=query.toObject(ReservedHall.class);
+//                        hall.setReservationId(query.getId());
+////                    hall.setBookingDate(Calendar.getInstance().getTime());
+//                        hall.setBookingDate(query.getTimestamp("bookingDate").toDate());
+//                        halls.add(hall);
+//                        Integer temp = query.get("stats") == null ? 0 : (Integer)query.get("status");
+//                        status.add(temp);
+//                        Log.d(TAG, "onEvent: ");
+//                    }
+//                adapter = new ReceiptAdapter(getContext(),halls,status);
+//                recyclerView.setAdapter(adapter);
+//                adapter.setListener(FragmentClosed.this);
+//            }
+//        });
+
+        notebookRef.whereEqualTo("userId",id)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                status.clear();
                 halls.clear();
                 if (e != null) {
                     System.err.println("Listen failed: " + e);
                     return;
                 }
                 if(queryDocumentSnapshots!=null)
+                {
+                    Log.d(TAG, "Size: "+queryDocumentSnapshots.size());
+
                     for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
                         ReservedHall hall=query.toObject(ReservedHall.class);
                         hall.setReservationId(query.getId());
-//                    hall.setBookingDate(Calendar.getInstance().getTime());
-                        hall.setBookingDate(query.getTimestamp("bookingDate").toDate());
-                        halls.add(hall);
-                        Integer temp = query.get("stats") == null ? 0 : (Integer)query.get("status");
+                        Integer temp = query.get("Status") == null ? 0 : (Boolean) query.get("Status")==true?1:2;
+                        Log.d(TAG, "Temp: "+temp);
+                        Log.d(TAG, "Status: "+query.get("Status"));
                         status.add(temp);
-                        Log.d(TAG, "onEvent: ");
+                        halls.add(hall);
                     }
-                adapter = new ReceiptAdapter(getContext(),halls,status);
-                recyclerView.setAdapter(adapter);
-                adapter.setListener(FragmentClosed.this);
+                    adapter = new ReceiptAdapter(getContext(),halls,status);
+                    recyclerView.setAdapter(adapter);
+                    adapter.setListener(FragmentClosed.this);
+                }
             }
         });
+
 
     }
 

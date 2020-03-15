@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
+import com.example.seminarhall.admin.FragmentAdminClosed;
 import com.example.seminarhall.receipt;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -70,29 +71,33 @@ public class FragmentActive extends Fragment implements ReceiptAdapter.ItemClick
         String id=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         Log.d(TAG, "onStart: ");
-        notebookRef.whereEqualTo("userId",id).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        notebookRef.whereEqualTo("userId", id)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                halls.clear();
                 status.clear();
+                halls.clear();
                 if (e != null) {
                     System.err.println("Listen failed: " + e);
                     return;
                 }
                 if(queryDocumentSnapshots!=null)
-                for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
-                    ReservedHall hall=query.toObject(ReservedHall.class);
-                    hall.setReservationId(query.getId());
-                    Integer temp = query.get("stats") == null ? 0 : (Integer)query.get("status");
-                    status.add(temp);
-//                    hall.setBookingDate(Calendar.getInstance().getTime());
-                    hall.setBookingDate(query.getTimestamp("bookingDate").toDate());
-                    halls.add(hall);
-                    Log.d(TAG, "onEvent: ");
+                {
+                    Log.d(TAG, "Size: "+queryDocumentSnapshots.size());
+
+                    for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
+                        ReservedHall hall=query.toObject(ReservedHall.class);
+                        hall.setReservationId(query.getId());
+                        Integer temp = query.get("Status") == null ? 0 : (Boolean) query.get("Status")==true?1:2;
+                        Log.d(TAG, "Temp: "+temp);
+                        Log.d(TAG, "Status: "+query.get("Status"));
+                        status.add(temp);
+                        halls.add(hall);
+                    }
+                    adapter = new ReceiptAdapter(getContext(),halls,status);
+                    recyclerView.setAdapter(adapter);
+                    adapter.setListener(FragmentActive.this);
                 }
-                adapter = new ReceiptAdapter(getContext(),halls,status);
-                recyclerView.setAdapter(adapter);
-                adapter.setListener(FragmentActive.this);
             }
         });
     }
@@ -103,7 +108,7 @@ public class FragmentActive extends Fragment implements ReceiptAdapter.ItemClick
         Log.d(TAG, "onItemClick: ");
         Intent intent = new Intent(getContext(), receipt.class);
         intent.putExtra("key",halls.get(position).getReservationId());
-        intent.putExtra("stat", "Closed");
+        intent.putExtra("stat", "Active");
         startActivity(intent);
     }
 }
