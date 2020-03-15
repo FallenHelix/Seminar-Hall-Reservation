@@ -43,24 +43,6 @@
         app:layout_constraintVertical_bias="0.462" />
 
     <EditText
-        android:id="@+id/nameInput"
-        android:layout_width="315dp"
-        android:layout_height="56dp"
-        android:background="@drawable/edit_text"
-        android:drawableStart="@drawable/person"
-        android:drawableLeft="@drawable/person"
-        android:drawablePadding="20dp"
-        android:fontFamily="@font/regular"
-        android:hint="Name"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.364"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.354" />
-
-    <EditText
         android:id="@+id/passwordInput"
         android:layout_width="315dp"
         android:layout_height="56dp"
@@ -77,25 +59,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.678" />
-
-    <EditText
-        android:id="@+id/mobileInput"
-        android:layout_width="315dp"
-        android:layout_height="56dp"
-        android:background="@drawable/edit_text"
-        android:drawableStart="@drawable/phone"
-        android:drawableLeft="@drawable/phone"
-        android:drawablePadding="20dp"
-        android:fontFamily="@font/regular"
-        android:hint="Mobile"
-        android:inputType="phone"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.427"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.567" />
 
     <EditText
         android:id="@+id/confirmPasswordInput"

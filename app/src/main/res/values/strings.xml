@@ -28,12 +28,20 @@
     <string name="SignUp">New User? Register Here</string>
     <string name="back">BACK</string>
     <string-array name="Departments">
+        <item>Select Department</item>
         <item>IT</item>
         <item>COMPS</item>
         <item>EXTC</item>
         <item>MECH</item>
         <item>ETRX</item>
-        <item>ALL</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="UserType">
+        <item>Select User Type</item>
+        <item>Student</item>
+        <item>Faculty</item>
+        <item>Other</item>
     </string-array>
     <string name="Registration">
  <![CDATA[ <font color=#353447>New User?</font><b><font color=#FF6B6B face=@string/rc_bold> Register Here!</b>  .]]>

@@ -162,8 +162,9 @@
 
     <Button
         android:id="@+id/ButtonAccept"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/ic_checkbox"
         android:text="Accept"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -174,14 +175,14 @@
 
     <Button
         android:id="@+id/ButtonReject"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Reject"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/ic_stop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintHorizontal_bias="0.601"
         app:layout_constraintStart_toEndOf="@+id/ButtonAccept"
         app:layout_constraintTop_toBottomOf="@+id/TextViewPurpose"
-        app:layout_constraintVertical_bias="0.513" />
+        app:layout_constraintVertical_bias="0.515" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

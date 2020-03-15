@@ -36,6 +36,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Map;
 
@@ -66,10 +69,34 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
         // Build a GoogleSignInClient with the options specified by gso.
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        CheckForNewUser();
+        CheckForNewUser(user);
     }
 
-    private void CheckForNewUser() {
+    private void CheckForNewUser(FirebaseUser user) {
+        DocumentReference doc1 = FirebaseFirestore.getInstance().document("users/" + user.getUid());
+        doc1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if(documentSnapshot!=null)
+                {
+                    Boolean newUser = documentSnapshot.getBoolean("newUser");
+                    if (newUser == null) {
+                        signOut();
+                    }
+                    if (newUser == true) {
+                        Intent intent = new Intent(UserDetails.this, NewUser.class);
+                        startActivity(intent);
+                    }
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(UserDetails.this, "Error!", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onFailure: " + e.toString());
+                signOut();
+            }
+        });
 
     }
 
