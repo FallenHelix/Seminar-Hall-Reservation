@@ -16,7 +16,7 @@
         tools:replace="android:label">
 <!-- <<<<<<< 7march -->
         <activity android:name=".home" />
-        <activity android:name=".receipt"
+        <activity android:name=".admin.receipt"
             android:theme="@style/AppTheme.NoActionBar"/>
 <!--   7march -->
 

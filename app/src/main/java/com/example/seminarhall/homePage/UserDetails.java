@@ -82,6 +82,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                     Boolean newUser = documentSnapshot.getBoolean("newUser");
                     if (newUser == null) {
                         signOut();
+                        return;
                     }
                     if (newUser == true) {
                         Intent intent = new Intent(UserDetails.this, NewUser.class);
@@ -235,10 +236,6 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
            @Override
            public void onSuccess(GetTokenResult getTokenResult) {
                Map<String, Object> map=getTokenResult.getClaims();
-               for (Map.Entry<String,Object> entry : map.entrySet())
-                   Log.d(TAG,"Key = " + entry.getKey() +
-                           ", Value = " + entry.getValue());
-
                boolean isAdmin= map.get("admin") != null && (boolean) map.get("admin");
                boolean newUser= map.get("newUser") != null && (boolean) map.get("newUser");
 
@@ -287,8 +284,4 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         }
         return true;
     }
-
-
-
-
 }

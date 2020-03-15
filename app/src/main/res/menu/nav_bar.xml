@@ -29,7 +29,7 @@
             <item
 
                 android:id="@+id/View_Request"
-                android:icon="@drawable/ic_password"
+                android:icon="@drawable/book"
                 android:title="View Bookings" />
                 <item
                     android:id="@+id/Add_halls"

@@ -16,9 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
-import com.example.seminarhall.admin.FragmentAdminClosed;
-import com.example.seminarhall.booking.FragmentFinal;
-import com.example.seminarhall.receipt;
+import com.example.seminarhall.admin.receipt;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;

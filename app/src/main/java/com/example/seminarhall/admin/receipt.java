@@ -1,4 +1,4 @@
-package com.example.seminarhall;
+package com.example.seminarhall.admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,11 +10,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.seminarhall.booking.Reserve;
+import com.example.seminarhall.R;
+import com.example.seminarhall.ReservedHall;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
