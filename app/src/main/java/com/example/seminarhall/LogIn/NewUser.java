@@ -148,13 +148,14 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener, 
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (id==R.id.Usertype) {
+
+        if(parent.getId()==R.id.Usertype){
+            Toast.makeText(this, "User Type Selected", Toast.LENGTH_SHORT).show();
             userTypeString=parent.getItemAtPosition(position).toString().trim();
-        } else if (id == R.id.department) {
+        } else if (parent.getId()== R.id.department) {
             branchString=parent.getItemAtPosition(position).toString().trim();
             Toast.makeText(this,branchString,Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override

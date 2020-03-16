@@ -10,6 +10,9 @@
     <color name="main_red">#FF6B6B</color>
     <color name="gray">@android:color/darker_gray</color>
 
+    <color name="colorPrimary">#FFAAFF</color>
+
+
 
     //edit Here
 <!--    <color name="calendar_active_month_bg">@color/white</color>-->
