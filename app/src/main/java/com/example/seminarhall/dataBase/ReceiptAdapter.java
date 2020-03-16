@@ -1,16 +1,13 @@
-package com.example.seminarhall.homePage;
+package com.example.seminarhall.dataBase;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,16 +20,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
 import java.util.List;
 
 
 public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptViewHolder> {
     private static final String TAG = "ReceiptAdapter";
     Context context;
-    Drawable accepted ;
-    Drawable error ;
-    Drawable waiting ;
+
 
 
     private List<ReservedHall> reserveList;
@@ -65,14 +59,11 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
         Log.d(TAG, "onBindViewHolder: ");
         if(holder.image!=null)
         if (status.get(position) == 0) {
-            holder.image.setImageResource(R.drawable.ic_bug);
-//            holder.image.setImageDrawable(waiting);
+            holder.image.setImageResource(R.drawable.inprocess);
         } else if (status.get(position) == 1) {
-//            holder.image.setImageDrawable(accepted);
-            holder.image.setImageResource(R.drawable.ic_checkbox);
+            holder.image.setImageResource(R.drawable.accepted);
         } else if (status.get(position) == 2) {
-//            holder.image.setImageDrawable(error);
-            holder.image.setImageResource(R.drawable.error);
+            holder.image.setImageResource(R.drawable.rejected);
         }
         holder.sDate.append(reserveList.get(position).getStartDateText());
         holder.eDate.append(reserveList.get(position).getEndDateText());

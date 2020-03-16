@@ -15,8 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.seminarhall.R;
+import com.example.seminarhall.ReceiptUser;
 import com.example.seminarhall.ReservedHall;
-import com.example.seminarhall.admin.receipt;
+import com.example.seminarhall.dataBase.ReceiptAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -102,7 +103,7 @@ public class FragmentActive extends Fragment implements ReceiptAdapter.ItemClick
     public void onItemClick(View view, int position) {
         Toast.makeText(getContext(), "You have clicked" + position, Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onItemClick: ");
-        Intent intent = new Intent(getContext(), receipt.class);
+        Intent intent = new Intent(getContext(), ReceiptUser.class);
         intent.putExtra("key",halls.get(position).getReservationId());
         intent.putExtra("stat", "Active");
         startActivity(intent);

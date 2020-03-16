@@ -1,12 +1,10 @@
 package com.example.seminarhall.booking;
 
-import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,15 +15,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
-import com.example.seminarhall.homePage.FragmentActive;
-import com.example.seminarhall.homePage.ReceiptAdapter;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.seminarhall.dataBase.ReceiptAdapter;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;

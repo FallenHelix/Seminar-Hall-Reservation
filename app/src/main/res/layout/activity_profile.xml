@@ -104,18 +104,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.86" />
-    <ImageView
-        android:id="@+id/imageview8"
-        android:scaleType="fitXY"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher_round"
-
-        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -133,7 +121,16 @@
         app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/profilepic" />
 
-
-
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/Profile_photo"
+        android:layout_width="132dp"
+        android:layout_height="122dp"
+        android:scaleType="fitXY"
+        android:src="@mipmap/ic_launcher_round"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:riv_corner_radius="80dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

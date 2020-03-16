@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
-import com.example.seminarhall.homePage.ReceiptAdapter;
+import com.example.seminarhall.dataBase.ReceiptAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;

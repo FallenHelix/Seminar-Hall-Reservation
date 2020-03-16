@@ -216,6 +216,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
         else return true;
     }
 
+
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         Calendar c = Calendar.getInstance();

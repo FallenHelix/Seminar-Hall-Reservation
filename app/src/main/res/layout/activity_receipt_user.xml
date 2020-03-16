@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".admin.receipt">
+    tools:context=".ReceiptUser">
+
 
 
     <ImageView
@@ -160,31 +161,17 @@
         app:layout_constraintVertical_bias="0.615" />
 
     <Button
-        android:id="@+id/ButtonAccept"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:hapticFeedbackEnabled="true"
-        android:background="@drawable/ic_checkbox"
-        android:paddingTop="80dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.226"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/TextViewPurpose"
-        app:layout_constraintVertical_bias="0.513">
-    </Button>
-
-    <Button
-        android:hapticFeedbackEnabled="true"
         android:id="@+id/ButtonReject"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:background="@drawable/ic_stop"
+        android:hapticFeedbackEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.601"
-        app:layout_constraintStart_toEndOf="@+id/ButtonAccept"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/TextViewPurpose"
-        app:layout_constraintVertical_bias="0.515" />
+        app:layout_constraintVertical_bias="0.55" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
