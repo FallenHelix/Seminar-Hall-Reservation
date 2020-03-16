@@ -1,26 +1,26 @@
 package com.example.seminarhall.homePage;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.drawable.RoundedBitmapDrawable;
-import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
-
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.seminarhall.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 public class profile extends AppCompatActivity {
 
     TextView name, email, branch, roll, mob;
     ImageView profilePic;
+    FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,16 @@ public class profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         setUpViews();
         putInfo();
+        setUpActionBar();
+    }
+
+
+    private void setUpActionBar() {
+        Toolbar toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("User Details");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     private void putInfo() {
@@ -48,19 +58,9 @@ public class profile extends AppCompatActivity {
                     .placeholder(R.mipmap.ic_launcher_round)
                     .error(R.mipmap.ic_launcher_round)
                     .into(profilePic);
-
-
         }
-
-//get bitmap of the image
-//        Bitmap imageBitmap= BitmapFactory.decodeResource(getResources(),R.id.Profile_photo);
-//        RoundedBitmapDrawable roundedBitmapDrawable= RoundedBitmapDrawableFactory.create(getResources(), imageBitmap);
-//
-////setting radius
-//        roundedBitmapDrawable.setCornerRadius(50.0f);
-////        roundedBitmapDrawable.setAntiAlias(true);
-//        profilePic.setImageDrawable(roundedBitmapDrawable);
     }
+
 
     private void setUpViews() {
         name = findViewById(R.id.TextView_name);

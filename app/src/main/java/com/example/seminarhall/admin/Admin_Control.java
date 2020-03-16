@@ -1,5 +1,6 @@
 package com.example.seminarhall.admin;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
@@ -9,14 +10,15 @@ import android.util.Log;
 
 import com.example.seminarhall.R;
 import com.example.seminarhall.homePage.BookingsPageAdapter;
-import com.example.seminarhall.homePage.FragmentActive;
-import com.example.seminarhall.homePage.FragmentClosed;
 import com.example.seminarhall.homePage.UserDetails;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GetTokenResult;
+import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Map;
 
@@ -30,6 +32,8 @@ public class Admin_Control extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin__control);
         setUpViews();
+        Toolbar toolbar=findViewById(R.id.toolbar1);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Admin Control");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         updateUI(FirebaseAuth.getInstance().getCurrentUser());
