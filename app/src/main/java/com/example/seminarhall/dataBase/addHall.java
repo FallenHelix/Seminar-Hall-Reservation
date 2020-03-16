@@ -97,7 +97,6 @@ public class addHall extends AppCompatActivity implements AdapterView.OnItemSele
             Toast.makeText(this, "Hall Size should be Greater than 0", Toast.LENGTH_SHORT).show();
         }
 
-
         //checking if the value is provided
         if (!TextUtils.isEmpty(hallName) && branchSelected()) {
 

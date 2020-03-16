@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.example.seminarhall.Hall;
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
+import com.example.seminarhall.homePage.FragmentActive;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -51,12 +52,12 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
     private Button itemButton,bookHall;
     private static int id=-1;
     private EditText purpose;
-    Date sCalendar=null,eCalendar=null;
 
+    private int firstHour,firstMinute,secondHour,secondMinute;
     //Items for multiple Choice
     private Button mainList;
-    String[] listItems;
-    boolean[] checkItems;
+    private String[] listItems;
+    private boolean[] checkItems;
     ArrayList<Integer> mUserItems = new ArrayList<>();
     private List<String> SelectedDates;
 
@@ -225,21 +226,59 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
         String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
         switch (id) {
             case R.id.StartTime:
-                    sCalendar = c.getTime();
+                   firstHour=hourOfDay;
+                   firstMinute=minute;
+                   if(checkValidTime())
                     startTime.setText(time);
-                    checkValidTime();
+
 
                 break;
             case R.id.EndTime:
-                c.add(Calendar.DATE,SelectedDates.size()-1);
-                    eCalendar=c.getTime();
+                secondHour=hourOfDay;
+                secondMinute = minute;
+                if(checkValidTime())
                     endTime.setText(time);
-                    checkValidTime();
         }
     }
 
-    private void checkValidTime() {
+    private boolean checkValidTime() {
 
+
+        String StartTimes = "11:01";
+        String EndTimes = "10:00";
+        String startTimeParse[] = StartTimes.split(":");
+        String endTimeParse[] = EndTimes.split(":");
+
+        if(SelectedDates.size()>1 && firstMinute!=-1&&secondMinute!=-1)
+        {
+            if(firstHour > secondHour)
+            {
+                Toast.makeText(getContext(),"Invalid",Toast.LENGTH_SHORT).show();
+                return false;
+
+            }
+            else if(firstHour == secondHour)
+            {
+                if(firstMinute >= secondMinute)
+                {
+                    Toast.makeText(getContext(),"Invalid",Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+                else
+                {
+                    System.out.println("valid");
+                    Toast.makeText(getContext(),"Valid",Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+        else {
+            return true;
+        }
     }
 
     private void multiChoiceDialog()

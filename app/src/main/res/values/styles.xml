@@ -2,9 +2,9 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
-        <!--        <item name="colorPrimary">@android:color/holo_green_dark</item>-->
-        <!--        <item name="colorPrimaryDark">@android:color/holo_purple</item>-->
-        <!--        <item name="colorAccent">@android:color/holo_red_light</item>-->
+                <item name="colorPrimary">@android:color/holo_green_dark</item>
+                <item name="colorPrimaryDark">@color/main_red</item>
+                <item name="colorAccent">@android:color/holo_red_light</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
