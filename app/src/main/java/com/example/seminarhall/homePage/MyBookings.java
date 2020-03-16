@@ -26,6 +26,8 @@ public class MyBookings extends AppCompatActivity {
         setContentView(R.layout.activity_my_bookings);
         Log.d(TAG, "onCreate: Started");
 
+        getSupportActionBar().setTitle("My Bookings");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setUpViews();
         UpdateUI(FirebaseAuth.getInstance().getCurrentUser());
     }

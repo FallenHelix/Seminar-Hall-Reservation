@@ -30,6 +30,8 @@ public class Admin_Control extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin__control);
         setUpViews();
+        getSupportActionBar().setTitle("Admin Control");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         updateUI(FirebaseAuth.getInstance().getCurrentUser());
     }
 
