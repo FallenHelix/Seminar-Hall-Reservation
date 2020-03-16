@@ -170,6 +170,7 @@ public class Singup extends AppCompatActivity {
 //                        }
 //                    });
                     // if the user created intent to login activity
+                    FirebaseAuth.getInstance().signOut();
                     Intent intent = new Intent(Singup.this,
                             SignIn.class);
                     startActivity(intent);

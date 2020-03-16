@@ -1,6 +1,7 @@
 package com.example.seminarhall.dataBase;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -28,6 +29,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -40,15 +47,14 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
     RecyclerView recyclerHallList;
     private boolean FirstTime=true;
     private DrawerLayout drawer;
+    CollectionReference db = FirebaseFirestore.getInstance().collection("halls");
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hall_list);
-
         setUpView();
-
     }
 
     private void setUpView()
@@ -57,15 +63,10 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
         recyclerHallList.setLayoutManager(new LinearLayoutManager(this));
         halls=new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference("Halls");
-
-
         //Side Drawer varibales
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
-
-
-
     }
 
 
@@ -73,23 +74,17 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
     @Override
     protected void onStart() {
         super.onStart();
-        databaseReference.limitToFirst(4)
-                .addValueEventListener(new ValueEventListener() {
+        db.limit(3).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 halls.clear();
-                for (DataSnapshot postSnapshot:dataSnapshot.getChildren())
-                {
-                    Hall hall = postSnapshot.getValue(Hall.class);
+                for (DocumentSnapshot x : queryDocumentSnapshots) {
+                    Hall hall = x.toObject(Hall.class);
                     halls.add(hall);
                 }
-                adapter = new HallListAdapter(hallList.this,halls);
+                adapter = new HallListAdapter(hallList.this, halls);
                 recyclerHallList.setAdapter(adapter);
                 start();
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }

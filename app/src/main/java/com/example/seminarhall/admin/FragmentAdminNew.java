@@ -16,12 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
-import com.example.seminarhall.homePage.BookingAdapter;
-import com.example.seminarhall.homePage.FragmentActive;
-import com.example.seminarhall.homePage.ReceiptAdapter;
-import com.example.seminarhall.receipt;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.seminarhall.dataBase.ReceiptAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -29,13 +24,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class FragmentAdminNew extends Fragment implements ReceiptAdapter.ItemClickListener {
     private static final String TAG = "FragmentAdminNew";

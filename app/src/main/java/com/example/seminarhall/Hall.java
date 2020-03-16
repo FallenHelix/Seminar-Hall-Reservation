@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.firestore.Exclude;
 
 import java.util.Date;
 
@@ -22,9 +23,8 @@ public class Hall implements Parcelable {
 
 
 
-    public Hall(String name, int capacity, String key, String dept) {
+    public Hall(String name, int capacity, String dept) {
         this.Name = name;
-        this.key=key;
         this.Size = capacity;
         this.dept = dept;
     }
@@ -56,10 +56,12 @@ public class Hall implements Parcelable {
         this.Size = size;
     }
 
+    @Exclude
     public void setKey(String key) {
         this.key=key;
     }
 
+    @Exclude
     public String getKey()
     {
         return this.key;

@@ -51,6 +51,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
     private Button itemButton,bookHall;
     private static int id=-1;
     private EditText purpose;
+    Date sCalendar=null,eCalendar=null;
 
     //Items for multiple Choice
     private Button mainList;
@@ -215,6 +216,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
         else return true;
     }
 
+
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         Calendar c = Calendar.getInstance();
@@ -223,11 +225,21 @@ public class FragmentTime extends Fragment implements View.OnClickListener,TimeP
         String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(c.getTime());
         switch (id) {
             case R.id.StartTime:
-                startTime.setText(time);
+                    sCalendar = c.getTime();
+                    startTime.setText(time);
+                    checkValidTime();
+
                 break;
             case R.id.EndTime:
-                endTime.setText(time);
+                c.add(Calendar.DATE,SelectedDates.size()-1);
+                    eCalendar=c.getTime();
+                    endTime.setText(time);
+                    checkValidTime();
         }
+    }
+
+    private void checkValidTime() {
+
     }
 
     private void multiChoiceDialog()

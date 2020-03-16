@@ -47,9 +47,11 @@
         app:layout_constraintVertical_bias="0.616" />
 
     <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/department"
-        android:layout_width="40dp"
-        android:layout_height="18dp"
+        android:id="@+id/HallDepartment"
+        android:layout_width="215dp"
+        android:layout_height="57dp"
+        android:gravity="left|center"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

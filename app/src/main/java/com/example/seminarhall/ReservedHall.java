@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 public class ReservedHall {
@@ -145,11 +146,11 @@ public class ReservedHall {
     @Exclude
     public String getStartDateText()
     {
-        return DateFormat.getDateInstance(DateFormat.SHORT).format(StartDate);
+        return DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY).format(StartDate);
     }
     @Exclude
     public String getEndDateText()
     {
-        return DateFormat.getDateInstance(DateFormat.SHORT).format(EndDate);
+        return DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALY).format(EndDate);
     }
 }
