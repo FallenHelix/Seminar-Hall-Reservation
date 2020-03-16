@@ -1,15 +1,19 @@
 package com.example.seminarhall.homePage;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+
+
 
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.example.seminarhall.R;
-import com.google.android.gms.tasks.OnFailureListener;
+
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,7 +29,9 @@ public class profile extends AppCompatActivity {
 
     TextView name, email, branch, roll, mob;
     ImageView profilePic;
+
     Map<String, Object> map = new HashMap<String, Object>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,16 @@ public class profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         setUpViews();
         putInfo();
+        setUpActionBar();
+    }
+
+
+    private void setUpActionBar() {
+        Toolbar toolbar=findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("User Details");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
     }
 
     @Override
@@ -75,6 +91,7 @@ public class profile extends AppCompatActivity {
                     .into(profilePic);
         }
     }
+
 
     private void setUpViews() {
         name = findViewById(R.id.TextView_name);

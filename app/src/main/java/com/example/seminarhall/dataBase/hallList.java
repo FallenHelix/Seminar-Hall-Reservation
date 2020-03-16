@@ -66,6 +66,8 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
         //Side Drawer varibales
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Halls");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         drawer = findViewById(R.id.drawer_layout);
     }
 

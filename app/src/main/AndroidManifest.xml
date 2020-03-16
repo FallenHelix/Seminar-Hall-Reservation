@@ -21,17 +21,16 @@
             android:name=".admin.receipt"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- 7march -->
         <activity android:name=".LogIn.NewUser" />
-        <activity
-            android:name=".admin.Admin_Control"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- >>>>>>> master -->
-        <activity
-            android:name=".homePage.MyBookings"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <!-- >>>>>>> master -->
+
         <activity
             android:name=".booking.Reserve"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".homePage.profile" />
+        <activity android:name=".homePage.profile"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".homePage.UserDetails"
+            />
         <activity
             android:name=".admin.functions"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -63,6 +62,11 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".homePage.MyBookings"
+            android:parentActivityName=".home"></activity>
+        <activity android:name=".admin.Admin_Control"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".homePage.UserDetails"></activity>
         <service
             android:name=".MessagingService"
             android:exported="false">
