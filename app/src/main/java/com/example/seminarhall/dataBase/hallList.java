@@ -82,6 +82,7 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
                 halls.clear();
                 for (DocumentSnapshot x : queryDocumentSnapshots) {
                     Hall hall = x.toObject(Hall.class);
+                    hall.setKey(x.getId());
                     halls.add(hall);
                 }
                 adapter = new HallListAdapter(hallList.this, halls);

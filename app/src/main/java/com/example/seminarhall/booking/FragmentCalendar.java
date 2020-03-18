@@ -19,6 +19,7 @@ import com.example.seminarhall.Hall;
 import com.example.seminarhall.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -32,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -40,14 +42,28 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
         CalendarPickerView.DateSelectableFilter {
 
     private static final String TAG = "FragmentCalendar";
-    CalendarPickerView calendarPickerView;
-
+    public CalendarPickerView calendarPickerView;
+    BookingHelper helper=new BookingHelper();
     private OnFragmentInteractionListener mListener;
 
-    List<Date> BookedDates;//dates that are needed to be highlighted, indicating a booked event;
-    List<Date> BookedDates2;//dates that are needed to be highlighted, indicating a booked event;
 
-    List<String> BookedDatesText;
+    private List<Date> BookedDates;//dates that are needed to be highlighted, indicating a booked event;
+    private static List<String> singleDates;//dates that are needed to be highlighted, indicating a singled booked event;
+    private static List<Map<String, String>> array = new ArrayList<>();
+
+    private List<String> BookedDatesText;
+    private static Map<String,String> id = new HashMap<>();
+    private static Map<String,String> id2 = new HashMap<>();
+
+
+    public static String  getSingleId(String key)
+    {
+        return id.get(key);
+    }
+    public static String  stat(String key)
+    {
+        return id2.get(key);
+    }
 
     private void getBookedDates() {
         Log.d(TAG, "getBookedDates: ");
@@ -61,7 +77,7 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     private Map<String, Object> Temp;
                     int days;
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+                    String k;
 
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -70,11 +86,20 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
 //                            x.get
                             days = (int) ((long) x.get("noOfDays"));
                             Log.d(TAG, "Days: " + days);
-                            BookedDatesText.addAll((List<String>) Temp.get("days"));
+                            if (days == 1) {
+                                String d=((List<String>)Temp.get("days")).get(0);
 
+                                singleDates.add(d);
+                                k=(String) Temp.get("key");
+                                id.put(d,k);
+                                id2.put(d, "Active");
+                            }
+                            else
+                            BookedDatesText.addAll((List<String>)Temp.get("days"));
                         }
-//                        setCellDecorator();
+                        setUpCalendar();
                         toDatesArray(BookedDatesText);
+                        toDatesArray(singleDates);
                     }
                 });
 
@@ -85,7 +110,7 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     private Map<String, Object> Temp;
                     int days;
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+                    String k;
 
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -94,15 +119,31 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
 //                            x.get
                             days = (int) ((long) x.get("noOfDays"));
                             Log.d(TAG, "Days: " + days);
+                            if (days == 1) {
+                                String d=((List<String>)Temp.get("days")).get(0);
+
+                                singleDates.add(d);
+                                k=(String) Temp.get("key");
+                                id.put(d,k);
+                                id2.put(d, "Closed");
+                            }
+                            else
                                 BookedDatesText.addAll((List<String>) Temp.get("days"));
                         }
-//                        setCellDecorator();
+                        setUpCalendar();
                         toDatesArray(BookedDatesText);
+                        helper.setInfo(singleDates);
+                        helper.toDatesArray();
                     }
                 });
-
-
     }
+
+    public static List<String> sD()
+    {
+        return singleDates;
+    }
+
+
 
 
     @Nullable
@@ -112,7 +153,6 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
 
         setViews(view);
         setUpCalendar();
-
         return view;
     }
 
@@ -126,7 +166,7 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
         calendarPickerView.setDateSelectableFilter(this);
         getBookedDates();
         //setting up lists
-        BookedDates2 = new ArrayList<>();
+        singleDates = new ArrayList<>();
         BookedDatesText = new ArrayList<>();
     }
 
@@ -147,6 +187,7 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
 
 
 
+
     private void getDates() {
         Log.d(TAG, "getDates: ");
         List<Date> dates = calendarPickerView.getSelectedDates();
@@ -157,12 +198,24 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
         }
         List<String> selectedDates = new ArrayList<>();
         for (Date x : dates) {
-//
             String temp = DateFormat.getDateInstance(DateFormat.DATE_FIELD,Locale.ITALY).format(x);
             if (BookedDatesText.contains(temp)) {
                 setUpCalendar();
                 Log.d(TAG, "getDates: clash");
+                Toast.makeText(getContext(), "Sorry Date has been Occupied", Toast.LENGTH_SHORT).show();
                 return;
+            } else if (this.singleDates.contains(temp)) {
+                if (dates.size() > 1) {
+                    setUpCalendar();
+                    return;
+                }else
+                {
+                    selectedDates.add(temp);
+                    mListener.onFragmentInteraction(selectedDates);
+                    FragmentTime.singleCheck();
+                    return;
+                }
+//                               Toast.makeText(getContext(), "Single Reservation day", Toast.LENGTH_SHORT).show();
             }
             selectedDates.add(temp);
             Log.d(TAG, "getDates: " + dates.size());
@@ -171,10 +224,10 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
     }
 
 
+
     @Override
     public void onDateSelected(Date date) {
         getDates();
-
     }
 
     private void toDatesArray(List<String> dates) {
@@ -195,7 +248,6 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
         }
         calendarPickerView.highlightDates(BookedDates);
     }
-
 
     @Override
     public void onDateUnselected(Date date) {
@@ -227,8 +279,6 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
 
     @Override
     public boolean isDateSelectable(Date date) {
-
-
         return true;
     }
 
