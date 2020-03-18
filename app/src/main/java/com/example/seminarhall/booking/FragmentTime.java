@@ -1,7 +1,6 @@
 package com.example.seminarhall.booking;
 
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,12 +20,9 @@ import androidx.fragment.app.Fragment;
 
 import com.example.seminarhall.Hall;
 import com.example.seminarhall.R;
-import com.example.seminarhall.Reservation.TimeClass;
 import com.example.seminarhall.ReservedHall;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
