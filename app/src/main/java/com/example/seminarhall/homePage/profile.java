@@ -9,11 +9,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.seminarhall.R;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -65,7 +67,7 @@ public class profile extends AppCompatActivity {
           }
       }).addOnFailureListener(new OnFailureListener() {
           @Override
-          public void onFailure(@NonNull Exception e) {
+          public void onFailure(@NonNull  Exception e) {
               Toast.makeText(profile.this,"Error Occured",Toast.LENGTH_SHORT).show();
           }
       });
