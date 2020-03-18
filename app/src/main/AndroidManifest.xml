@@ -14,23 +14,21 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name=".ReceiptUser"></activity>
-        <!-- <<<<<<< 7march -->
+        <activity android:name=".Reservation.BookingPageClass"></activity>
+        <activity android:name=".ReceiptUser" /> <!-- <<<<<<< 7march -->
         <activity android:name=".home" />
         <activity
             android:name=".admin.receipt"
             android:theme="@style/AppTheme.NoActionBar" /> <!-- 7march -->
-        <activity android:name=".LogIn.NewUser" />
-        <!-- >>>>>>> master -->
-
+        <activity android:name=".LogIn.NewUser" /> <!-- >>>>>>> master -->
         <activity
             android:name=".booking.Reserve"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".homePage.profile"
-            android:theme="@style/AppTheme.NoActionBar"
+        <activity
+            android:name=".homePage.profile"
             android:parentActivityName=".homePage.UserDetails"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".admin.functions"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -61,12 +59,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".homePage.MyBookings"
+            android:parentActivityName=".home" />
+        <activity
+            android:name=".admin.Admin_Control"
+            android:parentActivityName=".homePage.UserDetails"
+            android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity android:name=".homePage.MyBookings"
-            android:parentActivityName=".home"></activity>
-        <activity android:name=".admin.Admin_Control"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".homePage.UserDetails"></activity>
         <service
             android:name=".MessagingService"
             android:exported="false">

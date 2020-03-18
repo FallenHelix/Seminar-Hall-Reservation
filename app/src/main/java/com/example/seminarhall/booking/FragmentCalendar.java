@@ -45,6 +45,7 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
     public CalendarPickerView calendarPickerView;
     BookingHelper helper=new BookingHelper();
     private OnFragmentInteractionListener mListener;
+    Hall hall;
 
 
     private List<Date> BookedDates;//dates that are needed to be highlighted, indicating a booked event;
@@ -65,11 +66,12 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
         return id2.get(key);
     }
 
+    public  void setHall(Hall h)
+    {
+        this.hall=h;
+    }
     private void getBookedDates() {
         Log.d(TAG, "getBookedDates: ");
-        Hall hall = Reserve.getHall();
-
-
         CollectionReference db = FirebaseFirestore.getInstance().collection("Main/Reservation/Active");
         db.whereEqualTo("hallId", hall.getKey())
 //                .whereGreaterThanOrEqualTo("noOfDays",1)
@@ -212,7 +214,7 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
                 {
                     selectedDates.add(temp);
                     mListener.onFragmentInteraction(selectedDates);
-                    FragmentTime.singleCheck();
+                    mListener.clash(true);
                     return;
                 }
 //                               Toast.makeText(getContext(), "Single Reservation day", Toast.LENGTH_SHORT).show();
@@ -260,6 +262,12 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
         }
     }
 
+    public void sendClash(boolean t) {
+        if (mListener != null) {
+            mListener.clash(t);
+        }
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -284,6 +292,7 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(List<String> sendBackText);
+        void clash(boolean stat);
     }
 
 }
