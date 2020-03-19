@@ -136,10 +136,10 @@
         app:layout_constraintVertical_bias="0.882" />
 
     <ImageView
-        android:layout_below="@id/toolbar"
         android:id="@+id/imageView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="57dp"
+        android:layout_height="163dp"
+        android:layout_below="@id/toolbar"
         android:fontFamily="@font/r_medium"
         android:scaleType="fitXY"
         app:srcCompat="@drawable/p_b" />
