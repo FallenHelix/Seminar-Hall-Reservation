@@ -1,7 +1,5 @@
 package com.example.seminarhall;
 
-import android.util.Log;
-
 import com.google.firebase.firestore.Exclude;
 
 import java.text.DateFormat;
@@ -19,6 +17,27 @@ public class ReservedHall {
     private Date BookingDate;
     int NoOfDays;
     List<String> days;
+    double startHour,endHour;
+
+
+
+    public double getStartHour() {
+        return startHour;
+    }
+
+    public void setStartHour(double startHour) {
+        this.startHour = startHour;
+    }
+
+    public double getEndHour() {
+        return endHour;
+    }
+
+    public void setEndHour(double endHour) {
+        this.endHour = endHour;
+    }
+
+
 
     public int getNoOfDays() {
         return NoOfDays;
@@ -116,6 +135,9 @@ public class ReservedHall {
         EndDate = endDate;
     }
 
+    private void setHour()
+    {
+    }
 
     public ReservedHall(String hallId, List<String> Dates
             , String startTime, String endTime, String userId, String purpose) {
@@ -129,6 +151,7 @@ public class ReservedHall {
         this.BookingDate= Calendar.getInstance().getTime();
         this.days=Dates;
         this.NoOfDays=Dates.size();
+        setHour();
 
     }
     @Exclude
@@ -153,4 +176,6 @@ public class ReservedHall {
     {
         return DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALY).format(EndDate);
     }
+
+
 }

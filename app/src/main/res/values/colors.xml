@@ -33,7 +33,7 @@
     <color name="calendar_divider">@color/main_red</color>//DATES IN EK MONTH KA TABLE WHICH ARE DUSRE MONTHS KE IT MAKES A BAR ON THEM
     <color name="calendar_inactive_month_bg">#ffffff</color>
     <color name="calendar_selected_day_bg">#ff6b6b</color>
-    <color name="calendar_highlighted_day_bg">#ffffff</color> //doubt
+    <color name="calendar_highlighted_day_bg">#AABB99</color> //doubt
     <color name="calendar_selected_range_bg">#d9f08080</color>
     <color name="calendar_text_inactive">#ffffff</color>//DATES IN EK MONTH KA TABLE WHICH ARE DUSRE MONTHS KE(LET'S CAMOUFLAGE THIS)
     <color name="calendar_text_active">#000000</color> //EVERY ACTIVE TEXT WHICH INCLUDES SELECTABLE DATES AND THE ACTIVE MONTHS(THIS IS THE PROBLEM)

@@ -40,11 +40,19 @@ public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFra
     private ViewPager mViewPager;
     private static List<String> mString;
     private TextView head;
-    private static Hall selectedHall;
+    private Hall selectedHall;
+    FragmentTime fragmentTime ;
+
 
     public static List<String> getSelectedDates()
     {
         return mString;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 
     @Override
@@ -107,18 +115,16 @@ public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFra
         head.setPaintFlags(head.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
     }
 
-    public static Hall getHall()
-    {
-        return selectedHall;
-    }
-
 
 
     private void setUpViewPager()
     {
         Log.d(TAG, "setUpViewPager: ");
-        FragmentTime fragmentTime = FragmentTime.newInstance("Select Date First");
-        msectionPageAdapter.addFragment(new FragmentCalendar(), "Tab 1");
+       fragmentTime = FragmentTime.newInstance("Select Date First");
+        fragmentTime.setHall(selectedHall);
+        FragmentCalendar c=new FragmentCalendar();
+        c.setHall(selectedHall);
+        msectionPageAdapter.addFragment(c, "Tab 1");
         msectionPageAdapter.addFragment(fragmentTime, "Tab 2");
         mViewPager.setAdapter(msectionPageAdapter);
 
@@ -128,8 +134,13 @@ public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFra
     public void onFragmentInteraction(List<String> sendBackText) {
         if (sendBackText != null) {
             mString=sendBackText;
-//        msectionPageAdapter.notifyDataSetChanged();
+            fragmentTime.updateDate(sendBackText);
         }
+    }
+
+    @Override
+    public void clash(boolean stat) {
+        fragmentTime.setClash(stat);
     }
 
 
