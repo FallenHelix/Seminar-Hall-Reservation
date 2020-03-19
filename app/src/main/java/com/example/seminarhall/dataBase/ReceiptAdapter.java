@@ -27,8 +27,6 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
     private static final String TAG = "ReceiptAdapter";
     Context context;
 
-
-
     private List<ReservedHall> reserveList;
     public ItemClickListener itemClickListener;
     private List<Integer> status;
@@ -65,10 +63,12 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
         } else if (status.get(position) == 2) {
             holder.image.setImageResource(R.drawable.rejected);
         }
-        holder.sDate.append(reserveList.get(position).getStartDateText());
-        holder.eDate.append(reserveList.get(position).getEndDateText());
-        holder.sTime.append(reserveList.get(position).getPurpose());
-
+        holder.sDate.setText(reserveList.get(position).getStartDateText());
+        holder.eDate.setText(reserveList.get(position).getEndDateText());
+        holder.sTime.setText(reserveList.get(position).getStartTime());
+        holder.eTime.setText(reserveList.get(position).getEndTime());
+        holder.purpose.setText(reserveList.get(position).getPurpose());
+        holder.Hallid.setText(reserveList.get(position).getHallId().toUpperCase());
     }
 
     private String getHallName(String hallId) {
@@ -100,7 +100,7 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
 
 
     public class ReceiptViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView Hallid, sDate, eDate, sTime;
+        TextView Hallid, sDate, eDate, sTime,eTime,purpose;
         ImageView image;
         public ReceiptViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -109,6 +109,8 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
             eDate = (TextView) itemView.findViewById(R.id.TextEndDate);
             sTime = (TextView) itemView.findViewById(R.id.TextStartTime);
             image = (ImageView)itemView.findViewById(R.id.imageView);
+            eTime=itemView.findViewById(R.id.TextEndTime);
+            purpose = itemView.findViewById(R.id.TextViewPurpose);
             itemView.setOnClickListener(this);
         }
 

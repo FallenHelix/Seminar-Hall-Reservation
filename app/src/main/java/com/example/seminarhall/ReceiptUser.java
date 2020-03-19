@@ -40,9 +40,10 @@ public class ReceiptUser extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipt_user);
+        user=FirebaseAuth.getInstance().getCurrentUser();
+
         setUpIntent();
         setUpViews();
-        user=FirebaseAuth.getInstance().getCurrentUser();
 
         updateUI(user);
     }
@@ -69,13 +70,14 @@ public class ReceiptUser extends AppCompatActivity implements View.OnClickListen
                     hall.setReservationId(documentSnapshot.getId());
                     fillData();
                 }
+                if (!user.getUid().equals(hall.getUserId())) {
+                    Log.d(TAG, "setUpIntent: User Id does not match" + user.getUid());
+                    Toast.makeText(ReceiptUser.this, "Error occurred", Toast.LENGTH_SHORT).show();
+//                    updateUI(null);
+                }
+
             }
         });
-        if (user.getUid() != hall.getUserId()) {
-            Log.d(TAG, "setUpIntent: User Id does not match");
-            Toast.makeText(this, "Error occurred", Toast.LENGTH_SHORT).show();
-            updateUI(null);
-        }
 
     }
 
@@ -100,7 +102,7 @@ public class ReceiptUser extends AppCompatActivity implements View.OnClickListen
         Room = findViewById(R.id.TextRoom);
         purpose = findViewById(R.id.TextViewPurpose);
         findViewById(R.id.ButtonReject).setOnClickListener(this);
-        findViewById(R.id.ButtonAccept).setOnClickListener(this);
+//        findViewById(R.id.ButtonAccept).setOnClickListener(this);
     }
 
     @Override
