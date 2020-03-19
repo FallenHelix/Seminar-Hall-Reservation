@@ -3,14 +3,15 @@
 
     <color name="red">#FF0000</color>
     <color name="background_color">#009688</color>
-    <color name="white">#FFFFFF</color>
+<!--    <color name="white">#FFFFFF</color>-->
     <color name="black">#000000</color>
     <color name="white_greyish">#EEEEEE</color>
     <color name="button_selectorcolor">#9E9E9E</color>
     <color name="main_red">#FF6B6B</color>
+    <color name="app_blue">#353447</color>
     <color name="gray">@android:color/darker_gray</color>
 
-    <color name="colorPrimary">#FFAAFF</color>
+<!--    <color name="colorPrimary">#FFAAFF</color>-->
 
 
 
@@ -39,4 +40,23 @@
     <color name="calendar_text_active">#000000</color> //EVERY ACTIVE TEXT WHICH INCLUDES SELECTABLE DATES AND THE ACTIVE MONTHS(THIS IS THE PROBLEM)
     <color name="calendar_text_selected">#ffffff</color>   //date select karne ke baad ka color of date text
     <color name="calendar_text_unselectable">#708090</color>
+
+
+
+    <color name="colorPrimary">#49BEFF</color>
+    <color name="colorPrimaryDark">#65DCE5</color>
+    <color name="colorAccent">#0D5D98</color>
+
+    <color name="address">#2F7092</color>
+    <color name="followers">#0D5D98</color>
+    <color name="headings">#3797CF</color>
+    <color name="solidCircle">#AAFFFFFF</color>
+    <color name="circleBorder">#50FFFFFF</color>
+    <color name="gradEnd">#67EFC8</color>
+    <color name="gradStart">#63C9FF</color>
+    <color name="followersBg">#65DCE5</color>
+    <color name="followingBg">#49BEFF</color>
+    <color name="grey">#E5E5E5</color>
+
+    <color name="white">#FFFFFF</color>
 </resources>

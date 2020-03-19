@@ -10,12 +10,13 @@
     android:paddingBottom="20dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/Profile_photo"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher_round" />
+<!--    android:scaleType="fitXY"-->
+
 
     <TextView
         android:id="@+id/User_Name"

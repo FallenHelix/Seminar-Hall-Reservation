@@ -223,6 +223,7 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
             Log.d(TAG, "getDates: " + dates.size());
         }
         mListener.onFragmentInteraction(selectedDates);
+        mListener.clash(false);
     }
 
 

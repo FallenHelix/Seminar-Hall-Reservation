@@ -14,41 +14,39 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name=".Reservation.BookingPageClass"></activity>
+        <activity android:name=".ProfilePage"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ReceiptUser" /> <!-- <<<<<<< 7march -->
         <activity android:name=".home" />
         <activity
             android:name=".admin.receipt"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- 7march -->
+            android:theme="@style/AppTheme.NoActionBar2" /> <!-- 7march -->
         <activity android:name=".LogIn.NewUser" /> <!-- >>>>>>> master -->
         <activity
             android:name=".booking.Reserve"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.NoActionBar2"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".homePage.profile"
             android:parentActivityName=".homePage.UserDetails"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar2" />
         <activity
             android:name=".admin.functions"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar1" />
         <activity android:name=".HCalendar" />
         <activity
             android:name=".LogIn.SignIn"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".Booking"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar1" />
         <activity
             android:name=".dataBase.hallList"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar2" />
         <activity
             android:name=".dataBase.addHall"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar1" />
         <activity android:name=".LogIn.reset" />
         <activity
             android:name=".homePage.UserDetails"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar2" />
         <activity
             android:name=".LogIn.Singup"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -61,11 +59,12 @@
         </activity>
         <activity
             android:name=".homePage.MyBookings"
-            android:parentActivityName=".home" />
+            android:parentActivityName=".home"
+            android:theme="@style/AppTheme.NoActionBar1" />
         <activity
             android:name=".admin.Admin_Control"
             android:parentActivityName=".homePage.UserDetails"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar2" />
 
         <service
             android:name=".MessagingService"

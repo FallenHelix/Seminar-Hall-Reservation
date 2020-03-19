@@ -140,7 +140,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         TextView nav_email = (TextView) headerView.findViewById(R.id.User_email);
         TextView nav_name = (TextView) headerView.findViewById(R.id.User_Name);
         nav_name.setText(name);
-        navPic.setAdjustViewBounds(true);
+//        navPic.setAdjustViewBounds(true);
         if(url!=null)
         {
             url=url.replace("s96-c", "s384-c");

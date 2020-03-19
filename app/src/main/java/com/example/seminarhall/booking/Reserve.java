@@ -1,36 +1,24 @@
 package com.example.seminarhall.booking;
 
 import android.content.Intent;
-import android.graphics.Paint;
-import com.example.seminarhall.Hall;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import com.example.seminarhall.Hall;
 import com.example.seminarhall.LogIn.SignIn;
 import com.example.seminarhall.R;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AppCompatActivity;
-
-
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.TableLayout;
-import android.widget.TextView;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,16 +26,11 @@ public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFra
     private static final String TAG = "Reserve Class";
     private SectionPageAdapter msectionPageAdapter;
     private ViewPager mViewPager;
-    private static List<String> mString;
     private TextView head;
     private Hall selectedHall;
     FragmentTime fragmentTime ;
 
 
-    public static List<String> getSelectedDates()
-    {
-        return mString;
-    }
 
     @Override
     public void onBackPressed() {
@@ -61,10 +44,8 @@ public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFra
         setContentView(R.layout.activity_reserve);
 
         Log.d(TAG, "onCreate: ");
-        mString = new ArrayList<>();
         head = (TextView) findViewById(R.id.title);
         setHallName();
-
         //check user is logged in or not
         UpdateUI(FirebaseAuth.getInstance().getCurrentUser());
 
@@ -101,6 +82,17 @@ public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFra
         });
     }
 
+    private void setUpToolbar(String title) {
+        Toolbar toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(title);
+        TextView head=findViewById(R.id.toolbarText);
+        head.setText(title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    }
+
     private void UpdateUI(FirebaseUser currentUser) {
         if (currentUser == null) {
             Intent intent = new Intent(getApplicationContext(), SignIn.class);
@@ -111,8 +103,7 @@ public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFra
     private void setHallName() {
         Intent intent=getIntent();
         selectedHall = intent.getParcelableExtra("Hall Selected");
-        head.setText(selectedHall.getName());
-        head.setPaintFlags(head.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+        setUpToolbar(selectedHall.getName());
     }
 
 
@@ -133,7 +124,6 @@ public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFra
     @Override
     public void onFragmentInteraction(List<String> sendBackText) {
         if (sendBackText != null) {
-            mString=sendBackText;
             fragmentTime.updateDate(sendBackText);
         }
     }

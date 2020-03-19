@@ -17,12 +17,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.seminarhall.Hall;
 import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -39,7 +43,7 @@ import java.util.Calendar;
 import java.util.List;
 
 
-public class FragmentTime extends Fragment implements View.OnClickListener, TimePickerDialog.OnTimeSetListener  {
+public class FragmentTime extends Fragment implements View.OnClickListener, TimePickerDialog.OnTimeSetListener {
     private static final String TAG = "FragmentTime";
     public static final String Arg_start_date = "Start Date";
     private TextView startTime, endTime, selectedDate, itemText;
@@ -47,6 +51,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
     private static int id = -1;
     private EditText purpose;
     private Hall currHall;
+    boolean clashLoaded = false;
 
     private int firstHour = 1000, firstMinute = 1000, secondHour = 1000, secondMinute = 1000;
     //Items for multiple Choice
@@ -60,7 +65,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
     //variables for clash check for single date
     List<Double> sTime;
     List<Double> eTime;
-    double startHour=-1, endHour=-1;
+    double startHour = -1, endHour = -1;
     List<Integer> expandedList = new ArrayList<>();
 
     //Fragment listener
@@ -70,66 +75,6 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
     public FragmentTime() {
 
     }
-
-    private boolean TimeCheck() {
-        Log.d(TAG, "TimeCheck: ");
-        if (expandedList.contains(startHour) || expandedList.contains(endHour)) {
-            Log.d(TAG, "TimeCheck: error");
-
-            return false;
-        } else
-            return true;
-
-    }
-
-
-    private void DateCheck() {
-        final List<Integer> startTime = new ArrayList<>();
-        final List<Integer> endTime = new ArrayList<>();
-        Log.d(TAG, "Selected" + SelectedDates);
-//        Log.d(TAG, "SingleDates" + singleDates);
-
-
-        String status = FragmentCalendar.stat(SelectedDates.get(0));
-        String id = FragmentCalendar.getSingleId(SelectedDates.get(0));
-        Log.d(TAG, "Key " + id);
-        Log.d(TAG, "Status: " + status);
-
-        CollectionReference doc = FirebaseFirestore.getInstance().collection("Main");
-
-
-        doc.whereArrayContains("days", SelectedDates.get(0)).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (DocumentSnapshot x : queryDocumentSnapshots) {
-                    startTime.add((int)(long) ( x.get("startHour")));
-                    endTime.add((int)(long)  (x.get("endHour")));
-                }
-                Log.d(TAG, "Start Time" + startTime);
-                Log.d(TAG, "End Time"+endTime);
-                expand(startTime, endTime);
-            }
-        });
-    }
-
-    private boolean expandedListReady=false;
-
-    public void expand(List<Integer> startTime, List<Integer> endTime) {
-
-        for (int i = 0; i < startTime.size(); i++) {
-            for (int j = startTime.get(i) + 1; j <= endTime.get(i)-1; j++) {
-                expandedList.add(j);
-            }
-        }
-        itemText.setText("");
-
-        Log.d(TAG, "expand list: "+expandedList);
-        for (int i : expandedList) {
-            itemText.append("-" + i);
-        }
-        expandedListReady=true;
-    }
-
 
     public static FragmentTime newInstance(String start) {
 
@@ -143,7 +88,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        clash=false;
+        clash = false;
         Log.d(TAG, "onCreate: ");
         Calendar c = Calendar.getInstance();
         String d = DateFormat.getDateInstance(DateFormat.SHORT).format(c.getTime());
@@ -193,6 +138,10 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
 
         if (clash)
             getClashTimes();
+        else {
+            sTime.clear();
+            eTime.clear();
+        }
     }
 
 
@@ -202,58 +151,96 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
         Log.d(TAG, "getClashTimes: ");
         CollectionReference db1 = FirebaseFirestore.getInstance().collection("Main/Reservation/Active");
         CollectionReference db2 = FirebaseFirestore.getInstance().collection("Main/Reservation/Closed");
-        db1.whereGreaterThan("endHour", 10)
-                .whereEqualTo("hallId",currHall.getKey())
-                .orderBy("endHour", Query.Direction.DESCENDING).get().addOnSuccessListener(
-                new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
-                            sTime.add((double) x.getDouble("startHour"));
-                            eTime.add((double) x.getDouble("endHour"));
-                        }
-                        Log.d(TAG, "startHour" + sTime);
-                        Log.d(TAG, "end Time " + eTime);
+
+        Task t1 = db1.whereArrayContainsAny("days", SelectedDates)
+                .whereEqualTo("hallId", currHall.getKey())
+                .orderBy("endHour", Query.Direction.DESCENDING)
+                .get();
+        Task t2 = db2.whereArrayContainsAny("days", SelectedDates)
+                .whereEqualTo("hallId", currHall.getKey())
+                .orderBy("endHour", Query.Direction.DESCENDING).get();
+        Task<List<QuerySnapshot>> allTask = Tasks.whenAllSuccess(t1, t2);
+        allTask.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
+            @Override
+            public void onSuccess(List<QuerySnapshot> querySnapshots) {
+                for (QuerySnapshot snapshots : querySnapshots) {
+                    for (QueryDocumentSnapshot x : snapshots) {
+                        sTime.add((double) x.getDouble("startHour"));
+                        eTime.add((double) x.getDouble("endHour"));
                     }
                 }
-        ).addOnFailureListener(new OnFailureListener() {
+                clashLoaded = true;
+                showDialogBox();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure: "+e);
+                Log.d(TAG, "onFailure: "+e.toString());
             }
         });
-//        Task t2=db2.whereGreaterThan("endTime", 10)
-//                .whereEqualTo("hallId",currHall.getKey())
-//                .orderBy("endTime", Query.Direction.DESCENDING).get();
-
-
-
+//        db1.whereArrayContainsAny("days", SelectedDates)
+//                .whereEqualTo("hallId", currHall.getKey())
+//                .orderBy("endHour", Query.Direction.DESCENDING)
+//                .get().addOnSuccessListener(
+//                new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
+//                            sTime.add((double) x.getDouble("startHour"));
+//                            eTime.add((double) x.getDouble("endHour"));
+//                        }
+//                        Log.d(TAG, "startHour" + sTime);
+//                        Log.d(TAG, "end Time " + eTime);
+//                    }
+//                }
+//        ).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d(TAG, "onFailure: " + e);
+//            }
+//        });
+//        db2.whereArrayContainsAny("days", SelectedDates)
+//                .whereEqualTo("hallId", currHall.getKey())
+//                .orderBy("endHour", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//            @Override
+//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
+//                    sTime.add((double) x.getDouble("startHour"));
+//                    eTime.add((double) x.getDouble("endHour"));
+//                }
+//                clashLoaded = true;
+//                showDialogBox();
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d(TAG, "onFailure: e");
+//            }
+//        });
     }
 
     private boolean filterTime() {
-        List<Double> t1 = new ArrayList<>(sTime);
-        List<Double> t2= new ArrayList<>(eTime);
-        //initial filter
-        List<Integer> popList = new ArrayList<>();
-        for (int i = 0; i < t1.size(); i++) {
-            if (startHour > eTime.get(i)) {
-                popList.add(i);
-            }
-        }
-        for (int i : popList) {
-            t1.remove(i);
-            t2.remove(i);
-        }
+//        List<Double> t1 = new ArrayList<>(sTime);
+//        List<Double> t2= new ArrayList<>(eTime);
+//        //initial filter
+//        List<Integer> popList = new ArrayList<>();
+//        for (int i = 0; i < t1.size(); i++) {
+//            if (startHour > eTime.get(i)) {
+//                popList.add(i);
+//            }
+//        }
+//        for (int i : popList) {
+//            t1.remove(i);
+//            t2.remove(i);
+//        }
 
         for (int i = 0; i < sTime.size(); i++) {
-            if ((endHour)>sTime.get(i)) {
-                if (startHour+0.01 > eTime.get(i)) {
+            if ((endHour) > sTime.get(i)) {
+                if (startHour + 0.01 > eTime.get(i)) {
                     return true;
-                }
-                else
-                {
-                    Log.d(TAG, "filterTime: "+sTime.get(i)+" - "+eTime.get(i));
-                    Log.d(TAG, "INput TIme"+startHour+" - "+endHour);
+                } else {
+                    Log.d(TAG, "filterTime: " + sTime.get(i) + " - " + eTime.get(i));
+                    Log.d(TAG, "INput TIme" + startHour + " - " + endHour);
                     return false;//startHour is less
                 }
 //                if (endHour < eTime.get(i)) {//db has SuperSet of time i.e database has bigger time slots reserved
@@ -263,8 +250,8 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
 //                }
             }
         }
-        Log.d(TAG, "INput TIme"+startHour+" - "+endHour);
-        return  true;
+        Log.d(TAG, "INput TIme" + startHour + " - " + endHour);
+        return true;
     }
 
     public void updateDate(List<String> s) {
@@ -299,27 +286,36 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
         } else if (i == R.id.b1) {
             multiChoiceDialog();
         } else if (i == R.id.button4) {
+            startReservation();
 
-//            if (!mainCheck()) {
-//                Toast.makeText(getContext(), "Pleasea Enter Purpose!!", Toast.LENGTH_SHORT).show();
-//            } else {
-//                reserveHall();
-//            }
-            if (filterTime()) {
-                Toast.makeText(getContext(), "Valid Time bro", Toast.LENGTH_SHORT).show();
-            }
-            else
-                Toast.makeText(getContext(),"Invalid Time bro",Toast.LENGTH_LONG).show();
         }
 
     }
 
+    private void startReservation() {
+        if (!mainCheck()) {
+            Toast.makeText(getContext(), "Pleasea Enter Purpose!!", Toast.LENGTH_SHORT).show();
+        } else if (clash) //these exist a clash.. try clashCLoaded is finished
+        {
+            if (clashLoaded) {
+                if (filterTime()) {
+                    reserveHall();
+                } else
+                    showDialogBox();
+            } else {
+                Toast.makeText(getContext(), "!Contacting Server", Toast.LENGTH_SHORT).show();
+                onResume();
+            }
+        } else {
+            reserveHall();
+        }
+    }
+
+
     private void reserveHall() //adding to database
     {
 
-        if (!TimeCheck()) {
-            return;
-        }
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db;
         ReservedHall hall = new ReservedHall(currHall.getKey(), SelectedDates, startTime.getText().toString().trim(),
@@ -352,9 +348,16 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
 
     private boolean mainCheck() {
 
-        if (purpose.getText().toString().trim().length() == 0) {
+        if (startHour == -1 | endHour == -1) {
+            Toast.makeText(getContext(), "Enter Time First", Toast.LENGTH_SHORT).show();
             return false;
-        } else return true;
+        } else if (SelectedDates.size() == 0) {
+            Toast.makeText(getContext(), "Please Select Date First!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (purpose.getText().toString().trim().length() == 0) {
+            return false;
+        } else
+            return true;
     }
 
 
@@ -371,7 +374,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
                 firstMinute = minute;
                 if (checkValidTime()) {
                     startTime.setText(time);
-                    startHour = hourOfDay+((double)minute/100);
+                    startHour = hourOfDay + ((double) minute / 100);
                 }
                 break;
             case R.id.EndTime:
@@ -379,7 +382,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
                 secondMinute = minute;
                 if (checkValidTime()) {
                     endTime.setText(time);
-                    endHour = hourOfDay+((double)minute/100);
+                    endHour = hourOfDay + ((double) minute / 100);
                 }
         }
     }
@@ -407,26 +410,6 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
         }
     }
 
-    private void temp()
-    {
-
-        CollectionReference db = FirebaseFirestore.getInstance().collection("Main/Reservation/Active");
-        db.whereGreaterThan("endTime", 10)
-                .whereEqualTo("hallId",currHall.getKey())
-                .orderBy("endTime", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
-                    Log.d(TAG, "onSuccess: " + x);
-                }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure: "+e);
-            }
-        });
-    }
 
     private void multiChoiceDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -483,17 +466,29 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
         mDialog.show();
     }
 
-    public void setHall(Hall h)
-    {
-        currHall=h;
+    public void setHall(Hall h) {
+        currHall = h;
     }
 
     public void setClash(boolean stat) {
-        clash=stat;
+        clash = stat;
     }
 
-    public void openDialog() {
-        DialogBox exampleDialog = new DialogBox();
-        exampleDialog.show(getChildFragmentManager(), "example dialog");
+    private void showDialogBox() {
+        String displayString = "";
+        if (sTime.size() > 0)
+            for (int i = 0; i < sTime.size(); i++) {
+                displayString +=(sTime.get(i).toString());
+                displayString+=(" - " + eTime.get(i));
+//                displayString.concat();
+            }
+        openDialog(displayString);
+    }
+
+
+    public void openDialog(String s) {
+        DialogBox exampleDialog = new DialogBox(s);
+        FragmentTransaction ft = getChildFragmentManager().beginTransaction();
+        exampleDialog.show(ft, s);
     }
 }

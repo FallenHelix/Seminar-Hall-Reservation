@@ -7,6 +7,7 @@
     tools:context=".booking.Reserve">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:elevation="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#353447"
@@ -14,19 +15,29 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 <!--        android:theme="@style/AppTheme.NoActionBar">-->
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+        <androidx.appcompat.widget.Toolbar
+            android:elevation="5dp"
             android:gravity="center"
-            android:minHeight="?actionBarSize"
-            android:padding="8dp"
-            android:textColor="@color/white"
-            android:fontFamily="@font/sf_display_medium"
-            android:text="@string/hall"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:id="@+id/toolbar"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+            <TextView
+                android:id="@+id/toolbarText"
+                android:layout_marginRight="?android:attr/actionBarSize"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:text="Hall_Name"
+                android:layout_gravity="center"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+        </androidx.appcompat.widget.Toolbar>
+
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"

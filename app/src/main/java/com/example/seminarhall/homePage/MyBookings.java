@@ -1,16 +1,16 @@
 package com.example.seminarhall.homePage;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.ViewPager;
 
 import com.example.seminarhall.LogIn.SignIn;
 import com.example.seminarhall.R;
-import com.example.seminarhall.booking.FragmentCalendar;
-import com.example.seminarhall.booking.FragmentTime;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,8 +26,13 @@ public class MyBookings extends AppCompatActivity {
         setContentView(R.layout.activity_my_bookings);
         Log.d(TAG, "onCreate: Started");
 
-        getSupportActionBar().setTitle("My Bookings");
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+//        getSupportActionBar().setTitle("My Bookings");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        TextView textView = findViewById(R.id.toolbarText);
+        textView.setText("My Bookings");
         setUpViews();
         UpdateUI(FirebaseAuth.getInstance().getCurrentUser());
     }
