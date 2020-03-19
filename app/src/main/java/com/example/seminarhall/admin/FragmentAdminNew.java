@@ -74,6 +74,7 @@ public class FragmentAdminNew extends Fragment implements ReceiptAdapter.ItemCli
                 status.clear();
                 if (e != null) {
                     System.err.println("Listen failed: " + e);
+                    Log.d(TAG, "Failure: "+e);
                     return;
                 } else if (queryDocumentSnapshots != null) {
                     Log.d(TAG, "onEvent: ");

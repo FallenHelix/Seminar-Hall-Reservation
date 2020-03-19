@@ -50,7 +50,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     private DrawerLayout drawer;
     private GoogleSignInClient mGoogleSignInClient;
     NavigationView navigationView;
-
+    FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: ");
@@ -58,9 +58,10 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
 
+         user = FirebaseAuth.getInstance().getCurrentUser();
         setView();
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         updateUi(user);
+        setNavigation();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -125,9 +126,17 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         toggle.syncState();
 
         //setting up side drawer email and profile pic
+
+        return;
+    }
+
+    private void setNavigation() {
         String name,email;
-        name=mAuth.getCurrentUser().getDisplayName();
-        email=mAuth.getCurrentUser().getEmail();
+        if (user == null) {
+            updateUi(null);
+        }
+        name=user.getDisplayName();
+        email=user.getEmail();
         String url=null;
         if(mAuth.getCurrentUser().getPhotoUrl()!=null)
         {
@@ -148,8 +157,6 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             nav_email.setText(email);
 
         }
-
-        return;
     }
 
     @Override

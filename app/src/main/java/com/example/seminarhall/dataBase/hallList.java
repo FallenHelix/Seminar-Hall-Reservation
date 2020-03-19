@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,7 +24,10 @@ import com.example.seminarhall.Hall;
 import com.example.seminarhall.LogIn.MainActivity;
 import com.example.seminarhall.R;
 import com.example.seminarhall.booking.Reserve;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.api.LogDescriptor;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +38,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -41,6 +46,7 @@ import java.util.ArrayList;
 public class hallList extends AppCompatActivity implements HallListAdapter.ItemClickListener,NavigationView.OnNavigationItemSelectedListener
 {
 
+    private static final String TAG = "hallList";
     HallListAdapter adapter;
     DatabaseReference databaseReference;
     ArrayList<Hall> halls;
@@ -76,20 +82,28 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
     @Override
     protected void onStart() {
         super.onStart();
-        db.limit(3).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        db.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                 halls.clear();
-                for (DocumentSnapshot x : queryDocumentSnapshots) {
+                for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
                     Hall hall = x.toObject(Hall.class);
                     hall.setKey(x.getId());
                     halls.add(hall);
                 }
-                adapter = new HallListAdapter(hallList.this, halls);
-                recyclerHallList.setAdapter(adapter);
-                start();
+                    adapter = new HallListAdapter(hallList.this, halls);
+                    recyclerHallList.setAdapter(adapter);
+                    start();
+                
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: ");
+
             }
         });
+
     }
     private void start()
     {

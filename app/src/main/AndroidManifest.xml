@@ -36,6 +36,7 @@
         <activity android:name=".HCalendar" />
         <activity
             android:name=".LogIn.SignIn"
+            android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar1" />
         <activity
             android:name=".dataBase.hallList"
