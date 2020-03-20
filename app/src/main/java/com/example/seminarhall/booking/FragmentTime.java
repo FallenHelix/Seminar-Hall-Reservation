@@ -294,7 +294,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
 
     private void startReservation() {
         if (!mainCheck()) {
-            Toast.makeText(getContext(), "Pleasea Enter Purpose!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Please Enter Purpose!!", Toast.LENGTH_SHORT).show();
         } else if (clash) //these exist a clash.. try clashCLoaded is finished
         {
             if (clashLoaded) {
