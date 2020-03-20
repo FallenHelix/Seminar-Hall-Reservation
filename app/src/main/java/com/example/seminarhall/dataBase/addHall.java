@@ -47,8 +47,8 @@ public class addHall extends AppCompatActivity implements AdapterView.OnItemSele
         branchString = null;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hall);
-        editTextHallName = findViewById(R.id.Hall_Name);
-        editTextHallSize = findViewById(R.id.Hall_Size);
+//        editTextHallName = findViewById(R.id.Hall_Name);
+//        editTextHallSize = findViewById(R.id.Hall_Size);
         addToDb = findViewById(R.id.Add_a);
         branch = findViewById(R.id.HallDepartment);
 
@@ -87,6 +87,9 @@ public class addHall extends AppCompatActivity implements AdapterView.OnItemSele
             size = Integer.parseInt(size_string);
         } catch (Exception e) {
             Toast.makeText(addHall.this, "Enter Size", Toast.LENGTH_SHORT).show();
+            editTextHallSize.setText("");
+            editTextHallSize.setError("Enter Size");
+
             return;
         }
         if(hallName.length()==0)
@@ -145,10 +148,15 @@ public class addHall extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
     private boolean branchSelected() {
-        if (branchString == null || branchString == "Select Department") {
+        if (branchString == null || branchString.equals("Select Department")) {
+            Log.d(TAG, "branchSelected: None");
+            Toast.makeText(addHall.this,"Select Branch",Toast.LENGTH_SHORT).show();
             return false;
-        } else
+
+        } else {
+            Log.d(TAG, "branchSelected: "+branchString);
             return true;
+        }
     }
 
     @Override

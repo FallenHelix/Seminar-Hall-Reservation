@@ -57,7 +57,7 @@ public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallLi
         String hName=temp.getName();
         int size=temp.getSize();
         holder.hallSize.setText(String.valueOf(size));
-        holder.hallName.setText(hName);
+        holder.hallRoom.setText(hName);
     }
 
     @Override
@@ -67,13 +67,14 @@ public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallLi
 
 //LIST XML handling class
     public class HallListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView hallName;
+        TextView hallRoom;
         TextView hallSize;
+        TextView hallBranch,hallName,hallBuilding;
 
          HallListViewHolder( View itemView) {
             super(itemView);
-            hallName = (TextView) itemView.findViewById(R.id.textView);
-            hallSize = (TextView) itemView.findViewById(R.id.textView2);
+            hallRoom = (TextView) itemView.findViewById(R.id.HallRoom);
+            hallSize = (TextView) itemView.findViewById(R.id.HallSize);
             itemView.setOnClickListener(this);
         }
 

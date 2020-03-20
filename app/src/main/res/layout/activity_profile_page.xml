@@ -100,8 +100,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:background="@color/followingBg"
             android:gravity="center"
+            android:background="@color/followingBg"
             android:paddingTop="5dp"
             android:paddingBottom="5dp">
 
