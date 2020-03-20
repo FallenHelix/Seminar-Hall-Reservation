@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -146,6 +147,8 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
         //get the text views
         View headerView = navigationView.getHeaderView(0);
+        LinearLayout l = headerView.findViewById(R.id.Nav);
+
         ImageView navPic= (ImageView) headerView.findViewById(R.id.Profile_photo);
         TextView nav_email = (TextView) headerView.findViewById(R.id.User_email);
         TextView nav_name = (TextView) headerView.findViewById(R.id.User_Name);

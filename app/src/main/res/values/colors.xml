@@ -10,7 +10,7 @@
     <color name="main_red">#FF6B6B</color>
     49BEFF
 
-        <color name="app_blue">#000026</color>
+        <color name="app_blue">#63C9FF</color>
 <!--    <color name="app_blue">#353447</color>-->
     <color name="gray">@android:color/darker_gray</color>
 
@@ -37,7 +37,7 @@
     <color name="calendar_divider">@color/main_red</color>//DATES IN EK MONTH KA TABLE WHICH ARE DUSRE MONTHS KE IT MAKES A BAR ON THEM
     <color name="calendar_inactive_month_bg">#ffffff</color>
     <color name="calendar_selected_day_bg">#ff6b6b</color>
-    <color name="calendar_highlighted_day_bg">#AABB99</color> //doubt
+    <color name="calendar_highlighted_day_bg">#49BEFF</color> //doubt
     <color name="calendar_selected_range_bg">#d9f08080</color>
     <color name="calendar_text_inactive">#ffffff</color>//DATES IN EK MONTH KA TABLE WHICH ARE DUSRE MONTHS KE(LET'S CAMOUFLAGE THIS)
     <color name="calendar_text_active">#000000</color> //EVERY ACTIVE TEXT WHICH INCLUDES SELECTABLE DATES AND THE ACTIVE MONTHS(THIS IS THE PROBLEM)

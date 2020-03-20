@@ -10,7 +10,7 @@
         android:elevation="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#353447"
+        android:background="@color/app_blue"
 
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light">

@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".admin.functions">
 
+    <androidx.appcompat.widget.Toolbar
+        android:elevation="5dp"
+        android:gravity="center"
+        android:background="@color/main_red"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:id="@+id/toolbar"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
     <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/activity_vertical_margin"
@@ -16,55 +29,41 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_email" />
         <EditText
+            android:drawableLeft="@drawable/ic_email"
+            android:drawablePadding="8dp"
             android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="15dp"
-            android:hint="Enter User Email"
+            android:hint="Enter User Email"/>
 
-            />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_add_numbers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            app:cardBackgroundColor="@android:color/white"
-            app:cardUseCompatPadding="true"/>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_add_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardBackgroundColor="@android:color/white"
-            app:cardUseCompatPadding="true"/>
 
         <Button
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text"
             android:id="@+id/MakeAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="make User Admin" />
 
         <Button
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text"
             android:id="@+id/checkAdmin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Check user for admin" />
 
         <Button
+            android:layout_marginTop="20dp"
+            android:background="@drawable/edit_text"
             android:id="@+id/sendEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Send Eamil" />
-
-
+            android:text="See Current Admins" />
 
     </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+</RelativeLayout>

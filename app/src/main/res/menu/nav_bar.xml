@@ -33,7 +33,7 @@
                 android:title="View Bookings" />
                 <item
                     android:id="@+id/Add_halls"
-                    android:icon="@drawable/ic_mic_black_24dp"
+                    android:icon="@drawable/book2"
                     android:title="Add New Halls" />
             </menu>
         </item>

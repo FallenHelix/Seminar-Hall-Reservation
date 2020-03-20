@@ -387,7 +387,12 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
         }
     }
 
+
     private boolean checkValidTime() {
+        if(!checkDateSelected())
+        {
+            return false;
+        }
         Log.d(TAG, "checkValidTime: ");
         if (SelectedDates.size() < 2 && firstMinute != -1 && secondMinute != -1) {
             if (firstHour > secondHour) {
@@ -408,6 +413,14 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
         } else {
             return true;
         }
+    }
+
+    private boolean checkDateSelected() {
+        if (SelectedDates == null | SelectedDates.size() == 0) {
+            return false;
+        }
+        else
+            return true;
     }
 
 
