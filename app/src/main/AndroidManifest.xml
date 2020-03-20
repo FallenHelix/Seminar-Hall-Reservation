@@ -16,7 +16,8 @@
         tools:replace="android:label">
         <activity android:name=".ProfilePage"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ReceiptUser" /> <!-- <<<<<<< 7march -->
+        <activity android:name=".ReceiptUser"
+            android:theme="@style/AppTheme.NoActionBar2"/> <!-- <<<<<<< 7march -->
         <activity android:name=".home" />
         <activity
             android:name=".admin.receipt"
