@@ -237,7 +237,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
-            Toast.makeText(this, "User Not Logged IN",Toast.LENGTH_LONG);
+            Toast.makeText(this, "User Not Logged In",Toast.LENGTH_LONG);
         }
 
     }

@@ -7,7 +7,7 @@
 
 
     <string name="forgotPass">
-    <![CDATA[ <font color=#353447>Forgot Password?</font><b><font color=#FF6B6B face=@string/rc_bold> Reser Here!</b>  .]]>
+    <![CDATA[ <font color=#353447>Forgot Password?</font><b><font color=#FF6B6B face=@string/rc_bold> Reset Here!</b>  .]]>
     </string>
 
     <string name="action_settings">Settings</string>
@@ -22,7 +22,7 @@
     <string name="fullName">Full Name</string>
     <string name="mobileNumber">Mobile Number</string>
     <string name="confirmPassword">Confirm Password</string>
-    <string name="terms_conditions">By clicking SignUp you agree all the Terms and Conditions.</string>
+    <string name="terms_conditions">By clicking SignUp you agree to all the Terms and Conditions.</string>
     <string name="register">Register Here!</string>
     <string name="already_user">Already have Account? Login here.</string>
     <string name="registered_emailid">Please enter your Registered Email Id below:</string>
@@ -53,7 +53,7 @@
     <string-array name="Services">
         <item>Projector</item>
         <item>White Board</item>
-        <item>Speaker and mic</item>
+        <item>Speaker and Mic</item>
         <item>Presentation Materials</item>
     </string-array>
 

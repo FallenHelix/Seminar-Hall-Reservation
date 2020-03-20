@@ -72,7 +72,7 @@ public class ProfilePage extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(ProfilePage.this,"Error Occured",Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProfilePage.this,"Error Occurred",Toast.LENGTH_SHORT).show();
             }
         });
     }

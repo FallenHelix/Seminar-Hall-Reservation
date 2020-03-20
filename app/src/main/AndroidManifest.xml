@@ -39,9 +39,7 @@
             android:name=".LogIn.SignIn"
             android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar1" />
-        <activity
-            android:name=".dataBase.hallList"
-            android:theme="@style/AppTheme.NoActionBar2" />
+
         <activity
             android:name=".dataBase.addHall"
             android:theme="@style/AppTheme.NoActionBar1" />
@@ -66,6 +64,10 @@
         <activity
             android:name=".admin.Admin_Control"
             android:parentActivityName=".homePage.UserDetails"
+            android:theme="@style/AppTheme.NoActionBar2" />
+        <activity
+            android:name=".dataBase.hallList"
+            android:parentActivityName=".home"
             android:theme="@style/AppTheme.NoActionBar2" />
 
         <service
