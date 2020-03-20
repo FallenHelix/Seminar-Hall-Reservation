@@ -1,38 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#353447"
+    android:layout_height="260dp"
+    android:background="@drawable/grad2"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:paddingTop="30dp"
     android:paddingLeft="20dp"
+    android:paddingTop="30dp"
     android:paddingBottom="20dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/Profile_photo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@mipmap/ic_launcher_round" />
-<!--    android:scaleType="fitXY"-->
+    <!--    android:background="#353447"-->
+    <!--    android:layout_height="250dp"-->
 
 
-    <TextView
-        android:id="@+id/User_Name"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="8dp"
-        android:layout_below="@+id/Profile_photo"
-        android:text="Name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/User_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Email"
-        android:layout_below="@id/User_Name"/>
+        <ImageView
+            android:id="@+id/Profile_photo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:scaleType="fitXY"
+
+            android:src="@mipmap/ic_launcher_round" />
+
+
+        <TextView
+            android:id="@+id/User_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Profile_photo"
+            android:paddingTop="8dp"
+            android:text="Name"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+        <TextView
+            android:id="@+id/User_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/User_Name"
+            android:text="Email" />
+    </LinearLayout>
 
 </LinearLayout>
 

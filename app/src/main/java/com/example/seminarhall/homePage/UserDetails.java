@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide;
 import com.example.seminarhall.LogIn.NewUser;
 import com.example.seminarhall.LogIn.SignIn;
 import com.example.seminarhall.LogIn.MainActivity;
+import com.example.seminarhall.ProfilePage;
 import com.example.seminarhall.R;
 import com.example.seminarhall.admin.Admin_Control;
 import com.example.seminarhall.dataBase.addHall;
@@ -275,7 +276,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int i=item.getItemId();
         if (i == R.id.nav_profile) {
-            Intent intent = new Intent(UserDetails.this, profile.class);
+            Intent intent = new Intent(UserDetails.this, ProfilePage.class);
             startActivity(intent);
         } else if (i == R.id.Add_admin) {
             Intent intent = new Intent(UserDetails.this, functions.class);

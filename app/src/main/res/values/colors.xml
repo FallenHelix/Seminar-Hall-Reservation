@@ -8,7 +8,10 @@
     <color name="white_greyish">#EEEEEE</color>
     <color name="button_selectorcolor">#9E9E9E</color>
     <color name="main_red">#FF6B6B</color>
-    <color name="app_blue">#353447</color>
+    49BEFF
+
+        <color name="app_blue">#000026</color>
+<!--    <color name="app_blue">#353447</color>-->
     <color name="gray">@android:color/darker_gray</color>
 
 <!--    <color name="colorPrimary">#FFAAFF</color>-->

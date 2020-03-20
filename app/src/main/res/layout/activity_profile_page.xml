@@ -9,23 +9,23 @@
     <RelativeLayout
         android:id="@+id/rellay1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/grad"
-        android:paddingBottom="20dp">
+        android:layout_height="230dp"
+        android:background="@drawable/profile_grad"
+        android:paddingBottom="10dp">
 
         <RelativeLayout
+
             android:id="@+id/imgUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:background="@drawable/circle_border">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/userImgae"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:layout_margin="9dp"
                 android:background="@drawable/circle"
                 android:padding="3dp"
                 android:src="@mipmap/joey" />
@@ -41,12 +41,13 @@
             android:layout_marginTop="15sp"
             android:fontFamily="sans-serif-light"
             android:text="PROFILE"
-            android:textFontWeight="@android:integer/config_longAnimTime"
             android:textColor="@color/white"
+            android:textFontWeight="@android:integer/config_longAnimTime"
             android:textSize="32sp" />
 
 
         <ImageView
+            android:id="@+id/settings"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentRight="true"
@@ -82,10 +83,11 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/TextViewUserType"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Name"
+                    android:fontFamily="@font/sf_display_medium"
+                    android:text="Student/Faculty"
                     android:textColor="@color/white"
                     android:textSize="25sp" />
 
@@ -112,10 +114,11 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/TextViewBookings"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-light"
-                android:text="No. of bookings"
+                android:fontFamily="@font/sf_display_medium"
+                android:text="Bookings: "
                 android:textColor="@color/white"
                 android:textSize="25sp" />
 
@@ -132,7 +135,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
@@ -146,15 +148,108 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Name"
+                    android:textColor="@color/headings"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/TextView_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="USER Name"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="Email"
                     android:textColor="@color/headings"
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/TextView_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
                     android:text="USER EMAIL"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Roll#"
+                    android:textColor="@color/headings"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/TextView_roll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Phone number"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Branch"
+                    android:textColor="@color/headings"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/TextView_branch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Branch "
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
@@ -180,6 +275,7 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/TextView_contact"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -194,65 +290,6 @@
                     android:background="@color/grey" />
 
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Branch"
-                    android:textColor="@color/headings"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Branch "
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/grey" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="User Type"
-                    android:textColor="@color/headings"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="Student/Faculty"
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="15dp"
-                    android:background="@color/grey" />
-
-            </LinearLayout>
-
 
         </LinearLayout>
 
