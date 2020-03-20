@@ -60,6 +60,9 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hall_list);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setUpView();
     }
 
@@ -70,10 +73,7 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
         halls=new ArrayList<>();
         databaseReference = FirebaseDatabase.getInstance().getReference("Halls");
         //Side Drawer varibales
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Halls");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         drawer = findViewById(R.id.drawer_layout);
     }
 

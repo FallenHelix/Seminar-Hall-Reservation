@@ -32,7 +32,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class Singup extends AppCompatActivity {
-    private static final String TAG = "Singup";
+    private static final String TAG = "SignUp";
     //private static View view;
     private FirebaseAuth mAuth;
     private static final Pattern PASSWORD_PATTERN =

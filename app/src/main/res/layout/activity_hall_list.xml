@@ -16,7 +16,7 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
+            android:layout_height="wrap_content"
             android:background="@color/app_blue"
             android:elevation="5dp"
 
@@ -29,11 +29,11 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:fontFamily="@font/rc_bold"
             android:layout_marginTop="20dp"
+            android:fontFamily="@font/rc_bold"
             android:gravity="bottom"
             android:padding="10dp"
-            android:text="Hall Database"
+            android:text="Halls"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/main_red" />
 
