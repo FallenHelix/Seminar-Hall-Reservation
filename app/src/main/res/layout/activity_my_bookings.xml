@@ -7,6 +7,7 @@
     android:theme="@style/AppTheme.NoActionBar1"
     tools:context=".homePage.MyBookings">
 
+
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,6 +15,11 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|snap|enterAlways"
+            app:contentScrim="@color/main_red">
         <androidx.appcompat.widget.Toolbar
             android:gravity="center"
             android:id="@+id/toolbar"
@@ -32,6 +38,7 @@
             android:textColor="@color/white"
             android:textSize="20dp" />
         </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"

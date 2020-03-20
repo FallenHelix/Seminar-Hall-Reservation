@@ -178,61 +178,9 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
                 Log.d(TAG, "onFailure: "+e.toString());
             }
         });
-//        db1.whereArrayContainsAny("days", SelectedDates)
-//                .whereEqualTo("hallId", currHall.getKey())
-//                .orderBy("endHour", Query.Direction.DESCENDING)
-//                .get().addOnSuccessListener(
-//                new OnSuccessListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                        for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
-//                            sTime.add((double) x.getDouble("startHour"));
-//                            eTime.add((double) x.getDouble("endHour"));
-//                        }
-//                        Log.d(TAG, "startHour" + sTime);
-//                        Log.d(TAG, "end Time " + eTime);
-//                    }
-//                }
-//        ).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Log.d(TAG, "onFailure: " + e);
-//            }
-//        });
-//        db2.whereArrayContainsAny("days", SelectedDates)
-//                .whereEqualTo("hallId", currHall.getKey())
-//                .orderBy("endHour", Query.Direction.DESCENDING).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//            @Override
-//            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
-//                    sTime.add((double) x.getDouble("startHour"));
-//                    eTime.add((double) x.getDouble("endHour"));
-//                }
-//                clashLoaded = true;
-//                showDialogBox();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Log.d(TAG, "onFailure: e");
-//            }
-//        });
     }
 
     private boolean filterTime() {
-//        List<Double> t1 = new ArrayList<>(sTime);
-//        List<Double> t2= new ArrayList<>(eTime);
-//        //initial filter
-//        List<Integer> popList = new ArrayList<>();
-//        for (int i = 0; i < t1.size(); i++) {
-//            if (startHour > eTime.get(i)) {
-//                popList.add(i);
-//            }
-//        }
-//        for (int i : popList) {
-//            t1.remove(i);
-//            t2.remove(i);
-//        }
 
         for (int i = 0; i < sTime.size(); i++) {
             if ((endHour) > sTime.get(i)) {

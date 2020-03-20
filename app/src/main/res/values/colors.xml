@@ -7,7 +7,9 @@
     <color name="black">#000000</color>
     <color name="white_greyish">#EEEEEE</color>
     <color name="button_selectorcolor">#9E9E9E</color>
-    <color name="main_red">#FF6B6B</color>
+<!--    <color name="main_red">#FF6B6B</color>-->
+    <color name="main_red">#0D5D98</color>
+
     49BEFF
 
         <color name="app_blue">#63C9FF</color>

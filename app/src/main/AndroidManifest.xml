@@ -30,7 +30,7 @@
         <activity
             android:name=".homePage.profile"
             android:parentActivityName=".homePage.UserDetails"
-            android:theme="@style/AppTheme.NoActionBar2" />
+            android:theme="@style/AppTheme.NoActionBar1" />
         <activity
             android:name=".admin.functions"
             android:theme="@style/AppTheme.NoActionBar1" />
@@ -41,14 +41,14 @@
             android:theme="@style/AppTheme.NoActionBar1" />
         <activity
             android:name=".dataBase.hallList"
-            android:theme="@style/AppTheme.NoActionBar2" />
+            android:theme="@style/AppTheme.NoActionBar1" />
         <activity
             android:name=".dataBase.addHall"
             android:theme="@style/AppTheme.NoActionBar1" />
         <activity android:name=".LogIn.reset" />
         <activity
             android:name=".homePage.UserDetails"
-            android:theme="@style/AppTheme.NoActionBar2" />
+            android:theme="@style/AppTheme.NoActionBar1" />
         <activity
             android:name=".LogIn.Singup"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
@@ -66,7 +66,7 @@
         <activity
             android:name=".admin.Admin_Control"
             android:parentActivityName=".homePage.UserDetails"
-            android:theme="@style/AppTheme.NoActionBar2" />
+            android:theme="@style/AppTheme.NoActionBar1" />
 
         <service
             android:name=".MessagingService"
