@@ -3,7 +3,7 @@
 
 
     <string name="twitterUsername">\@joeytribbiani</string>
-    <string name="app_name">Hall Reservation</string>
+    <string name="app_name">Sessions</string>
 
 
     <string name="forgotPass">
@@ -43,6 +43,13 @@
         <item>Select User Type</item>
         <item>Student</item>
         <item>Faculty</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="BuildingType">
+        <item>Select Building</item>
+        <item>Arya</item>
+        <item>Bhaskara</item>
         <item>Other</item>
     </string-array>
     <string name="Registration">

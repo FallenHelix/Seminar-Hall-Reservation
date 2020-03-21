@@ -6,18 +6,21 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".app"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Seminar Hall Reservation"
+        android:label="Sessions"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name=".ProfilePage"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".ReceiptUser"
-            android:theme="@style/AppTheme.NoActionBar2"/> <!-- <<<<<<< 7march -->
+        <activity
+            android:name=".ProfilePage"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ReceiptUser"
+            android:theme="@style/AppTheme.NoActionBar2" /> <!-- <<<<<<< 7march -->
         <activity android:name=".home" />
         <activity
             android:name=".admin.receipt"
@@ -25,6 +28,7 @@
         <activity android:name=".LogIn.NewUser" /> <!-- >>>>>>> master -->
         <activity
             android:name=".booking.Reserve"
+            android:parentActivityName=".homePage.UserDetails"
             android:theme="@style/AppTheme.NoActionBar2"
             android:windowSoftInputMode="adjustPan" />
         <activity
@@ -33,16 +37,15 @@
             android:theme="@style/AppTheme.NoActionBar2" />
         <activity
             android:name=".admin.functions"
-            android:theme="@style/AppTheme.NoActionBar1" />
+            android:theme="@style/AppTheme.NoActionBar2" />
         <activity android:name=".HCalendar" />
         <activity
             android:name=".LogIn.SignIn"
             android:noHistory="true"
-            android:theme="@style/AppTheme.NoActionBar1" />
-
+            android:theme="@style/AppTheme.NoActionBar2" />
         <activity
             android:name=".dataBase.addHall"
-            android:theme="@style/AppTheme.NoActionBar1" />
+            android:theme="@style/AppTheme.NoActionBar2" />
         <activity android:name=".LogIn.reset" />
         <activity
             android:name=".homePage.UserDetails"
@@ -60,7 +63,7 @@
         <activity
             android:name=".homePage.MyBookings"
             android:parentActivityName=".home"
-            android:theme="@style/AppTheme.NoActionBar1" />
+            android:theme="@style/AppTheme.NoActionBar2" />
         <activity
             android:name=".admin.Admin_Control"
             android:parentActivityName=".homePage.UserDetails"

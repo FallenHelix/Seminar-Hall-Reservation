@@ -11,7 +11,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/main_red"
+        android:background="@color/app_blue"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|snap|enterAlways"
-            app:contentScrim="@color/main_red">
+            app:contentScrim="@color/dark_blue">
         <androidx.appcompat.widget.Toolbar
             android:gravity="center"
             android:id="@+id/toolbar"

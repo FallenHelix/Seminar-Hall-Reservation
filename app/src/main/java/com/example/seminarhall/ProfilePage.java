@@ -1,17 +1,18 @@
 package com.example.seminarhall;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.seminarhall.LogIn.MainActivity;
-import com.example.seminarhall.homePage.profile;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,7 +25,7 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProfilePage extends AppCompatActivity {
+public class ProfilePage extends AppCompatActivity implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private static final String TAG = "ProfilePage";
 
@@ -32,6 +33,8 @@ public class ProfilePage extends AppCompatActivity {
     ImageView profilePic;
     FirebaseUser user;
     Map<String, Object> map = new HashMap<String, Object>();
+    ImageView settings;
+    float roation=0;
 
 
     @Override
@@ -98,6 +101,8 @@ public class ProfilePage extends AppCompatActivity {
         mob = findViewById(R.id.TextView_contact);
         profilePic = findViewById(R.id.userImgae);
         userType = findViewById(R.id.TextViewUserType);
+        settings = findViewById(R.id.settings);
+        settings.setOnClickListener(this);
         Log.d(TAG, "setUpViews: 2");
     }
 
@@ -113,6 +118,36 @@ public class ProfilePage extends AppCompatActivity {
                     .placeholder(R.mipmap.ic_launcher_round)
                     .error(R.mipmap.ic_launcher_round)
                     .into(profilePic);
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        int i = v.getId();
+        if (i == R.id.settings) {
+            roation+=30;
+            settings.setRotation(roation);
+            showPopup(v);
+        }
+    }
+
+    public void showPopup(View v) {
+//        PopupMenu popup = new PopupMenu(this, v,18,20);
+        PopupMenu popup = new PopupMenu(this, v, Gravity.NO_GRAVITY, R.attr.actionOverflowMenuStyle, 0);
+        popup.setOnMenuItemClickListener(this);
+        popup.inflate(R.menu.pop_profile_settings);
+        popup.show();
+    }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item1:
+                Toast.makeText(this, "Item 1 clicked", Toast.LENGTH_SHORT).show();
+                //Open Edit settins pages
+                return true;
+            default:
+                return false;
         }
     }
 }

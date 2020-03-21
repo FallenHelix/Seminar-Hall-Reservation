@@ -16,7 +16,9 @@
     </style>
     <style name="AppTheme.NoActionBar2">
         <item name="colorPrimary">@color/app_blue</item>
-        <item name="colorPrimaryDark">@color/app_blue</item>
+        <item name="colorPrimaryDark">@color/status_blue</item>
+        <item name="colorAccent">@color/dark_blue</item>
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
