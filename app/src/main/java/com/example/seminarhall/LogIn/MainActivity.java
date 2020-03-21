@@ -12,11 +12,13 @@ import android.os.Bundle;
 
 import android.content.Intent;
 import android.text.Html;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.seminarhall.NotificationGroup.Notify;
 import com.example.seminarhall.ProfilePage;
 import com.example.seminarhall.R;
 import com.example.seminarhall.booking.Reserve;
@@ -25,9 +27,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    private static final String TAG = "MainActivity";
 
     private Button Continue;
     private FirebaseAuth mAuth;
@@ -56,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         temp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, ProfilePage.class);
+                Intent intent = new Intent(MainActivity.this, Notify.class);
                 startActivity(intent);
             }
         });
@@ -65,39 +70,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SignIn.class);
-//                Intent intent = new Intent(MainActivity.this, Temp.class);
 
                 startActivity(intent);
                 overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
             }
         });
-
-
     }
 
-//    private void setUPNotification() {
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-//            NotificationChannel channel =
-//                    new NotificationChannel("MyNotification", "MyNotification"
-//                            , NotificationManager.IMPORTANCE_HIGH);
-//            NotificationManager manager = getSystemService(NotificationManager.class);
-//            manager.createNotificationChannel(channel);
-//        }
-//
-//        FirebaseMessaging.getInstance().subscribeToTopic("general")
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        String msg = "SuccessFull";
-//                        if (!task.isSuccessful()) {
-//                            msg = "Failed";
-//                        }
-//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//
-//    }
+
 
 
     @Override

@@ -22,12 +22,21 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignIn extends AppCompatActivity implements View.OnClickListener{
 
@@ -85,7 +94,32 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
         resetPassword.setText(Html.fromHtml(resetPassword.getText().toString()));
         //hide progress bar
         progressbar.setVisibility(View.INVISIBLE);
+        setupFirebaseID();
     }
+
+    private void setupFirebaseID() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(
+                new OnCompleteListener<InstanceIdResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w(TAG, "getInstanceId failed", task.getException());
+                            finish();
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        map.put("tokenId:", token.trim());
+
+                        // Log and toast
+                        String msg = getString(R.string.fcm_token, token);
+                        Log.d(TAG, msg);
+                    }
+                }
+        );
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -129,6 +163,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
+                progressbar.setVisibility(View.INVISIBLE);
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);
                 // [START_EXCLUDE]
@@ -152,14 +187,40 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
 
                             progressbar.setVisibility(View.INVISIBLE);
+                            FirebaseUser user=task.getResult().getUser();
 
-                            Toast.makeText(SignIn.this,"Authentication Successful",Toast.LENGTH_LONG).show();
-                            //updateUI(user);
-                            Intent intent = new Intent(SignIn.this, UserDetails.class);
-                            startActivity(intent);
+                            DocumentReference db = FirebaseFirestore.getInstance().document("users/" + user.getUid().trim());
+
+                            if(map.size()!=0) {
+                                db.set(map, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        Intent intent = new Intent(SignIn.this,
+                                                UserDetails.class);
+                                        Log.d(TAG, "onComplete: Token Updated");
+                                        startActivity(intent);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        mAuth.signOut();
+                                        progressbar.setVisibility(View.INVISIBLE);
+                                        Toast.makeText(SignIn.this, "Error Occurred", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+//                                Toast.makeText(SignIn.this, "Authentication Successful", Toast.LENGTH_LONG).show();
+//                                //updateUI(user);
+//                                Intent intent = new Intent(SignIn.this, UserDetails.class);
+//                                startActivity(intent);
+                            }
+                            else
+                            {
+                                mAuth.signOut();
+                                progressbar.setVisibility(View.INVISIBLE);
+                            }
+
 
 
                         } else {
@@ -193,6 +254,8 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
         progressbar.setVisibility(View.INVISIBLE);
         super.onBackPressed();
     }
+    Map<String, String> map = new HashMap<>();
+
 
     private void SignInUser()
     {
@@ -219,9 +282,26 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
 
                                         // if sign-in is successful
                                         // intent to home activity
-                                        Intent intent = new Intent(SignIn.this,
-                                                UserDetails.class);
-                                        startActivity(intent);
+                                        FirebaseUser user=task.getResult().getUser();
+                                        DocumentReference db = FirebaseFirestore.getInstance().document("users" + user.getUid().trim());
+                                        db.set(map, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                Intent intent = new Intent(SignIn.this,
+                                                        UserDetails.class);
+                                                Log.d(TAG, "onComplete: Token Updated");
+                                                startActivity(intent);
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                mAuth.signOut();
+                                                progressbar.setVisibility(View.INVISIBLE);
+                                                Toast.makeText(SignIn.this, "Error Occurred", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+
+
                                     }
                                     else
                                     {

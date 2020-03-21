@@ -1,13 +1,16 @@
 package com.example.seminarhall.homePage;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.app.NotificationManager;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -217,20 +220,18 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
     private void updateUi(FirebaseUser user) {
         if (user != null) {
-            //String name=user.getDisplayName();
             String email = user.getEmail();
-            //String password=user.getUid();
+
             String password=user.getDisplayName();
             Email.setText(email);
             U_id.setText(password);
-            // Check if user's email is verified
-            boolean emailVerified = user.isEmailVerified();
 
-            // The user's ID, unique to the Firebase project. Do NOT use this value to
-            // authenticate with your backend server, if you have one. Use
-            // FirebaseUser.getIdToken() instead.
-            String uid = user.getUid();
+            ////////Notificaiton
+//            NotificationManager manager = getSystemService(NotificationManager.class);
 
+            setUpNotification Notification = new setUpNotification(this, user);
+
+            ////////////////////////////
             setUpAdminUi(user);
         }
         else

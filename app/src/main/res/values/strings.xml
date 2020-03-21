@@ -5,10 +5,11 @@
     <string name="twitterUsername">\@joeytribbiani</string>
     <string name="app_name">Sessions</string>
 
-
+    <string name="fcm_token">FCM Token: %s</string>
     <string name="forgotPass">
     <![CDATA[ <font color=#353447>Forgot Password?</font><b><font color=#FF6B6B face=@string/rc_bold> Reset Here!</b>  .]]>
     </string>
+    <string name="long_dummy_text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad aut blanditiis eius fuga harum impedit ipsa neque placeat, suscipit ut veniam voluptatum? Asperiores aspernatur cupiditate dicta dolorem ea esse eveniet magnam repudiandae suscipit voluptates? Itaque, molestias tenetur! Accusamus alias amet autem delectus dignissimos dolor, ea exercitationem, in minima natus officia officiis quaerat recusandae saepe sed similique totam voluptatum. Accusamus cupiditate dignissimos earum exercitationem odit officiis perferendis quidem repudiandae. A alias dicta dolores id illo natus placeat quod. Alias aperiam aspernatur doloremque ducimus facilis iure voluptatum? A ab accusantium culpa dolor eum fugit harum, illum iusto maiores numquam, obcaecati placeat unde voluptas! Ab accusantium, adipisci aliquam asperiores consequuntur delectus deserunt dolor eius esse fugit hic ipsam itaque iusto nemo optio placeat porro quae quo vel vero? Blanditiis harum illo impedit modi, pariatur rem unde veritatis! Autem error excepturi facere qui quos.</string>
 
     <string name="action_settings">Settings</string>
     <string name="email">Email Id</string>
