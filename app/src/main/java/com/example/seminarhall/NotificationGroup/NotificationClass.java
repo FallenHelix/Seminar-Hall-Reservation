@@ -5,13 +5,9 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
-import com.google.firebase.auth.FirebaseUser;
-
-import static androidx.core.content.ContextCompat.getSystemService;
-
 public class NotificationClass extends Application {
+    //Class makes a defualt notification channel for every user
     public static final String CHANNEL_1_ID = "User Notification";
-    public static final String CHANNEL_2_ID = "channel2";
 
 
     @Override

@@ -4,11 +4,12 @@
     package="com.example.seminarhall">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <!--        android:name=".NotificationGroup.NotificationClass"-->
 
 
     <application
+        android:name=".NotificationGroup.NotificationClass"
         android:allowBackup="true"
+
         android:icon="@mipmap/ic_launcher"
         android:label="Sessions"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -77,25 +78,25 @@
 
         <service
             android:name=".MessagingService"
-            android:stopWithTask="false"
-            android:exported="false">
+            android:exported="false"
+            android:stopWithTask="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
-<!--        <meta-data-->
-<!--        android:name="com.google.firebase.messaging.default_notification_channel_id"-->
-<!--        android:value="Default Channel" />-->
-<!--        <meta-data-->
-<!--            android:name="com.google.firebase.messaging.default_notification_icon"-->
-<!--            android:resource="@drawable/ic_bug" />-->
-<!--        &lt;!&ndash; Set color used with incoming notification messages. This is used when no color is set for the incoming-->
-<!--             notification message. See README(https://goo.gl/6BKBk7) for more. &ndash;&gt;-->
-<!--        <meta-data-->
-<!--            android:name="com.google.firebase.messaging.default_notification_color"-->
-<!--            android:resource="@color/colorAccent" />-->
-<!--        <receiver android:name=".NotificationGroup.NotificationReceiver" />-->
+        <!--        <meta-data-->
+        <!--        android:name="com.google.firebase.messaging.default_notification_channel_id"-->
+        <!--        android:value="Default Channel" />-->
+        <!--        <meta-data-->
+        <!--            android:name="com.google.firebase.messaging.default_notification_icon"-->
+        <!--            android:resource="@drawable/ic_bug" />-->
+        <!--        &lt;!&ndash; Set color used with incoming notification messages. This is used when no color is set for the incoming-->
+        <!--             notification message. See README(https://goo.gl/6BKBk7) for more. &ndash;&gt;-->
+        <!--        <meta-data-->
+        <!--            android:name="com.google.firebase.messaging.default_notification_color"-->
+        <!--            android:resource="@color/colorAccent" />-->
+        <!--        <receiver android:name=".NotificationGroup.NotificationReceiver" />-->
 
     </application>
 

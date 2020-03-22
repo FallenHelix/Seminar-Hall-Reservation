@@ -32,7 +32,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import static com.example.seminarhall.NotificationGroup.NotificationClass.CHANNEL_1_ID;
-import static com.example.seminarhall.NotificationGroup.NotificationClass.CHANNEL_2_ID;
 
 
 public class Notify extends AppCompatActivity {
@@ -111,7 +110,7 @@ public class Notify extends AppCompatActivity {
         String title = editTextTitle.getText().toString();
         String message = editTextMessage.getText().toString();
 
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_2_ID)
+        Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_back_arrow)
                 .setContentTitle(title)
                 .setContentText(message)

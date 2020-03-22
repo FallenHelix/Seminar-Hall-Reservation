@@ -110,7 +110,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
 
                         // Get new Instance ID token
                         String token = task.getResult().getToken();
-                        map.put("tokenId:", token.trim());
+                        map.put("tokenId", token.trim());
 
                         // Log and toast
                         String msg = getString(R.string.fcm_token, token);
@@ -188,7 +188,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
 
-                            progressbar.setVisibility(View.INVISIBLE);
+
                             FirebaseUser user=task.getResult().getUser();
 
                             DocumentReference db = FirebaseFirestore.getInstance().document("users/" + user.getUid().trim());
@@ -200,6 +200,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
                                         Intent intent = new Intent(SignIn.this,
                                                 UserDetails.class);
                                         Log.d(TAG, "onComplete: Token Updated");
+                                        progressbar.setVisibility(View.INVISIBLE);
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {

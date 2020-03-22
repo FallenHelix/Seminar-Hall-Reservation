@@ -158,6 +158,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
                 .get();
         Task t2 = db2.whereArrayContainsAny("days", SelectedDates)
                 .whereEqualTo("hallId", currHall.getKey())
+                .whereEqualTo("status",true)
                 .orderBy("endHour", Query.Direction.DESCENDING).get();
         Task<List<QuerySnapshot>> allTask = Tasks.whenAllSuccess(t1, t2);
         allTask.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {

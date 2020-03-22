@@ -13,7 +13,25 @@ import java.util.Locale;
 
 public class ReservedHall {
     private String hallId,reservationId, startTime,EndTime,userId,Purpose;
-    private Date StartDate,EndDate;
+    private Date startDate, endDate;
+    private String textStartDate,textEndDate;
+
+    public String getTextStartDate() {
+        return textStartDate;
+    }
+
+    public void setTextStartDate(String textStartDate) {
+        this.textStartDate = textStartDate;
+    }
+
+    public String getTextEndDate() {
+        return textEndDate;
+    }
+
+    public void setTextEndDate(String textEndDate) {
+        this.textEndDate = textEndDate;
+    }
+
     private Date BookingDate;
     int NoOfDays;
     List<String> days;
@@ -78,11 +96,11 @@ public class ReservedHall {
     }
 
     public Date getStartDate() {
-        return StartDate;
+        return startDate;
     }
 
     public void setStartDate(Date startDate) {
-        this.StartDate = startDate;
+        this.startDate = startDate;
     }
 
     public String getStartTime() {
@@ -128,11 +146,11 @@ public class ReservedHall {
     }
 
     public Date getEndDate() {
-        return EndDate;
+        return endDate;
     }
 
     public void setEndDate(Date endDate) {
-        EndDate = endDate;
+        this.endDate = endDate;
     }
 
     private void setHour()
@@ -142,8 +160,8 @@ public class ReservedHall {
     public ReservedHall(String hallId, List<String> Dates
             , String startTime, String endTime, String userId, String purpose) {
         this.hallId = hallId;
-        this.StartDate = toDate(Dates.get(0));
-        this.EndDate=toDate(Dates.get(Dates.size()-1));
+        this.startDate = toDate(Dates.get(0));
+        this.endDate =toDate(Dates.get(Dates.size()-1));
         this.EndTime = endTime;
         this.startTime = startTime;
         this.userId = userId;
@@ -151,6 +169,8 @@ public class ReservedHall {
         this.BookingDate= Calendar.getInstance().getTime();
         this.days=Dates;
         this.NoOfDays=Dates.size();
+        this.textStartDate = Dates.get(0);
+        this.textEndDate = Dates.get(Dates.size() - 1);
         setHour();
 
     }
@@ -169,12 +189,12 @@ public class ReservedHall {
     @Exclude
     public String getStartDateText()
     {
-        return DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY).format(StartDate);
+        return DateFormat.getDateInstance(DateFormat.SHORT, Locale.ITALY).format(startDate);
     }
     @Exclude
     public String getEndDateText()
     {
-        return DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALY).format(EndDate);
+        return DateFormat.getDateInstance(DateFormat.SHORT,Locale.ITALY).format(endDate);
     }
 
 

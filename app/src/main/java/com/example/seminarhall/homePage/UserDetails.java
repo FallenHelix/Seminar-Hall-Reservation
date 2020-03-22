@@ -56,6 +56,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     private GoogleSignInClient mGoogleSignInClient;
     NavigationView navigationView;
     FirebaseUser user;
+    setUpNotification Notification;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: ");
@@ -226,10 +227,9 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             Email.setText(email);
             U_id.setText(password);
 
-            ////////Notificaiton
-//            NotificationManager manager = getSystemService(NotificationManager.class);
+            ////////Notification Class
 
-            setUpNotification Notification = new setUpNotification(this, user);
+             Notification = new setUpNotification(this, user);
 
             ////////////////////////////
             setUpAdminUi(user);
@@ -253,6 +253,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
                if (isAdmin) {
                    showAdminUI();
+                   Notification.setFirebaseAdminNotification();
                }
                else if (newUser) {
                    Intent intent = new Intent(UserDetails.this, NewUser.class);

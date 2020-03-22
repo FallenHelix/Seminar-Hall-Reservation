@@ -1,23 +1,15 @@
 package com.example.seminarhall;
 
 import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.Log;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.seminarhall.LogIn.MainActivity;
-import com.example.seminarhall.NotificationGroup.NotificationReceiver;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -75,37 +68,62 @@ public class MessagingService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         Log.d(TAG, "onMessageReceived: ");
         super.onMessageReceived(remoteMessage);
-        String messageType = remoteMessage.getMessageType();
         String status = remoteMessage.getData().get("status");
         if (status.equals("accepted") | status.equals("rejected")) {
             Log.d(TAG, "Status message");
             sendOnChannelStatus(remoteMessage.getData());
+        } else if (status.equals("new")) {
+            sendOnNewReservation(remoteMessage.getData());
         }
         Log.d(TAG, "onMessageReceived: " + remoteMessage.getData().get("d"));
+    }
 
-//        sendOnChannel1(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
-//
-//        showUserNotification("Titiel", "body");
+    private void sendOnNewReservation(Map<String, String> map) {
+//        var payload = {
+//                data:{
+//            d:"Payload Loaded",
+//                    status:"new",
+//                    "startTime":Time,
+//                    "Date": Date,
+//                    "userName:":userName
+//        }};
 
-//        if (messageType.equals("Success") | messageType.equals("Failure")) {
-//            showUserNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
-//        }
-//        else
-//            showNotification(remoteMessage.getNotification().getTitle(),
-//                    remoteMessage.getNotification().getBody());
+        String time = map.get("startTime");
+        String startDate = map.get("Date");
+        String Username = map.get("userName");
+        String title = "New Booking Requested";
+        String body= Username+" has requested a new Booking on "+startDate+ " starting "+time;
+
+        Notification notification = new NotificationCompat.Builder(this, "User Notification")
+                .setSmallIcon(R.drawable.ic_bug)
+                .setContentTitle(title)
+                .setContentText(body)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(body)
+                        .setBigContentTitle(title)
+                        .setSummaryText("New Booking Request"))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .setColor(Color.RED)
+                .setAutoCancel(true)
+                .setOnlyAlertOnce(true)
+                .build();
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(1, notification);
 
     }
 
     private void sendOnChannelStatus(Map<String, String> data) {
         String status = data.get("status");
         int largeIcon;
-        String time = data.get("start Time");
+        String time = data.get("startTime");
         String Date = data.get("Date");
         String Title;
         int color;
         String body = "Your Booking request for " + Date + ", starting: " + time + " has been " + status;
         if (status.equals("accepted")) {
             Log.d(TAG, "sendOnChannelStatus: Accepted");
+            Log.d(TAG, "Status: "+status);
             Title = "Your Reservation Request Has been Accepted";
             largeIcon = R.drawable.ic_checkbox;
             color = Color.BLUE;
@@ -113,6 +131,7 @@ public class MessagingService extends FirebaseMessagingService {
 
         } else {
             Log.d(TAG, "sendOnChannelStatus: Rejected");
+            Log.d(TAG, "Status: "+status);
             Title = "Your Reservation Request Has been Rejected";
             largeIcon = R.drawable.rejected;
             color = Color.RED;
