@@ -1,35 +1,20 @@
 package com.example.seminarhall.LogIn;
 
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.bluetooth.le.PeriodicAdvertisingParameters;
-import android.os.Build;
 import android.os.Bundle;
 
 import android.content.Intent;
 import android.text.Html;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.seminarhall.NotificationGroup.Notify;
-import com.example.seminarhall.ProfilePage;
 import com.example.seminarhall.R;
-import com.example.seminarhall.booking.Reserve;
 import com.example.seminarhall.homePage.UserDetails;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private static final String TAG = "MainActivity";
@@ -84,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         int i = newUserTextView.getId();
         if (i == R.id.TextRegister) {
-            Intent intent = new Intent(MainActivity.this, Singup.class);
+            Intent intent = new Intent(MainActivity.this, Signup.class);
             startActivity(intent);
         }
 

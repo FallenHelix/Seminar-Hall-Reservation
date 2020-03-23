@@ -125,13 +125,14 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
     public void onClick(View v) {
         int i=v.getId();
         if (i == R.id.btn_back) {
-            Intent intent = new Intent(SignIn.this, MainActivity.class);
-            startActivity(intent);
+//            Intent intent = new Intent(SignIn.this, MainActivity.class);
+            onBackPressed();
+//            startActivity(intent);
         } else if (i == R.id.frgp) {
             Intent intent = new Intent(SignIn.this, reset.class);
             startActivity(intent);
         } else if (i == R.id.Rgst) {
-            Intent intent = new Intent(SignIn.this, Singup.class);
+            Intent intent = new Intent(SignIn.this, Signup.class);
             startActivity(intent);
         } else if (i == R.id.LogIn) {
             SignInUser();

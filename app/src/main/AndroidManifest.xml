@@ -5,7 +5,6 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-
     <application
         android:name=".NotificationGroup.NotificationClass"
         android:allowBackup="true"
@@ -16,9 +15,9 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name=".NotificationGroup.Notify"></activity>
+        <activity android:name=".homePage.EditProfile"></activity>
         <activity
-            android:name=".ProfilePage"
+            android:name=".homePage.ProfilePage"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ReceiptUser"
@@ -53,7 +52,7 @@
             android:name=".homePage.UserDetails"
             android:theme="@style/AppTheme.NoActionBar2" />
         <activity
-            android:name=".LogIn.Singup"
+            android:name=".LogIn.Signup"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity android:name=".LogIn.MainActivity">
             <intent-filter>
@@ -63,21 +62,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".homePage.MyBookings"
+            android:name=".UserBookings.MyBookings"
             android:parentActivityName=".home"
-            android:theme="@style/AppTheme.NoActionBar2" >
+            android:theme="@style/AppTheme.NoActionBar2">
             <intent-filter>
-                <action android:name="MYBOOKINGS"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="MYBOOKINGS" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
             android:name=".admin.Admin_Control"
             android:parentActivityName=".homePage.UserDetails"
-            android:theme="@style/AppTheme.NoActionBar2" >
+            android:theme="@style/AppTheme.NoActionBar2">
             <intent-filter>
-                <action android:name="ADMIN_CONTROL"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="ADMIN_CONTROL" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
@@ -93,20 +94,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <!--        <meta-data-->
-        <!--        android:name="com.google.firebase.messaging.default_notification_channel_id"-->
-        <!--        android:value="Default Channel" />-->
-        <!--        <meta-data-->
-        <!--            android:name="com.google.firebase.messaging.default_notification_icon"-->
-        <!--            android:resource="@drawable/ic_bug" />-->
-        <!--        &lt;!&ndash; Set color used with incoming notification messages. This is used when no color is set for the incoming-->
-        <!--             notification message. See README(https://goo.gl/6BKBk7) for more. &ndash;&gt;-->
-        <!--        <meta-data-->
-        <!--            android:name="com.google.firebase.messaging.default_notification_color"-->
-        <!--            android:resource="@color/colorAccent" />-->
-        <!--        <receiver android:name=".NotificationGroup.NotificationReceiver" />-->
-
     </application>
 
 </manifest>

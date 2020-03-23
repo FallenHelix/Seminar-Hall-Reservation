@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.seminarhall.R;
+import com.example.seminarhall.dataBase.addHall;
 import com.example.seminarhall.homePage.UserDetails;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -33,30 +34,33 @@ import java.util.HashMap;
 
 public class NewUser extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     private static final String TAG = "NewUser";
-    TextView roll,Name;
+    TextView roll,Name,mobile;
     Spinner department,userType;
     HashMap<String, Object> map;
     private FirebaseFunctions mFunctions;
     private String branchString,userTypeString;
+    FirebaseUser user;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user);
-//        UpdateUI(FirebaseAuth.getInstance().getCurrentUser());
+        user=FirebaseAuth.getInstance().getCurrentUser();
+        UpdateUI(FirebaseAuth.getInstance().getCurrentUser());
         setUpViews();
         findViewById(R.id.signUpButton).setOnClickListener(this);
-
     }
 
 
     private void setUpViews() {
-        Name = findViewById(R.id.nameInput);
+        Name = findViewById(R.id.User_Name);
         roll = (EditText) findViewById(R.id.Roll);
-        department = (Spinner) findViewById(R.id.department);
+        department = (Spinner) findViewById(R.id.Branch);
+        mobile = findViewById(R.id.mobile);
         mFunctions = FirebaseFunctions.getInstance();
         userType = findViewById(R.id.Usertype);
+        roll.setEnabled(false);
         setUpSpinner();
 
     }
@@ -86,6 +90,29 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener, 
         }
     }
 
+    private boolean checkFields(String name,String roll,String mobile) {
+        if (!branchSelected()) {
+            return false;
+        }
+        Log.d(TAG, "checkFields: ");
+        if ( name == null) {
+            Toast.makeText(this, "Enter Name", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (this.roll.isEnabled() &&roll.length()<6) {
+            Toast.makeText(this, "Enter Roll Number!", Toast.LENGTH_SHORT).show();
+            return false;
+        } else if (mobile.length() < 10) {
+            this.mobile.setError("Enter Mobile Number!");
+            Toast.makeText(this, "Enter Mobile Number!", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+
+    }
+
     @Override
     public void onClick(View v) {
         int i = v.getId();
@@ -95,64 +122,88 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener, 
     }
 
     private void addToDb() {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String fullName = Name.getText().toString().trim();
-        String rollNumber=roll.getText().toString().trim();
+        if (user != null) {
+
+            String fullName = Name.getText().toString().trim();
+
+            String rollNumber = roll.getText().toString().trim();
+            String mob = mobile.getText().toString().trim();
+            if (checkFields(fullName, rollNumber, mob)) {
 //        String dept=department.getText().toString().trim();
 
-        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                .setDisplayName(fullName)
-                .build();
+                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                        .setDisplayName(fullName)
+                        .build();
 
-        user.updateProfile(profileUpdates)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                user.updateProfile(profileUpdates)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Log.d(TAG, "User profile updated.");
+                                } else {
+                                    Toast.makeText(NewUser.this, "An Error Occured!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                map = new HashMap<>();
+                CollectionReference ref = FirebaseFirestore.getInstance().collection("users");
+                map.put("userName", fullName);
+                map.put("rollNumber", rollNumber);
+                map.put("Department", branchString);
+                map.put("User Type:", userTypeString);
+                map.put("newUser", false);
+                ref.document(user.getUid()).set(map, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Log.d(TAG, "User profile updated.");
-                        }
-                        else
-                        {
-                            Toast.makeText(NewUser.this, "An Error Occured!", Toast.LENGTH_SHORT).show();
-                        }
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "onSuccess: ");
+                        Intent intent = new Intent(NewUser.this, UserDetails.class);
+                        startActivity(intent);
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "onFailure: " + e);
+                        Toast.makeText(NewUser.this, "An Error Ocurred, Try agian later", Toast.LENGTH_LONG).show();
                     }
                 });
-        map = new HashMap<>();
-        CollectionReference ref = FirebaseFirestore.getInstance().collection("users");
-        map.put("userName",fullName);
-        map.put("rollNumber", rollNumber);
-        map.put("Department", branchString);
-        map.put("User Type:", userTypeString);
-        map.put("newUser", false);
-        ref.document(user.getUid()).set(map, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Log.d(TAG, "onSuccess: ");
-                Intent intent = new Intent(NewUser.this, UserDetails.class);
-                startActivity(intent);
-
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure: "+e);
-                Toast.makeText(NewUser.this, "An Error Ocurred, Try agian later", Toast.LENGTH_LONG).show();
-            }
-        });
+        }
     }
 
 
     //need to add Validation fields Here
 
+    private boolean branchSelected() {
+        if (branchString == null || branchString.equals("Select Department")) {
+            Log.d(TAG, "branchSelected: None");
+            Toast.makeText(NewUser.this,"Select Branch",Toast.LENGTH_SHORT).show();
+            return false;
 
+        } else if (userType==null|userType.equals("Select User Type")) {
+
+            Log.d(TAG, "UserType: None");
+            Toast.makeText(NewUser.this,"Select User Type",Toast.LENGTH_SHORT).show();
+            return false;
+
+        } else {
+            Log.d(TAG, "branchSelected: " + branchString);
+            return true;
+        }
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         if(parent.getId()==R.id.Usertype){
+
             Toast.makeText(this, "User Type Selected", Toast.LENGTH_SHORT).show();
-            userTypeString=parent.getItemAtPosition(position).toString().trim();
-        } else if (parent.getId()== R.id.department) {
+            userTypeString = parent.getItemAtPosition(position).toString().trim();
+            if (userTypeString.compareTo("Student")==0) {
+                roll.setEnabled(true);
+            }
+        } else if (parent.getId()== R.id.Branch) {
             branchString=parent.getItemAtPosition(position).toString().trim();
             Toast.makeText(this,branchString,Toast.LENGTH_SHORT).show();
         }

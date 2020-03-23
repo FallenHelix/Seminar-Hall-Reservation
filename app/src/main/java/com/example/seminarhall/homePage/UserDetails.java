@@ -1,16 +1,13 @@
 package com.example.seminarhall.homePage;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -24,8 +21,8 @@ import com.bumptech.glide.Glide;
 import com.example.seminarhall.LogIn.NewUser;
 import com.example.seminarhall.LogIn.SignIn;
 import com.example.seminarhall.LogIn.MainActivity;
-import com.example.seminarhall.ProfilePage;
 import com.example.seminarhall.R;
+import com.example.seminarhall.UserBookings.MyBookings;
 import com.example.seminarhall.admin.Admin_Control;
 import com.example.seminarhall.dataBase.addHall;
 import com.example.seminarhall.admin.functions;

@@ -1,101 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".LogIn.NewUser">
 
-    <EditText
-        android:id="@+id/nameInput"
-        android:layout_width="315dp"
-        android:layout_height="56dp"
-        android:background="@drawable/edit_text"
-        android:drawableStart="@drawable/person"
-        android:drawableLeft="@drawable/person"
-        android:drawablePadding="20dp"
-        android:fontFamily="@font/regular"
-        android:hint="Name"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.427"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.204" />
-
-    <EditText
-        android:id="@+id/Roll"
-        android:layout_width="315dp"
-        android:layout_height="56dp"
-        android:background="@drawable/edit_text"
-        android:drawableStart="@drawable/person"
-        android:drawableLeft="@drawable/person"
-        android:drawablePadding="20dp"
-        android:fontFamily="@font/regular"
-        android:hint="Roll Number"
-        android:padding="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.427"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.442" />
-
-    <Button
-        android:id="@+id/signUpButton"
-        android:layout_width="312dp"
-        android:layout_height="57dp"
-        android:layout_marginBottom="84dp"
-        android:background="@drawable/button"
-        android:fontFamily="@font/r_bold"
-        android:gravity="center"
-        android:text="Continue!"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <ImageView
         android:id="@+id/backButton"
-        android:layout_width="42dp"
-        android:layout_height="39dp"
-        android:background="@drawable/back_arrow_black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.043"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.078"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="15dp"
+        android:paddingTop="20dp"
+        android:src="@drawable/back_arrow_black" />
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/department"
-        android:layout_width="315dp"
 
-        android:layout_height="56dp"
-        android:background="@drawable/edit_text"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.427"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.616" />
+    <TextView
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/Usertype"
-        android:gravity="left|center"
-        android:textAlignment="center"
-        android:background="@drawable/edit_text"
-        android:layout_width="315dp"
-        android:layout_height="56dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.427"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.314" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/backButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15sp"
+        android:fontFamily="@font/sf_display_medium"
+        android:text="EDIT PROFILE"
+        android:textColor="@color/black"
+        android:textFontWeight="@android:integer/config_longAnimTime"
+        android:textSize="32sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="30dp"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name"
+                android:textColor="@color/headings"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/User_Name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:fontFamily="sans-serif-light"
+                android:hint="Name"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/grey" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mobile"
+                android:textColor="@color/headings"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/mobile"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:fontFamily="sans-serif-light"
+                android:hint="Mobile"
+                android:inputType="numberSigned"
+                android:maxLength="13"
+                android:maxLines="1"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/grey" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Branch"
+                android:textColor="@color/headings"
+                android:textSize="13sp" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/Branch"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="@color/app_blue"
+                android:gravity="start|center"
+                android:textAlignment="center" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/grey" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="User Type"
+                android:textColor="@color/headings"
+                android:textSize="13sp" />
+
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/Usertype"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="@color/app_blue"
+                android:gravity="start|center"
+                android:textAlignment="center" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/grey" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Roll Number"
+                android:textColor="@color/headings"
+                android:textSize="13sp" />
+
+            <EditText
+                android:id="@+id/Roll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints="@android:string/autofill"
+                android:background="@android:color/transparent"
+                android:fontFamily="sans-serif-light"
+                android:hint="Roll Number"
+                android:inputType="textCapWords"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:textColor="#000000"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/grey" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:autofillHints="true"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/AddUserDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:padding="8dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@color/dark_blue"
+                android:hapticFeedbackEnabled="true"
+                android:text="Save Details!"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.359" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

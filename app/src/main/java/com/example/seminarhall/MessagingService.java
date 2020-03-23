@@ -3,8 +3,6 @@ package com.example.seminarhall;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.util.Log;
 
@@ -12,10 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.example.seminarhall.LogIn.MainActivity;
-import com.example.seminarhall.NotificationGroup.NotificationReceiver;
 import com.example.seminarhall.admin.Admin_Control;
-import com.example.seminarhall.homePage.MyBookings;
+import com.example.seminarhall.UserBookings.MyBookings;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,7 +19,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.firestore.auth.User;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -89,13 +84,12 @@ public class MessagingService extends FirebaseMessagingService {
         String startDate = map.get("Date");
         String Username = map.get("userName");
         String title = "New Booking Requested";
-        String body= Username+" has requested a new Booking on "+startDate+ " starting "+time;
+        String body = Username + " has requested a new Booking on " + startDate + " starting " + time;
 
         Intent activityIntent = new Intent(this, Admin_Control.class);
         activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent contentIntent = PendingIntent.getActivity(this,
                 0, activityIntent, 0);
-
 
 
         Notification notification = new NotificationCompat.Builder(this, "User Notification")
@@ -128,7 +122,7 @@ public class MessagingService extends FirebaseMessagingService {
         String body = "Your Booking request for " + Date + ", starting: " + time + " has been " + status;
         if (status.equals("accepted")) {
             Log.d(TAG, "sendOnChannelStatus: Accepted");
-            Log.d(TAG, "Status: "+status);
+            Log.d(TAG, "Status: " + status);
             Title = "Your Reservation Request Has been Accepted";
             largeIcon = R.drawable.ic_checkbox;
             color = Color.BLUE;
@@ -136,7 +130,7 @@ public class MessagingService extends FirebaseMessagingService {
 
         } else {
             Log.d(TAG, "sendOnChannelStatus: Rejected");
-            Log.d(TAG, "Status: "+status);
+            Log.d(TAG, "Status: " + status);
             Title = "Your Reservation Request Has been Rejected";
             largeIcon = R.drawable.rejected;
             color = Color.RED;
@@ -148,7 +142,6 @@ public class MessagingService extends FirebaseMessagingService {
         activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent contentIntent = PendingIntent.getActivity(this,
                 0, activityIntent, 0);
-
 
 
         Notification notification = new NotificationCompat.Builder(this, "User Notification")
@@ -167,64 +160,6 @@ public class MessagingService extends FirebaseMessagingService {
                 .setContentIntent(contentIntent)
                 .build();
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(1, notification);
-    }
-
-    private void showUserNotification(String title, String Body) {
-        Log.d(TAG, "showUserNotification: ");
-        Notification notification = new NotificationCompat.Builder(this, Channel_1)
-                .setSmallIcon(R.drawable.ic_one)
-                .setContentTitle(title)
-                .setContentText(Body)
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .setColor(Color.BLUE)
-                .setAutoCancel(true)
-                .setOnlyAlertOnce(true)
-                .build();
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(1, notification);
-        Log.d(TAG, "showUserNotification: End");
-    }
-
-//    public void showNotification(String title, String Body) {
-//        Log.d(TAG, "showNotification: ");
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this,
-//                "My Notification")
-//                .setContentTitle(title).setSmallIcon(R.drawable.ic_checkbox)
-//                .setAutoCancel(true)
-//                .setContentText(Body+"Show notification");
-//        NotificationManagerCompat managerCompat = NotificationManagerCompat.from(this);
-//        managerCompat.notify(999,builder.build());
-//    }
-
-    public void sendOnChannel1(String title, String message) {
-
-        Log.d(TAG, "sendOnChannel1: ");
-
-
-
-        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.thumb);
-        largeIcon = Bitmap.createScaledBitmap(largeIcon, 144, 144, true);
-        Bitmap acc = BitmapFactory.decodeResource(getResources(), R.drawable.ic_checkbox);
-
-        Notification notification = new NotificationCompat.Builder(this, Channel_1)
-                .setSmallIcon(R.drawable.ic_checkbox)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setLargeIcon(largeIcon)
-                .setStyle(new NotificationCompat.BigPictureStyle()
-                        .bigPicture(acc)
-                        .bigLargeIcon(null))
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .setColor(Color.BLUE)
-                .setAutoCancel(true)
-                .setOnlyAlertOnce(true)
-                .build();
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-
-
         notificationManager.notify(1, notification);
     }
 

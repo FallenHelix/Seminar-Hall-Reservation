@@ -12,35 +12,6 @@
         android:layout_height="?actionBarSize"
         android:id="@+id/toolbar" />
 
-<!--    <EditText-->
-<!--        android:id="@+id/Hall_Name"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:ems="10"-->
-<!--        android:hint="Hall Name"-->
-<!--        android:inputType="textPersonName"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.109" />-->
-
-<!--   -->
-
-<!--    <EditText-->
-<!--        android:id="@+id/Hall_Size"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:ems="10"-->
-<!--        android:inputType="textPersonName"-->
-<!--        android:hint="Size"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/Add_a"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="0.616" />-->
-
-
     <RelativeLayout
         android:layout_below="@id/toolbar"
         android:layout_width="wrap_content"

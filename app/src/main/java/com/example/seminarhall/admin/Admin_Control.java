@@ -9,7 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.seminarhall.R;
-import com.example.seminarhall.homePage.BookingsPageAdapter;
+import com.example.seminarhall.UserBookings.BookingsPageAdapter;
 import com.example.seminarhall.homePage.UserDetails;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.tabs.TabLayout;

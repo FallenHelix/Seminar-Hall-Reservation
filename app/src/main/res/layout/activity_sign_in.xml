@@ -3,9 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".LogIn.SignIn">
+
     <ImageView
         android:id="@+id/btn_back"
         android:layout_width="wrap_content"
@@ -18,20 +19,65 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/materialTextView"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="124dp"
-        android:fontFamily="@font/r_bold"
-        android:text="Welcome Back!"
-
-        android:textColor="#353447"
-        android:textSize="45dp"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/r_bold"
+            android:layout_marginStart="36dp"
+
+            android:text="Welcome Back!"
+            android:textColor="#353447"
+            android:textSize="45dp" />
+
+        <TextView
+            android:id="@+id/frgp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="36dp"
+            android:fontFamily="@font/light"
+            android:text="@string/forgotPass"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+
+    <!--    <com.google.android.material.textview.MaterialTextView-->
+    <!--        android:id="@+id/materialTextView"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginTop="124dp"-->
+    <!--        android:fontFamily="@font/r_bold"-->
+    <!--        android:text="Welcome Back!"-->
+
+    <!--        android:textColor="#353447"-->
+    <!--        android:textSize="45dp"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintHorizontal_bias="0.495"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/frgp"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginStart="36dp"-->
+    <!--        android:layout_marginLeft="36dp"-->
+    <!--        android:fontFamily="@font/light"-->
+    <!--        android:text="@string/forgotPass"-->
+    <!--        android:visibility="visible"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/materialTextView"-->
+    <!--        app:layout_constraintVertical_bias="0.0" />-->
 
     <EditText
         android:id="@+id/EmailInput"
@@ -50,9 +96,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.408" />
 
+
     <EditText
-        android:singleLine="true"
-        android:inputType="textPassword"
         android:id="@+id/passwordInput"
         android:layout_width="315dp"
         android:layout_height="56dp"
@@ -62,7 +107,9 @@
         android:drawablePadding="20dp"
         android:fontFamily="@font/regular"
         android:hint="Password"
+        android:inputType="textPassword"
         android:padding="10dp"
+        android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -105,26 +152,14 @@
         app:layout_constraintStart_toEndOf="@+id/LogIn"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/frgp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginLeft="36dp"
-        android:fontFamily="@font/light"
-        android:text="@string/forgotPass"
-        android:visibility="visible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/materialTextView"
-        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:visibility="invisible"
         android:id="@+id/Rgst"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/light"
         android:text="@string/Registration"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.127"
@@ -138,8 +173,8 @@
         android:layout_width="149dp"
         android:layout_height="170dp"
         android:indeterminate="true"
-        android:indeterminateTintMode="src_atop"
         android:indeterminateTint="#FF6B6B"
+        android:indeterminateTintMode="src_atop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

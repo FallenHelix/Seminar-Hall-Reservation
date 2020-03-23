@@ -29,14 +29,14 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="512dp"
+        android:layout_marginBottom="524dp"
         android:background="@drawable/resettxt"
         android:gravity="center_horizontal"
         android:padding="10dp"
         android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.378"
+        app:layout_constraintHorizontal_bias="0.536"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
@@ -46,7 +46,8 @@
         android:layout_marginBottom="292dp"
         android:background="@drawable/edit_text"
         android:drawableLeft="@drawable/ic_email"
-        android:paddingLeft="8dp"
+
+        android:paddingLeft="10dp"
         android:drawablePadding="8dp"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toBottomOf="parent"
