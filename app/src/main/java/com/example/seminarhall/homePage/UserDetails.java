@@ -64,7 +64,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
 
-         user = FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
         setView();
         updateUi(user);
         setNavigation();
@@ -80,31 +80,34 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
     }
 
     private void CheckForNewUser(FirebaseUser user) {
-        DocumentReference doc1 = FirebaseFirestore.getInstance().document("users/" + user.getUid());
-        doc1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                if(documentSnapshot!=null)
-                {
-                    Boolean newUser = documentSnapshot.getBoolean("newUser");
-                    if (newUser == null) {
-                        signOut();
-                        return;
-                    }
-                    if (newUser == true) {
-                        Intent intent = new Intent(UserDetails.this, NewUser.class);
-                        startActivity(intent);
+        if (user != null) {
+
+
+            DocumentReference doc1 = FirebaseFirestore.getInstance().document("users/" + user.getUid());
+            doc1.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    if (documentSnapshot != null) {
+                        Boolean newUser = documentSnapshot.getBoolean("newUser");
+                        if (newUser == null) {
+                            signOut();
+                            return;
+                        }
+                        if (newUser == true) {
+                            Intent intent = new Intent(UserDetails.this, NewUser.class);
+                            startActivity(intent);
+                        }
                     }
                 }
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(UserDetails.this, "Error!", Toast.LENGTH_SHORT).show();
-                Log.d(TAG, "onFailure: " + e.toString());
-                signOut();
-            }
-        });
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(UserDetails.this, "Error!", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "onFailure: " + e.toString());
+                    signOut();
+                }
+            });
+        }
 
     }
 
@@ -138,32 +141,34 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
     private void setNavigation() {
         String name,email;
-        if (user == null) {
-            updateUi(null);
-        }
-        name=user.getDisplayName();
-        email=user.getEmail();
-        String url=null;
-        if(mAuth.getCurrentUser().getPhotoUrl()!=null)
-        {
-            url=mAuth.getCurrentUser().getPhotoUrl().toString();
-        }
+        if (user != null) {
 
-        //get the text views
-        View headerView = navigationView.getHeaderView(0);
-        LinearLayout l = headerView.findViewById(R.id.Nav);
 
-        ImageView navPic= (ImageView) headerView.findViewById(R.id.Profile_photo);
-        TextView nav_email = (TextView) headerView.findViewById(R.id.User_email);
-        TextView nav_name = (TextView) headerView.findViewById(R.id.User_Name);
-        nav_name.setText(name);
+            name = user.getDisplayName();
+            email = user.getEmail();
+            String url = null;
+            if (mAuth.getCurrentUser().getPhotoUrl() != null) {
+                url = mAuth.getCurrentUser().getPhotoUrl().toString();
+            }
+
+            //get the text views
+            View headerView = navigationView.getHeaderView(0);
+            LinearLayout l = headerView.findViewById(R.id.Nav);
+
+            ImageView navPic = (ImageView) headerView.findViewById(R.id.Profile_photo);
+            TextView nav_email = (TextView) headerView.findViewById(R.id.User_email);
+            TextView nav_name = (TextView) headerView.findViewById(R.id.User_Name);
+            nav_name.setText(name);
 //        navPic.setAdjustViewBounds(true);
-        if(url!=null)
-        {
-            url=url.replace("s96-c", "s384-c");
-            Glide.with(this).load(url).into(navPic);
-            nav_email.setText(email);
+            if (url != null) {
+                url = url.replace("s96-c", "s384-c");
+                Glide.with(this).load(url).into(navPic);
+                nav_email.setText(email);
 
+            }
+        } else {
+            finish();
+            updateUi(null);
         }
     }
 

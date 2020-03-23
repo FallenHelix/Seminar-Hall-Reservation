@@ -9,7 +9,6 @@
     <application
         android:name=".NotificationGroup.NotificationClass"
         android:allowBackup="true"
-
         android:icon="@mipmap/ic_launcher"
         android:label="Sessions"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -66,11 +65,21 @@
         <activity
             android:name=".homePage.MyBookings"
             android:parentActivityName=".home"
-            android:theme="@style/AppTheme.NoActionBar2" />
+            android:theme="@style/AppTheme.NoActionBar2" >
+            <intent-filter>
+                <action android:name="MYBOOKINGS"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".admin.Admin_Control"
             android:parentActivityName=".homePage.UserDetails"
-            android:theme="@style/AppTheme.NoActionBar2" />
+            android:theme="@style/AppTheme.NoActionBar2" >
+            <intent-filter>
+                <action android:name="ADMIN_CONTROL"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
         <activity
             android:name=".dataBase.hallList"
             android:parentActivityName=".home"

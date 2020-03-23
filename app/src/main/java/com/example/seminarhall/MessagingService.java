@@ -1,6 +1,8 @@
 package com.example.seminarhall;
 
 import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -10,6 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.seminarhall.LogIn.MainActivity;
+import com.example.seminarhall.NotificationGroup.NotificationReceiver;
+import com.example.seminarhall.admin.Admin_Control;
+import com.example.seminarhall.homePage.MyBookings;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -79,20 +85,18 @@ public class MessagingService extends FirebaseMessagingService {
     }
 
     private void sendOnNewReservation(Map<String, String> map) {
-//        var payload = {
-//                data:{
-//            d:"Payload Loaded",
-//                    status:"new",
-//                    "startTime":Time,
-//                    "Date": Date,
-//                    "userName:":userName
-//        }};
-
         String time = map.get("startTime");
         String startDate = map.get("Date");
         String Username = map.get("userName");
         String title = "New Booking Requested";
         String body= Username+" has requested a new Booking on "+startDate+ " starting "+time;
+
+        Intent activityIntent = new Intent(this, Admin_Control.class);
+        activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent contentIntent = PendingIntent.getActivity(this,
+                0, activityIntent, 0);
+
+
 
         Notification notification = new NotificationCompat.Builder(this, "User Notification")
                 .setSmallIcon(R.drawable.ic_bug)
@@ -107,6 +111,7 @@ public class MessagingService extends FirebaseMessagingService {
                 .setColor(Color.RED)
                 .setAutoCancel(true)
                 .setOnlyAlertOnce(true)
+                .setContentIntent(contentIntent)
                 .build();
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(1, notification);
@@ -138,16 +143,14 @@ public class MessagingService extends FirebaseMessagingService {
         }
 
         Log.d(TAG, "sendOnChannelStatus: ");
-//        Notification notification = new NotificationCompat.Builder(this, Channel_1)
-//                .setSmallIcon(largeIcon)
-//                .setContentTitle(Title)
-//                .setContentText(body)
-//                .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-//                .setColor(color)
-//                .setAutoCancel(true)
-//                .setOnlyAlertOnce(true)
-//                .build();
+
+        Intent activityIntent = new Intent(this, MyBookings.class);
+        activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent contentIntent = PendingIntent.getActivity(this,
+                0, activityIntent, 0);
+
+
+
         Notification notification = new NotificationCompat.Builder(this, "User Notification")
                 .setSmallIcon(largeIcon)
                 .setContentTitle(Title)
@@ -161,6 +164,7 @@ public class MessagingService extends FirebaseMessagingService {
                 .setColor(color)
                 .setAutoCancel(true)
                 .setOnlyAlertOnce(true)
+                .setContentIntent(contentIntent)
                 .build();
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(1, notification);
@@ -197,14 +201,8 @@ public class MessagingService extends FirebaseMessagingService {
     public void sendOnChannel1(String title, String message) {
 
         Log.d(TAG, "sendOnChannel1: ");
-//        Intent activityIntent = new Intent(this, MainActivity.class);
-//        PendingIntent contentIntent = PendingIntent.getActivity(this,
-//                0, activityIntent, 0);
-//
-//        Intent broadcastIntent = new Intent(this, NotificationReceiver.class);
-////        broadcastIntent.putExtra("toastMessage", message);
-//        PendingIntent actionIntent = PendingIntent.getBroadcast(this,
-//                0, broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
 
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.thumb);
         largeIcon = Bitmap.createScaledBitmap(largeIcon, 144, 144, true);

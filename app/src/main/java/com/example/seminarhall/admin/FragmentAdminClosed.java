@@ -18,6 +18,7 @@ import com.example.seminarhall.R;
 import com.example.seminarhall.ReservedHall;
 import com.example.seminarhall.dataBase.ReceiptAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -63,37 +64,45 @@ public class FragmentAdminClosed extends Fragment implements ReceiptAdapter.Item
     @Override
     public void onStart() {
         super.onStart();
-        String id= FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
 
-        Log.d(TAG, "onStart: ");
-        notebookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                status.clear();
-                halls.clear();
-                if (e != null) {
-                    System.err.println("Listen failed: " + e);
-                    return;
-                }
-                if(queryDocumentSnapshots!=null)
-                {
-                    Log.d(TAG, "Size: "+queryDocumentSnapshots.size());
 
-                    for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
-                        ReservedHall hall=query.toObject(ReservedHall.class);
-                        hall.setReservationId(query.getId());
-                        Integer temp = query.get("Status") == null ? 0 : (Boolean) query.get("Status")==true?1:2;
-                        Log.d(TAG, "Temp: "+temp);
-                        Log.d(TAG, "Status: "+query.get("Status"));
-                        status.add(temp);
-                        halls.add(hall);
+            String id = user.getUid();
+
+            Log.d(TAG, "onStart: ");
+            notebookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    status.clear();
+                    halls.clear();
+                    if (e != null) {
+                        System.err.println("Listen failed: " + e);
+                        return;
                     }
-                adapter = new ReceiptAdapter(getContext(),halls,status);
-                recyclerView.setAdapter(adapter);
-                adapter.setListener(FragmentAdminClosed.this);
+                    if (queryDocumentSnapshots != null) {
+                        Log.d(TAG, "Size: " + queryDocumentSnapshots.size());
+
+                        for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
+                            ReservedHall hall = query.toObject(ReservedHall.class);
+                            hall.setReservationId(query.getId());
+                            Integer temp = query.get("Status") == null ? 0 : (Boolean) query.get("Status") == true ? 1 : 2;
+                            Log.d(TAG, "Temp: " + temp);
+                            Log.d(TAG, "Status: " + query.get("Status"));
+                            status.add(temp);
+                            halls.add(hall);
+                        }
+                        adapter = new ReceiptAdapter(getContext(), halls, status);
+                        recyclerView.setAdapter(adapter);
+                        adapter.setListener(FragmentAdminClosed.this);
+                    }
                 }
-            }
-        });
+            });
+        }
+        else
+        {
+            getActivity().finish();
+        }
     }
 
     @Override

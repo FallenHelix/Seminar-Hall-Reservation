@@ -19,6 +19,7 @@ import com.example.seminarhall.ReceiptUser;
 import com.example.seminarhall.ReservedHall;
 import com.example.seminarhall.dataBase.ReceiptAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -36,12 +37,14 @@ public class FragmentClosed extends Fragment implements ReceiptAdapter.ItemClick
     ReceiptAdapter adapter;
     List<Integer> status = new ArrayList<>();
     CollectionReference notebookRef = FirebaseFirestore.getInstance().collection("Main/Reservation/Closed");
+    private FirebaseUser user;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         halls = new ArrayList<>();
+        user=FirebaseAuth.getInstance().getCurrentUser();
         Log.d(TAG, "onCreateView: ");
         View view = inflater.inflate(R.layout.fragment_active, container, false);
         setUpViews(view);
@@ -52,61 +55,40 @@ public class FragmentClosed extends Fragment implements ReceiptAdapter.ItemClick
     public void onStart() {
         super.onStart();
         Log.d(TAG, "onStart: ");
-        String id= FirebaseAuth.getInstance().getCurrentUser().getUid();
-//        notebookRef.whereEqualTo("userId",id).addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-//                halls.clear();
-//                if (e != null) {
-//                    System.err.println("Listen failed: " + e);
-//                    return;
-//                }
-//                if(queryDocumentSnapshots!=null)
-//                    for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
-//                        ReservedHall hall=query.toObject(ReservedHall.class);
-//                        hall.setReservationId(query.getId());
-////                    hall.setBookingDate(Calendar.getInstance().getTime());
-//                        hall.setBookingDate(query.getTimestamp("bookingDate").toDate());
-//                        halls.add(hall);
-//                        Integer temp = query.get("stats") == null ? 0 : (Integer)query.get("status");
-//                        status.add(temp);
-//                        Log.d(TAG, "onEvent: ");
-//                    }
-//                adapter = new ReceiptAdapter(getContext(),halls,status);
-//                recyclerView.setAdapter(adapter);
-//                adapter.setListener(FragmentClosed.this);
-//            }
-//        });
+        if (user != null) {
 
-        notebookRef.whereEqualTo("userId",id)
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                status.clear();
-                halls.clear();
-                if (e != null) {
-                    System.err.println("Listen failed: " + e);
-                    return;
-                }
-                if(queryDocumentSnapshots!=null)
-                {
-                    Log.d(TAG, "Size: "+queryDocumentSnapshots.size());
 
-                    for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
-                        ReservedHall hall=query.toObject(ReservedHall.class);
-                        hall.setReservationId(query.getId());
-                        Integer temp = query.get("Status") == null ? 0 : (Boolean) query.get("Status")==true?1:2;
-                        Log.d(TAG, "Temp: "+temp);
-                        Log.d(TAG, "Status: "+query.get("Status"));
-                        status.add(temp);
-                        halls.add(hall);
-                    }
-                    adapter = new ReceiptAdapter(getContext(),halls,status);
-                    recyclerView.setAdapter(adapter);
-                    adapter.setListener(FragmentClosed.this);
-                }
-            }
-        });
+            String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+            notebookRef.whereEqualTo("userId", id)
+                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                            status.clear();
+                            halls.clear();
+                            if (e != null) {
+                                System.err.println("Listen failed: " + e);
+                                return;
+                            }
+                            if (queryDocumentSnapshots != null) {
+                                Log.d(TAG, "Size: " + queryDocumentSnapshots.size());
+
+                                for (QueryDocumentSnapshot query : queryDocumentSnapshots) {
+                                    ReservedHall hall = query.toObject(ReservedHall.class);
+                                    hall.setReservationId(query.getId());
+                                    Integer temp = query.get("Status") == null ? 0 : (Boolean) query.get("Status") == true ? 1 : 2;
+                                    Log.d(TAG, "Temp: " + temp);
+                                    Log.d(TAG, "Status: " + query.get("Status"));
+                                    status.add(temp);
+                                    halls.add(hall);
+                                }
+                                adapter = new ReceiptAdapter(getContext(), halls, status);
+                                recyclerView.setAdapter(adapter);
+                                adapter.setListener(FragmentClosed.this);
+                            }
+                        }
+                    });
+        }
 
 
     }
