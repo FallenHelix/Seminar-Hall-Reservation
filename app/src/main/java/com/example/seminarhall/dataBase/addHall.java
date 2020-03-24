@@ -125,13 +125,18 @@ public class addHall extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
     private boolean branchSelected() {
-        if (branchString == null || branchString.equals("Select Department")|HallBuilding==null|HallBuilding.equals("Select Building")) {
+        if (branchString == null || branchString.equals("Select Department")) {
             Log.d(TAG, "branchSelected: None");
             Toast.makeText(addHall.this,"Select Branch",Toast.LENGTH_SHORT).show();
             return false;
 
+        } else if (HallBuilding == null | HallBuilding.equals("Select Building")) {
+            Log.d(TAG, "branchSelected: None");
+            Toast.makeText(addHall.this,"Select Building",Toast.LENGTH_SHORT).show();
+            return false;
+
         } else {
-            Log.d(TAG, "branchSelected: "+branchString);
+            Log.d(TAG, "branchSelected: " + branchString);
             return true;
         }
     }
@@ -154,7 +159,6 @@ public class addHall extends AppCompatActivity implements AdapterView.OnItemSele
         Log.d(TAG, "onNothingSelected: ");
         branchString = parent.getItemAtPosition(0).toString().trim();
         HallBuilding = parent.getItemAtPosition(0).toString().trim();
-
     }
 
 }
