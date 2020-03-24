@@ -58,7 +58,7 @@
         android:fontFamily="@font/sf_display_medium"
         android:textColor="@color/black"
         android:hint="Start Time"
-        android:inputType="time"
+        android:paddingTop="6dp"
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -86,6 +86,8 @@
 
     <TextView
         android:id="@+id/EndTime"
+        android:background="@drawable/edit_text"
+        android:paddingTop="6dp"
         android:layout_width="163dp"
         android:textColor="@color/black"
         android:layout_height="43dp"

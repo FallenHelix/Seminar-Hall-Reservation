@@ -53,7 +53,6 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
 
     @Override
     public void onBindViewHolder(@NonNull ReceiptViewHolder holder, int position) {
-        holder.Hallid.append(getHallName(reserveList.get(position).getHallId()));
         Log.d(TAG, "onBindViewHolder: ");
         if(holder.image!=null)
         if (status.get(position) == 0) {
@@ -71,23 +70,6 @@ public class ReceiptAdapter extends RecyclerView.Adapter<ReceiptAdapter.ReceiptV
         holder.Hallid.setText(reserveList.get(position).getHallId().toUpperCase());
     }
 
-    private String getHallName(String hallId) {
-        final DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Halls");
-        databaseReference.equalTo(hallId)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                        Log.d(TAG, "onDataChange: "+dataSnapshot.getValue().toString());
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-        return "1";
-    }
 
     @Override
     public int getItemCount() {

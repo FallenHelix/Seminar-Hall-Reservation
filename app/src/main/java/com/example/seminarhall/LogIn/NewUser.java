@@ -49,7 +49,7 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener, 
         user=FirebaseAuth.getInstance().getCurrentUser();
         UpdateUI(FirebaseAuth.getInstance().getCurrentUser());
         setUpViews();
-        findViewById(R.id.signUpButton).setOnClickListener(this);
+        findViewById(R.id.AddUserDetails).setOnClickListener(this);
     }
 
 
@@ -94,11 +94,12 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener, 
         if (!branchSelected()) {
             return false;
         }
-        Log.d(TAG, "checkFields: ");
-        if ( name == null) {
+        else if ( name.length()<2) {
             Toast.makeText(this, "Enter Name", Toast.LENGTH_SHORT).show();
+            Name.setError("Enter Name");
             return false;
         } else if (this.roll.isEnabled() &&roll.length()<6) {
+            this.roll.setError("Enter Roll Number");
             Toast.makeText(this, "Enter Roll Number!", Toast.LENGTH_SHORT).show();
             return false;
         } else if (mobile.length() < 10) {
@@ -115,8 +116,9 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener, 
 
     @Override
     public void onClick(View v) {
+        Log.d(TAG, "onClick: ");
         int i = v.getId();
-        if (i == R.id.signUpButton) {
+        if (i == R.id.AddUserDetails) {
             addToDb();
         }
     }
@@ -151,8 +153,9 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener, 
                 map.put("userName", fullName);
                 map.put("rollNumber", rollNumber);
                 map.put("Department", branchString);
-                map.put("User Type:", userTypeString);
+                map.put("userType", userTypeString);
                 map.put("newUser", false);
+                map.put("mobile", mob);
                 ref.document(user.getUid()).set(map, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -172,6 +175,10 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener, 
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        Toast.makeText(this, "Please Fill Details", Toast.LENGTH_SHORT).show();
+    }
 
     //need to add Validation fields Here
 
@@ -181,7 +188,7 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener, 
             Toast.makeText(NewUser.this,"Select Branch",Toast.LENGTH_SHORT).show();
             return false;
 
-        } else if (userType==null|userType.equals("Select User Type")) {
+        } else if (userType==null||userTypeString.equals("Select User Type")) {
 
             Log.d(TAG, "UserType: None");
             Toast.makeText(NewUser.this,"Select User Type",Toast.LENGTH_SHORT).show();
@@ -189,6 +196,7 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener, 
 
         } else {
             Log.d(TAG, "branchSelected: " + branchString);
+            Log.d(TAG, "User Type"+userTypeString);
             return true;
         }
     }
@@ -198,10 +206,15 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener, 
 
         if(parent.getId()==R.id.Usertype){
 
-            Toast.makeText(this, "User Type Selected", Toast.LENGTH_SHORT).show();
             userTypeString = parent.getItemAtPosition(position).toString().trim();
+            Toast.makeText(this, userTypeString, Toast.LENGTH_SHORT).show();
             if (userTypeString.compareTo("Student")==0) {
                 roll.setEnabled(true);
+            }
+            else
+            {
+                roll.setText("");
+                roll.setEnabled(false);
             }
         } else if (parent.getId()== R.id.Branch) {
             branchString=parent.getItemAtPosition(position).toString().trim();

@@ -4,6 +4,7 @@
     package="com.example.seminarhall">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".NotificationGroup.NotificationClass"
@@ -15,8 +16,11 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name=".homePage.EditProfile"
+        <activity android:name=".dataBase.ShowProfile"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".homePage.EditProfile"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".homePage.ProfilePage"
             android:theme="@style/AppTheme.NoActionBar" />

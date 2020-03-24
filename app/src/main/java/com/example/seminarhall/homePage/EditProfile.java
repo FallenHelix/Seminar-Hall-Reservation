@@ -161,7 +161,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         String userName=name.getText().toString().trim();
         String userRoll=roll.getText().toString().trim();
         String userMobile=mobile.getText().toString().trim();
-        if (!checkFields(userName, userRoll,userMobile)|id==null) {
+        if (!checkFields(userName, userRoll,userMobile)||id==null) {
             return;
         }
         map.put("userName",userName);
@@ -170,7 +170,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         else
             map.put("rollNumber", null);
         map.put("Department", branchType);
-        map.put("User Type:", userType);
+        map.put("UserType", userType);
         map.put("mobile", userMobile);
 
         CollectionReference db = FirebaseFirestore.getInstance().collection("users");
@@ -213,7 +213,6 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
 
         if(parent.getId()==R.id.Usertype){
             Log.d(TAG, "User: "+userType);
-            Toast.makeText(this, userType, Toast.LENGTH_SHORT).show();
             userType=parent.getItemAtPosition(position).toString().trim();
             if (userType.compareTo("Student")==0) {
                 roll.setEnabled(true);
@@ -225,7 +224,6 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
             }
         } else if (parent.getId()== R.id.Branch) {
             branchType=parent.getItemAtPosition(position).toString().trim();
-            Toast.makeText(this,branchType,Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -45,32 +45,32 @@ import java.util.List;
 
 public class FragmentTime extends Fragment implements View.OnClickListener, TimePickerDialog.OnTimeSetListener {
     private static final String TAG = "FragmentTime";
-    public static final String Arg_start_date = "Start Date";
+    private static final String Arg_start_date = "Start Date";
     private TextView startTime, endTime, selectedDate, itemText;
-    private Button itemButton, bookHall;
     private static int id = -1;
     private EditText purpose;
+    Button bookHall;
     private Hall currHall;
-    boolean clashLoaded = false;
+    private boolean clashLoaded = false;
 
     private int firstHour = 1000, firstMinute = 1000, secondHour = 1000, secondMinute = 1000;
     //Items for multiple Choice
     private Button mainList;
     private String[] listItems;
     private boolean[] checkItems;
-    ArrayList<Integer> mUserItems = new ArrayList<>();
+    private ArrayList<Integer> mUserItems = new ArrayList<>();
     private List<String> SelectedDates;
     int stat = -1; //need to check for single dates
 
     //variables for clash check for single date
-    List<Double> sTime;
-    List<Double> eTime;
-    double startHour = -1, endHour = -1;
+    private List<Double> sTime;
+    private List<Double> eTime;
+    private double startHour = -1, endHour = -1;
     List<Integer> expandedList = new ArrayList<>();
 
     //Fragment listener
     //boolean for clash
-    boolean clash;
+    private boolean clash;
 
     public FragmentTime() {
 
@@ -102,7 +102,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
         selectedDate = (TextView) view.findViewById(R.id.Date);
         startTime = (TextView) view.findViewById(R.id.StartTime);
         endTime = (TextView) view.findViewById(R.id.EndTime);
-        itemButton = (Button) view.findViewById(R.id.b1);
+        Button itemButton = (Button) view.findViewById(R.id.b1);
         itemText = (TextView) view.findViewById(R.id.items);
         bookHall = (Button) view.findViewById(R.id.button4);
         purpose = view.findViewById(R.id.editText);
@@ -166,8 +166,8 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
             public void onSuccess(List<QuerySnapshot> querySnapshots) {
                 for (QuerySnapshot snapshots : querySnapshots) {
                     for (QueryDocumentSnapshot x : snapshots) {
-                        sTime.add((double) x.getDouble("startHour"));
-                        eTime.add((double) x.getDouble("endHour"));
+                        sTime.add( x.getDouble("startHour"));
+                        eTime.add( x.getDouble("endHour"));
                     }
                 }
                 clashLoaded = true;
@@ -204,9 +204,18 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
     }
 
     public void updateDate(List<String> s) {
+        if (s == null) {
+            selectedDate.setText("Select Date First");
+            startHour=-1;
+            endHour=-1;
+            startTime.setText("Start Time");
+            endTime.setText("End Time");
+            return;
+        }
         SelectedDates = new ArrayList<>(s); //get all the selected dates
 
-        selectedDate.setText(s.get(0) + " - " + s.get(s.size() - 1));
+        String temp=s.get(0) + " - " + s.get(s.size() - 1);
+        selectedDate.setText(temp);
     }
 
     private void showTimePickerDialog() {
@@ -215,7 +224,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
                 getContext(),
                 this,
                 Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
-                Calendar.getInstance().get(Calendar.MINUTE),
+                0,
                 false
         );
 
@@ -263,8 +272,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
 
     private void reserveHall() //adding to database
     {
-
-
+        bookHall.setEnabled(false);
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         FirebaseFirestore db;
         ReservedHall hall = new ReservedHall(currHall.getKey(), SelectedDates, startTime.getText().toString().trim(),
@@ -290,6 +298,7 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(getContext(), "Exception Occurred", Toast.LENGTH_LONG).show();
                 Log.d(TAG, "onFailure: " + e);
+                bookHall.setEnabled(true);
             }
         });
     }

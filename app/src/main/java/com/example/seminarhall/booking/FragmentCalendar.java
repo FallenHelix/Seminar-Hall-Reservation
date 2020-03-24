@@ -200,6 +200,8 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
         List<Date> dates = calendarPickerView.getSelectedDates();
         if (dates == null || dates.size() > 10) {
             Toast.makeText(getContext(), "Max Number of days: 10", Toast.LENGTH_SHORT).show();
+            mListener.onFragmentInteraction(null);
+            mListener.clash(false);
             setUpCalendar();
             return;
         }

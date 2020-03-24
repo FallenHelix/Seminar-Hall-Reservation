@@ -115,8 +115,8 @@ public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFra
         fragmentTime.setHall(selectedHall);
         FragmentCalendar c=new FragmentCalendar();
         c.setHall(selectedHall);
-        msectionPageAdapter.addFragment(c, "Tab 1");
-        msectionPageAdapter.addFragment(fragmentTime, "Tab 2");
+        msectionPageAdapter.addFragment(c, "Date");
+        msectionPageAdapter.addFragment(fragmentTime, "Time");
         mViewPager.setAdapter(msectionPageAdapter);
 
     }
@@ -125,6 +125,10 @@ public class Reserve extends AppCompatActivity implements FragmentCalendar.OnFra
     public void onFragmentInteraction(List<String> sendBackText) {
         if (sendBackText != null) {
             fragmentTime.updateDate(sendBackText);
+        }
+        else
+        {
+            fragmentTime.updateDate(null);
         }
     }
 

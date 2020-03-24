@@ -26,12 +26,10 @@ public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallLi
     private ItemClickListener mClickListener;
 
 
-
     HallListAdapter(Activity context, ArrayList<Hall> halls) {
         if (halls == null) {
             this.halls = new ArrayList<>();
-        }
-        else {
+        } else {
             this.halls = halls;
         }
 
@@ -53,28 +51,31 @@ public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallLi
 //        holder.hallName.setText(currHall.getName());
 //        holder.hallSize.setText(currHall.getSize());
 
-        Hall temp = halls.get(position);
-        String hName=temp.getName();
-        int size=temp.getSize();
-        holder.hallSize.setText(String.valueOf(size));
-        holder.hallRoom.setText(hName);
+        holder.hallSize.setText(String.valueOf(halls.get(position).getSize()));
+        holder.hallRoom.setText(halls.get(position).getFloor());
+        holder.hallName.setText(halls.get(position).getName());
+        holder.hallBranch.setText(halls.get(position).getDept());
+        holder.hallBuilding.setText(halls.get(position).getBuilding());
     }
 
     @Override
     public int getItemCount() {
-        return null!=halls?halls.size():0;
+        return null != halls ? halls.size() : 0;
     }
 
-//LIST XML handling class
-    public class HallListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    //LIST XML handling class
+    public class HallListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView hallRoom;
         TextView hallSize;
-        TextView hallBranch,hallName,hallBuilding;
+        TextView hallBranch, hallName, hallBuilding;
 
-         HallListViewHolder( View itemView) {
+        HallListViewHolder(View itemView) {
             super(itemView);
             hallRoom = (TextView) itemView.findViewById(R.id.HallRoom);
             hallSize = (TextView) itemView.findViewById(R.id.HallSize);
+            hallBranch = itemView.findViewById(R.id.HallDepartment);
+            hallName = itemView.findViewById(R.id.HallName);
+            hallBuilding = itemView.findViewById(R.id.HallBuilding);
             itemView.setOnClickListener(this);
         }
 
@@ -103,32 +104,31 @@ public class HallListAdapter extends RecyclerView.Adapter<HallListAdapter.HallLi
 
         return exampleFilter;
     }
-    private  Filter exampleFilter=new Filter() {
+
+    private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Hall> filteredList = new ArrayList<>();
-            FilterResults results=new FilterResults();
+            FilterResults results = new FilterResults();
 
             if (constraint == null || constraint.length() == 0) {
-                results.values=hallListFull;
+                results.values = hallListFull;
                 return results;
             }
             if (halls.isEmpty()) {
                 filteredList.addAll(hallListFull);
-            }
-            else
-            {
+            } else {
                 String filterPattern = constraint.toString().toLowerCase().trim();
                 for (Hall hall : hallListFull) {
                     int hint = Integer.parseInt(filterPattern);
-                    int temp=hall.getSize();
-                    if (temp>=hint) {
+                    int temp = hall.getSize();
+                    if (temp >= hint) {
                         filteredList.add(hall);
                     }
                 }
             }
-            results.values=filteredList;
-            return  results;
+            results.values = filteredList;
+            return results;
         }
 
         @Override

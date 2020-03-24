@@ -89,9 +89,10 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         email.setText(user.getEmail());
         roll.setText((String) map.get("rollNumber"));
         branch.setText((String) map.get("Department"));
-//        mob.setText((String) map.get("User Type:"));
-//        bookings.setText();
-        userType.setText((String)map.get("UserType"));
+        mob.setText((String) map.get("mobile"));
+        String book = "Bookings" + (long) map.get("bookings");
+        bookings.setText(book);
+        userType.setText((String)map.get("userType"));
     }
 
     private void setUpViews() {
@@ -103,8 +104,10 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
         mob = findViewById(R.id.TextView_contact);
         profilePic = findViewById(R.id.userImgae);
         userType = findViewById(R.id.TextViewUserType);
+        bookings = findViewById(R.id.TextViewBookings);
         settings = findViewById(R.id.settings);
         settings.setOnClickListener(this);
+        findViewById(R.id.backButton).setOnClickListener(this);
         Log.d(TAG, "setUpViews: 2");
     }
 
@@ -125,11 +128,15 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+
         int i = v.getId();
         if (i == R.id.settings) {
             roation+=30;
             settings.setRotation(roation);
             showPopup(v);
+        }
+        if (i == R.id.backButton) {
+            onBackPressed();
         }
     }
 

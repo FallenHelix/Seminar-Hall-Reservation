@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
@@ -97,15 +98,20 @@ public class addHall extends AppCompatActivity implements AdapterView.OnItemSele
             return;
         } else if (size == 0) {
             Toast.makeText(this, "Hall Size should be Greater than 0", Toast.LENGTH_SHORT).show();
+        } else if (TextUtils.isEmpty(hallName)) {
+            Log.d(TAG, "addHall: ");
+            editTextHallName.setError("Enter Hall Name");
+            return;
         }
-
-        if (!TextUtils.isEmpty(hallName) && branchSelected()) {
+        else if ( branchSelected()) {
             addHallToDb(hallName, size,f);
 
         }
     }
 
     private void addHallToDb(final String hallName, int size,String f) {
+        addToDb.setEnabled(false);
+        Log.d(TAG, "addHallToDb: ");
         String id =hallName.toLowerCase();
         CollectionReference db = FirebaseFirestore.getInstance().collection("halls");
         Hall hall = new Hall(hallName, size, branchString,f,HallBuilding);
@@ -114,12 +120,14 @@ public class addHall extends AppCompatActivity implements AdapterView.OnItemSele
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(addHall.this, "Hall Added", Toast.LENGTH_SHORT).show();
+                finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(addHall.this, "An Error Occurred", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailure: " + e);
+                addToDb.setEnabled(true);
             }
         });
     }
@@ -130,7 +138,7 @@ public class addHall extends AppCompatActivity implements AdapterView.OnItemSele
             Toast.makeText(addHall.this,"Select Branch",Toast.LENGTH_SHORT).show();
             return false;
 
-        } else if (HallBuilding == null | HallBuilding.equals("Select Building")) {
+        } else if (HallBuilding == null || HallBuilding.equals("Select Building")) {
             Log.d(TAG, "branchSelected: None");
             Toast.makeText(addHall.this,"Select Building",Toast.LENGTH_SHORT).show();
             return false;
@@ -147,10 +155,10 @@ public class addHall extends AppCompatActivity implements AdapterView.OnItemSele
         if (parent.getId() == R.id.HallDepartment) {
 
         branchString = parent.getItemAtPosition(position).toString().trim();
-        Toast.makeText(this, branchString, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, branchString, Toast.LENGTH_SHORT).show();
         } else if (parent.getId() == R.id.HallBuilding) {
             HallBuilding = parent.getItemAtPosition(position).toString().trim();
-            Toast.makeText(this, HallBuilding, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, HallBuilding, Toast.LENGTH_SHORT).show();
         }
     }
 

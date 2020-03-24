@@ -15,6 +15,22 @@
       },
       "oauth_client": [
         {
+          "client_id": "998458393536-bo6q4qutsrocm12ml4s5eviucs8clddn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.seminarhall",
+            "certificate_hash": "8f3b89c8a036c7338cc0cf080baa088480d79677"
+          }
+        },
+        {
+          "client_id": "998458393536-a798m60v54kvt5dlc036vp2hfg0nt3rq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.seminarhall",
+            "certificate_hash": "8b978fd787eff97bb30f46051ff8125ef12a8610"
+          }
+        },
+        {
           "client_id": "998458393536-edsniugeuia9ulsfrdbv2kt0kgdl4dl3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -30,6 +46,35 @@
             "certificate_hash": "a18817d665bb9a5939067c9a9a1719ea7ec9038f"
           }
         },
+        {
+          "client_id": "998458393536-gt470fr0q6qb3ioju9q4osqpesenj550.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1ET44DEj2yQ2J91Y799cxoy5JjbA9ulU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "998458393536-gt470fr0q6qb3ioju9q4osqpesenj550.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998458393536:android:2e614537fa6a9fba0bfe25",
+        "android_client_info": {
+          "package_name": "com.google.firebase.quickstart.fcm"
+        }
+      },
+      "oauth_client": [
         {
           "client_id": "998458393536-gt470fr0q6qb3ioju9q4osqpesenj550.apps.googleusercontent.com",
           "client_type": 3

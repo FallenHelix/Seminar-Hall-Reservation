@@ -48,8 +48,8 @@
 
     <string-array name="BuildingType">
         <item>Select Building</item>
-        <item>Arya</item>
-        <item>Bhaskara</item>
+        <item>Aryabhatta</item>
+        <item>Bhaskaracharya</item>
         <item>Other</item>
     </string-array>
     <string name="Registration">

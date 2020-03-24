@@ -37,6 +37,8 @@ public class FragmentClosed extends Fragment implements ReceiptAdapter.ItemClick
     ReceiptAdapter adapter;
     List<Integer> status = new ArrayList<>();
     CollectionReference notebookRef = FirebaseFirestore.getInstance().collection("Main/Reservation/Closed");
+//    CollectionReference db = FirebaseFirestore.getInstance().collection("Main/Reservation/Rejected");
+
     private FirebaseUser user;
 
 

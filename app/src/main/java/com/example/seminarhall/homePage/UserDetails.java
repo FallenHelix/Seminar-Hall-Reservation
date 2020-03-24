@@ -46,8 +46,6 @@ import java.util.Map;
 
 public class UserDetails extends AppCompatActivity implements View.OnClickListener,NavigationView.OnNavigationItemSelectedListener{
     private static final String TAG = "UserDetails";
-    private TextView Email;
-    private TextView U_id;
     FirebaseAuth mAuth;
     private DrawerLayout drawer;
     private GoogleSignInClient mGoogleSignInClient;
@@ -111,11 +109,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
     private void setView() {
         findViewById(R.id.My_bookings).setOnClickListener(this);
-        findViewById(R.id.sign_out).setOnClickListener(this);
         findViewById(R.id.See_data).setOnClickListener(this);
-        findViewById(R.id.Save_data).setOnClickListener(this);
-        Email = findViewById(R.id.Eml);
-        U_id = findViewById(R.id.U_id);
 
         //Setting up Navigation Bar
 
@@ -204,11 +198,6 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
         } else if (i == R.id.See_data) {
             Intent intent = new Intent(UserDetails.this, hallList.class);
             startActivity(intent);
-        } else if (i == R.id.Save_data) {
-            Intent intent = new Intent(UserDetails.this, addHall.class);
-            startActivity(intent);
-        } else if (i == R.id.sign_out) {
-            signOut();
         }
     }
 
@@ -223,13 +212,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
 
     private void updateUi(FirebaseUser user) {
         if (user != null) {
-            String email = user.getEmail();
 
-            String password=user.getDisplayName();
-            Email.setText(email);
-            U_id.setText(password);
-
-            ////////Notification Class
 
              Notification = new setUpNotification(this, user);
 
@@ -295,6 +278,9 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             signOut();
         } else if (i == R.id.Add_halls) {
             Intent intent = new Intent(UserDetails.this, addHall.class);
+            startActivity(intent);
+        } else if (i == R.id.nav_booking) {
+            Intent intent = new Intent(UserDetails.this, MyBookings.class);
             startActivity(intent);
         }
         return true;

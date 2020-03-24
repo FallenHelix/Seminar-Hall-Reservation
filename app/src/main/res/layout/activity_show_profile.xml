@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".homePage.ProfilePage">
+    tools:context=".dataBase.ShowProfile">
+
 
     <RelativeLayout
         android:id="@+id/rellay1"
@@ -34,9 +35,8 @@
                 android:id="@+id/userImgae"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
-                android:background="@drawable/circle"
                 android:padding="3dp"
-                android:src="@mipmap/joey" />
+                android:src="@drawable/default_user" />
 
         </RelativeLayout>
 
@@ -53,18 +53,6 @@
             android:textFontWeight="@android:integer/config_longAnimTime"
             android:textSize="32sp" />
 
-
-        <ImageView
-            android:id="@+id/settings"
-            android:hapticFeedbackEnabled="true"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="15dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:src="@drawable/ic_settings" />
 
     </RelativeLayout>
 
@@ -109,8 +97,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:gravity="center"
             android:background="@color/followingBg"
+            android:gravity="center"
             android:paddingTop="5dp"
             android:paddingBottom="5dp">
 
@@ -209,6 +197,7 @@
                     android:background="@color/grey" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -304,3 +293,4 @@
 
     </RelativeLayout>
 </RelativeLayout>
+

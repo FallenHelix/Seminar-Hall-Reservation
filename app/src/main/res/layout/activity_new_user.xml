@@ -191,7 +191,8 @@
                 android:background="@android:color/transparent"
                 android:fontFamily="sans-serif-light"
                 android:hint="Roll Number"
-                android:inputType="textCapWords"
+
+                android:inputType="numberSigned"
                 android:maxLength="10"
                 android:maxLines="1"
                 android:textColor="#000000"

@@ -29,10 +29,10 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/rc_bold"
             android:gravity="bottom"
-            android:padding="10dp"
+            android:padding="5dp"
             android:text="Halls"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             android:textColor="@color/main_red" />
