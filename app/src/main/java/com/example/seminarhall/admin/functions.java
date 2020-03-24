@@ -23,6 +23,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -61,6 +63,7 @@ public class functions extends AppCompatActivity implements View.OnClickListener
         setContentView(R.layout.activity_functions);
         findViewById(R.id.MakeAdmin).setOnClickListener(this);
         findViewById(R.id.seeAdmins).setOnClickListener(this);
+        findViewById(R.id.RemoveAdmin).setOnClickListener(this);
 
         email = findViewById(R.id.email);
 
@@ -83,6 +86,21 @@ public class functions extends AppCompatActivity implements View.OnClickListener
         Map<String, Object> data = new HashMap<>();
         data.put("email", email);
         return mFunctions.getHttpsCallable("makeAdmin")
+                .call(data)
+                .continueWith(new Continuation<HttpsCallableResult, String>() {
+                    @Override
+                    public String then(@NonNull Task<HttpsCallableResult> task) throws Exception {
+                        Map<String, Object> result = (Map<String, Object>) task.getResult().getData();
+                        Log.d(TAG, "then: " + result.get("message"));
+                        return (String) result.get("message");
+                    }
+                });
+    }
+
+    private Task<String> removeAdmin(String email) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("email", email);
+        return mFunctions.getHttpsCallable("removeAdmin")
                 .call(data)
                 .continueWith(new Continuation<HttpsCallableResult, String>() {
                     @Override
@@ -118,9 +136,57 @@ public class functions extends AppCompatActivity implements View.OnClickListener
             case R.id.seeAdmins:
                 loadAdmin();
                 break;
+            case R.id.RemoveAdmin:
+                removeAdmin();
         }
     }
-     ArrayList<String> stringList=new ArrayList<>();
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser user= FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            finish();
+        }
+    }
+
+    private void removeAdmin() {
+        String mail = email.getText().toString().trim();
+        if (mail.length() == 0) {
+            Toast.makeText(this, "Enter Email Please", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        removeAdmin(mail).addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    Exception e = task.getException();
+                    if (e instanceof FirebaseFunctionsException) {
+                        FirebaseFunctionsException ffe = (FirebaseFunctionsException) e;
+
+                        // Function error code, will be INTERNAL if the failure
+                        // was not handled properly in the function call.
+                        FirebaseFunctionsException.Code code = ffe.getCode();
+
+                        // Arbitrary error details passed back from the function,
+                        // usually a Map<String, Object>.
+                        Object details = ffe.getDetails();
+                    }
+
+                    // [START_EXCLUDE]
+                    Log.w(TAG, "Make Admin Failed", e);
+                    showSnackbar("An error occurred.");
+                    return;
+                    // [END_EXCLUDE]
+                } else {
+                    String end = task.getResult();
+                    Toast.makeText(functions.this, end, Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+    }
+
+    ArrayList<String> stringList=new ArrayList<>();
 
     private void loadAdmin() {
         list=findViewById(R.id.list_item);
@@ -128,12 +194,14 @@ public class functions extends AppCompatActivity implements View.OnClickListener
         db.whereEqualTo("admin",true).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                stringList.clear();
                 for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
                     stringList.add((String) x.get("email"));
                 }
                 Log.d(TAG, "List:"+stringList);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(functions.this, android.R.layout.simple_list_item_1, stringList);
                 list.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
         });
     }

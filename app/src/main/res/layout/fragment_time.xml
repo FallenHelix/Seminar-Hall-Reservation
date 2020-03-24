@@ -37,12 +37,23 @@
 
         app:layout_constraintVertical_bias="0.076" />
 
+
+<!--    <Switch-->
+<!--        android:id="@+id/switch1"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/relativeLayout"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/StartTime" />-->
+
     <TextView
         android:id="@+id/StartTime"
         android:layout_width="163dp"
         android:layout_height="43dp"
         android:layout_marginStart="16dp"
-        android:background="?attr/selectableItemBackground"
+        android:background="@drawable/edit_text"
         android:ems="10"
         android:fontFamily="@font/sf_display_medium"
         android:textColor="@color/black"
@@ -58,6 +69,7 @@
         app:layout_constraintVertical_bias="0.255" />
 
     <EditText
+
         android:id="@+id/editText"
         android:layout_width="285dp"
         android:layout_height="52dp"
@@ -98,10 +110,10 @@
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.464">
+        app:layout_constraintVertical_bias="0.537">
 
         <Button
             android:id="@+id/b1"
@@ -124,7 +136,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:inputType="textMultiLine"
-            android:text="Select required items\n new line :" />
+            android:text="Select required items:" />
     </RelativeLayout>
 
 

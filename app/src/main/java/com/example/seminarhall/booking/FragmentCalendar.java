@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.seminarhall.Hall;
 import com.example.seminarhall.R;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -74,7 +75,6 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
         Log.d(TAG, "getBookedDates: ");
         CollectionReference db = FirebaseFirestore.getInstance().collection("Main/Reservation/Active");
         db.whereEqualTo("hallId", hall.getKey())
-//                .whereGreaterThanOrEqualTo("noOfDays",1)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     private Map<String, Object> Temp;
@@ -107,7 +107,7 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
 
          db = FirebaseFirestore.getInstance().collection("Main/Reservation/Closed");
         db.whereEqualTo("hallId", hall.getKey())
-//                .whereGreaterThanOrEqualTo("noOfDays",1)
+                .whereEqualTo("Status",true)
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     private Map<String, Object> Temp;
@@ -137,7 +137,12 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
                         helper.setInfo(singleDates);
                         helper.toDatesArray();
                     }
-                });
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: "+e);
+            }
+        });
     }
 
     public static List<String> sD()

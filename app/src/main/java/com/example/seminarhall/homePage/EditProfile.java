@@ -1,8 +1,5 @@
 package com.example.seminarhall.homePage;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,13 +7,13 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.seminarhall.LogIn.NewUser;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.seminarhall.R;
-import com.example.seminarhall.dataBase.addHall;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -95,6 +92,8 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
         name = findViewById(R.id.User_Name);
         roll = findViewById(R.id.Roll);
         mobile = findViewById(R.id.mobile);
+        user = findViewById(R.id.Usertype);
+        brach = findViewById(R.id.Branch);
         findViewById(R.id.backButton).setOnClickListener(this);
         findViewById(R.id.AddUserDetails).setOnClickListener(this);
         //Disable roll
@@ -115,7 +114,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
 // Apply the adapter to the spinner
         user.setAdapter(adapter1);
         brach.setAdapter(adapter);
-        brach.setOnItemSelectedListener(this);
+        user.setOnItemSelectedListener(this);
         brach.setOnItemSelectedListener(this);
     }
 
@@ -198,7 +197,7 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
             Toast.makeText(EditProfile.this,"Select Branch",Toast.LENGTH_SHORT).show();
             return false;
 
-        } else if (userType==null|userType.equals("Select User Type")) {
+        } else if (userType==null||userType.equals("Select User Type")) {
 
             Log.d(TAG, "UserType: None");
             Toast.makeText(EditProfile.this,"Select User Type",Toast.LENGTH_SHORT).show();
@@ -213,10 +212,16 @@ public class EditProfile extends AppCompatActivity implements View.OnClickListen
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         if(parent.getId()==R.id.Usertype){
-            Toast.makeText(this, "User Type Selected", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "User: "+userType);
+            Toast.makeText(this, userType, Toast.LENGTH_SHORT).show();
             userType=parent.getItemAtPosition(position).toString().trim();
             if (userType.compareTo("Student")==0) {
                 roll.setEnabled(true);
+            }
+            else
+            {
+                roll.setText("");
+                roll.setEnabled(false);
             }
         } else if (parent.getId()== R.id.Branch) {
             branchType=parent.getItemAtPosition(position).toString().trim();

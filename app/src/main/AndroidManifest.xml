@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
-        <activity android:name=".homePage.EditProfile"></activity>
+        <activity android:name=".homePage.EditProfile"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".homePage.ProfilePage"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -43,7 +44,7 @@
         <activity
             android:name=".LogIn.SignIn"
             android:noHistory="true"
-            android:theme="@style/AppTheme.NoActionBar2" />
+            android:theme="@style/AppTheme.NoActionBar1" />
         <activity
             android:name=".dataBase.addHall"
             android:theme="@style/AppTheme.NoActionBar2" />

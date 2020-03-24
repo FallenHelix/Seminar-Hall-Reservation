@@ -69,8 +69,6 @@ public class FragmentActive extends Fragment implements ReceiptAdapter.ItemClick
     public void onStart() {
         super.onStart();
         if (user != null) {
-
-
             String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
             Log.d(TAG, "onStart: ");

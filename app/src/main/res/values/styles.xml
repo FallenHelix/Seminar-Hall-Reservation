@@ -2,8 +2,8 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
-                <item name="colorPrimary">@color/app_blue</item>
-                <item name="colorPrimaryDark">@color/app_blue</item>
+                <item name="colorPrimary">#353447</item>
+                <item name="colorPrimaryDark">#22203D</item>
     </style>
 
     <style name="AppTheme.NoActionBar1">

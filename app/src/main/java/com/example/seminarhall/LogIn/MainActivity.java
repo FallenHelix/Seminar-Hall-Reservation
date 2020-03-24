@@ -42,14 +42,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
         Continue = findViewById(R.id.button);
-        Button temp = findViewById(R.id.button11);
-        temp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Notify.class);
-                startActivity(intent);
-            }
-        });
 
         Continue.setOnClickListener(new View.OnClickListener() {
             @Override
