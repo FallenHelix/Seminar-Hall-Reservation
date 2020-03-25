@@ -328,13 +328,13 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
 
     private boolean  EmailVerification()
     {
-//        final FirebaseUser user=mAuth.getCurrentUser();
-//        if (!user.isEmailVerified()) {
-//            user.sendEmailVerification();
-//            Toast.makeText(this, "Email Verification sent to Email Address", Toast.LENGTH_LONG).show();
-//            return false;
-//        }
-//        else
+        FirebaseUser user=mAuth.getCurrentUser();
+        if (!user.isEmailVerified()) {
+            user.sendEmailVerification();
+            Toast.makeText(this, "Email Verification sent to Email Address", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        else
             return true;
     }
     private boolean validateEmail() {
