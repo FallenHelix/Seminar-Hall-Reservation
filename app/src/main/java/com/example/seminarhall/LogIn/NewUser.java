@@ -195,8 +195,6 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener, 
             return false;
 
         } else {
-            Log.d(TAG, "branchSelected: " + branchString);
-            Log.d(TAG, "User Type"+userTypeString);
             return true;
         }
     }
@@ -207,7 +205,6 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener, 
         if(parent.getId()==R.id.Usertype){
 
             userTypeString = parent.getItemAtPosition(position).toString().trim();
-            Toast.makeText(this, userTypeString, Toast.LENGTH_SHORT).show();
             if (userTypeString.compareTo("Student")==0) {
                 roll.setEnabled(true);
             }
@@ -218,7 +215,6 @@ public class NewUser extends AppCompatActivity implements View.OnClickListener, 
             }
         } else if (parent.getId()== R.id.Branch) {
             branchString=parent.getItemAtPosition(position).toString().trim();
-            Toast.makeText(this,branchString,Toast.LENGTH_SHORT).show();
         }
     }
 

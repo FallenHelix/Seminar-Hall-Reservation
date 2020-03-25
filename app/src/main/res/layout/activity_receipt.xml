@@ -46,15 +46,6 @@
                 android:textSize="25sp" />
         </com.google.android.material.appbar.AppBarLayout>
 
-<!--        <LinearLayout-->
-<!--            android:layout_below="@+id/toolbar"-->
-<!--            android:id="@+id/linear"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="130dp"-->
-<!--            android:background="@drawable/bookingsummary"-->
-<!--            android:orientation="vertical">-->
-
-<!--        </LinearLayout>-->
 
         <LinearLayout
             android:id="@id/linear2"

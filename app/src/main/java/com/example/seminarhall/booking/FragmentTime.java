@@ -303,6 +303,35 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
         });
     }
 
+    public String time1(double s,double e)
+    {
+        String start_time, end_time;
+
+        String str1 = String.valueOf(s);
+        String str2 = Double.toString(e);
+        String[] start = str1.split("\\.");
+        String[] end = str2.split("\\.");
+        int a = Integer.valueOf(start[0]);
+        int b = Integer.valueOf(end[0]);
+        if(a < 12)
+        {
+            start_time = start[0] + ":" + start[1] + "0" + " am";
+        }
+        else
+        {
+            start_time = start[0] + ":" + start[1] + "0" + " pm";
+        }
+        if(b < 12)
+        {
+            end_time = end[0] + ":" + end[1] + "0" + " am";
+        }
+        else
+        {
+            end_time = end[0] + ":" + end[1] + "0" + " pm";
+        }
+//        System.out.println(start_time + " - " + end_time);
+        return (start_time + " - " + end_time);
+    }
 
     private boolean mainCheck() {
 
@@ -446,13 +475,19 @@ public class FragmentTime extends Fragment implements View.OnClickListener, Time
     }
 
     private void showDialogBox() {
-        String displayString = "";
-        if (sTime.size() > 0)
+//        String displayString = "";
+//        if (sTime.size() > 0)
+//            for (int i = 0; i < sTime.size(); i++) {
+//                displayString +=(sTime.get(i).toString());
+//                displayString+=(" - " + eTime.get(i));
+////                displayString.concat();
+//            }
+        String displayString="";
+        if (sTime.size() > 0) {
             for (int i = 0; i < sTime.size(); i++) {
-                displayString +=(sTime.get(i).toString());
-                displayString+=(" - " + eTime.get(i));
-//                displayString.concat();
+                displayString += time1(sTime.get(i), eTime.get(i));
             }
+        }
         openDialog(displayString);
     }
 

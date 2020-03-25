@@ -85,12 +85,14 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                     if (documentSnapshot != null) {
                         Boolean newUser = documentSnapshot.getBoolean("newUser");
                         if (newUser == null) {
-                            signOut();
+                            Intent intent = new Intent(UserDetails.this, NewUser.class);
+                            startActivity(intent);
                             return;
                         }
                         if (newUser == true) {
                             Intent intent = new Intent(UserDetails.this, NewUser.class);
                             startActivity(intent);
+                            return;
                         }
                     }
                 }

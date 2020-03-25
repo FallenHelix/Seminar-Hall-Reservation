@@ -31,7 +31,8 @@
         <activity
             android:name=".admin.receipt"
             android:theme="@style/AppTheme.NoActionBar2" /> <!-- 7march -->
-        <activity android:name=".LogIn.NewUser" /> <!-- >>>>>>> master -->
+        <activity android:name=".LogIn.NewUser"
+            android:theme="@style/AppTheme.NoActionBar"/> <!-- >>>>>>> master -->
         <activity
             android:name=".booking.Reserve"
             android:parentActivityName=".homePage.UserDetails"
