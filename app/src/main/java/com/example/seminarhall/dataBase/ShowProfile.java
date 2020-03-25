@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -74,6 +75,10 @@ public class ShowProfile extends AppCompatActivity implements View.OnClickListen
             public void onSuccess(DocumentSnapshot documentSnapshot) {
                 if(documentSnapshot!=null)
                 map.putAll(documentSnapshot.getData());
+                String photoUrl = (String) map.get("picUrl");
+                if (photoUrl != null || photoUrl.length() > 5) {
+                    loadPhoto(photoUrl);
+                }
                 putInfo();
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -84,6 +89,17 @@ public class ShowProfile extends AppCompatActivity implements View.OnClickListen
                 finish();
             }
         });
+    }
+
+    private void loadPhoto(String url) {
+        if (url != null) {
+            url = url.replace("s96-c", "s340-c");
+            Picasso.get()
+                    .load(url)
+                    .placeholder(R.mipmap.ic_launcher_round)
+                    .error(R.mipmap.ic_launcher_round)
+                    .into(profilePic);
+        }
     }
 
     private void putInfo() {

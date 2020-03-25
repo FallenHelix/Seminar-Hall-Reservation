@@ -30,7 +30,8 @@
         <activity android:name=".home" />
         <activity
             android:name=".admin.receipt"
-            android:theme="@style/AppTheme.NoActionBar2" /> <!-- 7march -->
+            android:theme="@style/AppTheme.NoActionBar2"
+            android:parentActivityName=".admin.Admin_Control" /><!-- 7march -->
         <activity android:name=".LogIn.NewUser"
             android:theme="@style/AppTheme.NoActionBar"/> <!-- >>>>>>> master -->
         <activity
@@ -44,6 +45,7 @@
             android:theme="@style/AppTheme.NoActionBar2" />
         <activity
             android:name=".admin.functions"
+            android:parentActivityName=".homePage.UserDetails"
             android:theme="@style/AppTheme.NoActionBar2" />
         <activity android:name=".HCalendar" />
         <activity

@@ -95,4 +95,20 @@ public class setUpNotification extends Application {
             return NotificationManagerCompat.from(context).areNotificationsEnabled();
         }
     }
+
+    public void UnSubscribeAdmin() {
+        Log.d(TAG, "UnSubscribeAdmin: ");
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("admin")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg = "SuccessFull";
+                        Log.d(TAG, "onComplete: Successful ");
+                        if (!task.isSuccessful()) {
+                            msg = "Failed";
+                            Log.d(TAG, "onComplete: Failed");
+                        }
+                    }
+                });
+    }
 }

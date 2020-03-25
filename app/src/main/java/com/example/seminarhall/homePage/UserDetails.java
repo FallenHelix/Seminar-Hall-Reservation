@@ -247,6 +247,7 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
                    startActivity(intent);
                }
                else {
+                   Notification.UnSubscribeAdmin();
                    showRegularUI();
                }
            }
