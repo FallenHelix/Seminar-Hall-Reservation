@@ -1,7 +1,6 @@
 package com.example.seminarhall.booking;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,13 +18,12 @@ import com.example.seminarhall.Hall;
 import com.example.seminarhall.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.squareup.timessquare.CalendarCellDecorator;
-import com.squareup.timessquare.CalendarCellView;
 import com.squareup.timessquare.CalendarPickerView;
 
 import java.text.DateFormat;
@@ -44,9 +42,10 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
 
     private static final String TAG = "FragmentCalendar";
     public CalendarPickerView calendarPickerView;
-    BookingHelper helper=new BookingHelper();
+    BookingHelper helper = new BookingHelper();
     private OnFragmentInteractionListener mListener;
     Hall hall;
+    Date today = Calendar.getInstance().getTime();
 
 
     private List<Date> BookedDates;//dates that are needed to be highlighted, indicating a booked event;
@@ -54,103 +53,137 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
     private static List<Map<String, String>> array = new ArrayList<>();
 
     private List<String> BookedDatesText;
-    private static Map<String,String> id = new HashMap<>();
-    private static Map<String,String> id2 = new HashMap<>();
+    private static Map<String, String> id = new HashMap<>();
+    private static Map<String, String> id2 = new HashMap<>();
 
 
-    public static String  getSingleId(String key)
-    {
+    public static String getSingleId(String key) {
         return id.get(key);
     }
-    public static String  stat(String key)
-    {
+
+    public static String stat(String key) {
         return id2.get(key);
     }
 
-    public  void setHall(Hall h)
-    {
-        this.hall=h;
+    public void setHall(Hall h) {
+        this.hall = h;
     }
+
     private void getBookedDates() {
+        Log.d(TAG, "Today: " + today);
         Log.d(TAG, "getBookedDates: ");
         CollectionReference db = FirebaseFirestore.getInstance().collection("Main/Reservation/Active");
-        db.whereEqualTo("hallId", hall.getKey())
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    private Map<String, Object> Temp;
-                    int days;
-                    String k;
+        CollectionReference db2 = FirebaseFirestore.getInstance().collection("Main/Reservation/Closed");
+//        db.whereEqualTo("hallId", hall.getKey())
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    private Map<String, Object> Temp;
+//                    int days;
+//                    String k;
+//
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
+//                            Temp = x.getData();
+////                            x.get
+//                            days = (int) ((long) x.get("noOfDays"));
+//                            Log.d(TAG, "Days: " + days);
+//                            if (days == 1) {
+//                                String d=((List<String>)Temp.get("days")).get(0);
+//
+//                                singleDates.add(d);
+//                                k=(String) Temp.get("key");
+//                                id.put(d,k);
+//                                id2.put(d, "Active");
+//                            }
+//                            else
+//                            BookedDatesText.addAll((List<String>)Temp.get("days"));
+//                        }
+//                        setUpCalendar();
+//                        toDatesArray(BookedDatesText);
+//                        toDatesArray(singleDates);
+//                    }
+//                });
+//
+//         db = FirebaseFirestore.getInstance().collection("Main/Reservation/Closed");
+//        db.whereEqualTo("hallId", hall.getKey())
+//                .whereEqualTo("Status",true)
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    private Map<String, Object> Temp;
+//                    int days;
+//                    String k;
+//
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
+//                            Temp = x.getData();
+////                            x.get
+//                            days = (int) ((long) x.get("noOfDays"));
+//                            Log.d(TAG, "Days: " + days);
+//                            if (days == 1) {
+//                                String d=((List<String>)Temp.get("days")).get(0);
+//
+//                                singleDates.add(d);
+//                                k=(String) Temp.get("key");
+//                                id.put(d,k);
+//                                id2.put(d, "Closed");
+//                            }
+//                            else
+//                                BookedDatesText.addAll((List<String>) Temp.get("days"));
+//                        }
+//                        setUpCalendar();
+//                        toDatesArray(BookedDatesText);
+//                        toDatesArray(singleDates);
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Log.d(TAG, "onFailure: "+e);
+//            }
+//        });
+        Task t1 = db.get();
+        Task t2 = db2.whereEqualTo("hallId", hall.getKey())
+                .whereEqualTo("Status", true)
+                .get();
+        Task<List<QuerySnapshot>> allTask = Tasks.whenAllSuccess(t1, t2);
+        allTask.addOnSuccessListener(new OnSuccessListener<List<QuerySnapshot>>() {
+            @Override
+            public void onSuccess(List<QuerySnapshot> querySnapshots) {
+                int days;
+                String k;
+                Map<String, Object> Temp = new HashMap<>();
+                for (QuerySnapshot queryDocumentSnapshots : querySnapshots) {
+                    for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
+                        Temp = x.getData();
 
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
-                            Temp = x.getData();
-//                            x.get
-                            days = (int) ((long) x.get("noOfDays"));
-                            Log.d(TAG, "Days: " + days);
-                            if (days == 1) {
-                                String d=((List<String>)Temp.get("days")).get(0);
-
-                                singleDates.add(d);
-                                k=(String) Temp.get("key");
-                                id.put(d,k);
-                                id2.put(d, "Active");
-                            }
-                            else
-                            BookedDatesText.addAll((List<String>)Temp.get("days"));
-                        }
-                        setUpCalendar();
-                        toDatesArray(BookedDatesText);
-                        toDatesArray(singleDates);
+                        days = (int) ((long) Temp.get("noOfDays"));
+                        Log.d(TAG, "Days: " + days);
+                        if (days == 1) {
+                            String d = ((List<String>) Temp.get("days")).get(0);
+                            singleDates.add(d);
+                            k = (String) Temp.get("key");
+                            id.put(d, k);
+                            id2.put(d, "Active");
+                        } else
+                            BookedDatesText.addAll((List<String>) Temp.get("days"));
                     }
-                });
-
-         db = FirebaseFirestore.getInstance().collection("Main/Reservation/Closed");
-        db.whereEqualTo("hallId", hall.getKey())
-                .whereEqualTo("Status",true)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    private Map<String, Object> Temp;
-                    int days;
-                    String k;
-
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        for (QueryDocumentSnapshot x : queryDocumentSnapshots) {
-                            Temp = x.getData();
-//                            x.get
-                            days = (int) ((long) x.get("noOfDays"));
-                            Log.d(TAG, "Days: " + days);
-                            if (days == 1) {
-                                String d=((List<String>)Temp.get("days")).get(0);
-
-                                singleDates.add(d);
-                                k=(String) Temp.get("key");
-                                id.put(d,k);
-                                id2.put(d, "Closed");
-                            }
-                            else
-                                BookedDatesText.addAll((List<String>) Temp.get("days"));
-                        }
-                        setUpCalendar();
-                        toDatesArray(BookedDatesText);
-                        helper.setInfo(singleDates);
-                        helper.toDatesArray();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
+                    setUpCalendar();
+                    toDatesArray(BookedDatesText);
+                    toDatesArray(singleDates);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.d(TAG, "onFailure: "+e);
+                Log.d(TAG, "onFailure: " + e);
             }
         });
     }
 
-    public static List<String> sD()
-    {
+    public static List<String> sD() {
         return singleDates;
     }
-
-
 
 
     @Nullable
@@ -192,9 +225,6 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
     }
 
 
-
-
-
     private void getDates() {
         Log.d(TAG, "getDates: ");
         List<Date> dates = calendarPickerView.getSelectedDates();
@@ -207,7 +237,7 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
         }
         List<String> selectedDates = new ArrayList<>();
         for (Date x : dates) {
-            String temp = DateFormat.getDateInstance(DateFormat.DATE_FIELD,Locale.ITALY).format(x);
+            String temp = DateFormat.getDateInstance(DateFormat.DATE_FIELD, Locale.ITALY).format(x);
             if (BookedDatesText.contains(temp)) {
                 setUpCalendar();
                 Log.d(TAG, "getDates: clash");
@@ -217,8 +247,7 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
                 if (dates.size() > 1) {
                     setUpCalendar();
                     return;
-                }else
-                {
+                } else {
                     selectedDates.add(temp);
                     mListener.onFragmentInteraction(selectedDates);
                     mListener.clash(true);
@@ -234,7 +263,6 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
     }
 
 
-
     @Override
     public void onDateSelected(Date date) {
         getDates();
@@ -247,7 +275,15 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
             Date t = null;
             try {
                 t = sdf.parse(dates.get(i));
-                BookedDates.add(t);
+//                                    BookedDates.add(t);
+
+                if (t.after(today)) {
+                    BookedDates.add(t);
+                }
+                else
+                {
+                    Log.d(TAG, "Before Date: "+t);
+                }
             } catch (ParseException e) {
                 Log.d(TAG, "Exception In Dates");
                 return;
@@ -300,6 +336,7 @@ public class FragmentCalendar extends Fragment implements CalendarPickerView.OnD
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(List<String> sendBackText);
+
         void clash(boolean stat);
     }
 

@@ -31,6 +31,7 @@ import java.util.List;
 
 public class FragmentAdminNew extends Fragment implements ReceiptAdapter.ItemClickListener {
     private static final String TAG = "FragmentAdminNew";
+    Toast myToast;
     RecyclerView recyclerView;
     List<ReservedHall> halls;
     FirebaseFirestore db;
@@ -42,6 +43,7 @@ public class FragmentAdminNew extends Fragment implements ReceiptAdapter.ItemCli
     public void onCreate(@Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
+        myToast=Toast.makeText(getContext(),null,Toast.LENGTH_SHORT);
         halls = new ArrayList<>();
         db= FirebaseFirestore.getInstance();
         notebookRef = FirebaseFirestore.getInstance().collection("/Main/Reservation/Active");
@@ -103,7 +105,9 @@ public class FragmentAdminNew extends Fragment implements ReceiptAdapter.ItemCli
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(getContext(), "You have clicked"+position, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getContext(), "You have clicked"+position, Toast.LENGTH_SHORT).show();
+        myToast.setText("You have clicked" + position);
+        myToast.show();
         Log.d(TAG, "onItemClick: ");
         Intent intent = new Intent(getContext(), receipt.class);
         intent.putExtra("key",halls.get(position).getReservationId());
