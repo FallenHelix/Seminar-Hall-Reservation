@@ -114,45 +114,5 @@ public class FragmentAdminNew extends Fragment implements ReceiptAdapter.ItemCli
         intent.putExtra("stat", "Active");
         intent.putExtra("status", status.get(position));
         startActivity(intent);
-        ///////////////////////
-//        ReservedHall hall = halls.get(position);
-//        String id = hall.getReservationId();
-//        FirebaseFirestore db=FirebaseFirestore.getInstance();
-//
-//                db.collection("Main/Reservation/Active").document(id).delete().addOnSuccessListener(
-//                new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        Log.d(TAG, "onSuccess: Deletion Successful");
-//                    }
-//                }
-//        );
-//        db.collection("Main/Reservation/Closed").document(id).set(hall).addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void aVoid) {
-//                Log.d(TAG, "onSuccess: In Adding to Closed");
-//            }
-//        });
-//        Map<String ,Object> map = new HashMap<>();
-//        map.put("Status", true);
-//        map.put("Accepted Date", Calendar.getInstance().getTime());
-//        map.put("Approved", FirebaseAuth.getInstance().getCurrentUser().getUid());
-//
-//
-//        db.collection("Main/Reservation/Closed").document(id).set(map, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void aVoid) {
-//                Log.d(TAG, "onSuccess: Merge");
-//            }
-//        })
-//        .addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Log.d(TAG, "onFailure: Merge Failed");
-//            }
-//        });
-//
-
-
     }
 }

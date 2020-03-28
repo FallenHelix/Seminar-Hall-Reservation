@@ -153,9 +153,11 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
         return true;
     }
 
+    private Toast myToast=Toast.makeText(hallList.this,null,Toast.LENGTH_SHORT);
     private void ExceptionFunction()
     {
-        Toast.makeText(this, "Please Input Only Number",Toast.LENGTH_LONG).show();
+        myToast.setText( "Please Input Only Number");
+        myToast.show();
     }
     @Override
     public void onItemClick(View view, int position) {
