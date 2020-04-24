@@ -259,20 +259,19 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
     Map<String, String> map = new HashMap<>();
 
 
-    private void SignInUser()
-    {
-        String email=emailInput.getText().toString().trim();
-        String password=passwordInput.getText().toString().trim();
+    private void SignInUser() {
+        String email = emailInput.getText().toString().trim();
+        String password = passwordInput.getText().toString().trim();
 
-        if(confirmInput())
+        if (confirmInput())
+        {
             progressbar.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
                         new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(
-                                    @NonNull Task<AuthResult> task)
-                            {
+                                    @NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     if (EmailVerification()) {
 
@@ -284,7 +283,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
 
                                         // if sign-in is successful
                                         // intent to home activity
-                                        FirebaseUser user=task.getResult().getUser();
+                                        FirebaseUser user = task.getResult().getUser();
                                         DocumentReference db = FirebaseFirestore.getInstance().document("users" + user.getUid().trim());
                                         db.set(map, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
@@ -300,29 +299,30 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
                                                 mAuth.signOut();
                                                 progressbar.setVisibility(View.INVISIBLE);
                                                 Toast.makeText(SignIn.this, "Error Occurred", Toast.LENGTH_SHORT).show();
+                                                progressbar.setVisibility(View.INVISIBLE);
+
                                             }
                                         });
 
 
-                                    }
-                                    else
-                                    {
+                                    } else {
                                         mAuth.signOut();
                                         progressbar.setVisibility(View.INVISIBLE);
-                                    }                                }
-
-                                else {
+                                    }
+                                } else {
 
                                     // sign-in failed
                                     Toast.makeText(getApplicationContext(),
                                             "Login failed!!",
                                             Toast.LENGTH_LONG)
                                             .show();
+                                    progressbar.setVisibility(View.INVISIBLE);
+
                                 }
                             }
                         });
 
-        Toast.makeText(this, "End of Function", Toast.LENGTH_LONG);
+    }
     }
 
 
@@ -368,12 +368,10 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
 
     public boolean confirmInput() {
         if (!validateEmail() | !validatePassword()) {
-            Toast.makeText(this, "Check Function Failed", Toast.LENGTH_LONG);
             return false;
         } else
         {
 
-            Toast.makeText(this, "Check Function is Successful", Toast.LENGTH_LONG);
 
             return true;
         }
