@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".homePage.ProfilePage">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
 
     <RelativeLayout
         android:id="@+id/rellay1"
@@ -35,8 +40,7 @@
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:background="@drawable/circle"
-                android:padding="3dp"
-                android:src="@mipmap/joey" />
+                android:padding="3dp"/>
 
         </RelativeLayout>
 
@@ -303,4 +307,7 @@
         </LinearLayout>
 
     </RelativeLayout>
-</RelativeLayout>
+
+
+    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>

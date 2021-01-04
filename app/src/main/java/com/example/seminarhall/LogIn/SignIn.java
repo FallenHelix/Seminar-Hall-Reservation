@@ -284,7 +284,7 @@ public class SignIn extends AppCompatActivity implements View.OnClickListener{
                                         // if sign-in is successful
                                         // intent to home activity
                                         FirebaseUser user = task.getResult().getUser();
-                                        DocumentReference db = FirebaseFirestore.getInstance().document("users" + user.getUid().trim());
+                                        DocumentReference db = FirebaseFirestore.getInstance().document("users/" + user.getUid().trim());
                                         db.set(map, SetOptions.merge()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {

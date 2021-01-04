@@ -62,6 +62,8 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
         setContentView(R.layout.activity_hall_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        myToast  =Toast.makeText(hallList.this,null,Toast.LENGTH_SHORT);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setUpView();
     }
@@ -114,7 +116,6 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Toast.makeText(this,"OnCreate Options Menu",Toast.LENGTH_SHORT).show();
         MenuInflater inflater=getMenuInflater();
         inflater.inflate(R.menu.hall_menu, menu);
 
@@ -153,7 +154,7 @@ public class hallList extends AppCompatActivity implements HallListAdapter.ItemC
         return true;
     }
 
-    private Toast myToast=Toast.makeText(hallList.this,null,Toast.LENGTH_SHORT);
+    private Toast myToast ;
     private void ExceptionFunction()
     {
         myToast.setText( "Please Input Only Number");

@@ -152,11 +152,11 @@ public class UserDetails extends AppCompatActivity implements View.OnClickListen
             TextView nav_email = (TextView) headerView.findViewById(R.id.User_email);
             TextView nav_name = (TextView) headerView.findViewById(R.id.User_Name);
             nav_name.setText(name);
+            nav_email.setText(email) ;
 //        navPic.setAdjustViewBounds(true);
             if (url != null) {
                 url = url.replace("s96-c", "s384-c");
                 Glide.with(this).load(url).into(navPic);
-                nav_email.setText(email);
 
             }
         } else {
